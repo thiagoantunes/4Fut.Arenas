@@ -1,0 +1,86 @@
+<h1 ng-show="listaVazia">voce não tem nenhuma qudra ainda =/</h1>
+
+<div style='margin:20px'>
+
+<br/>
+    <button type="button" class="btn btn-primary" ng-click="vm.novaQuadra = !vm.novaQuadra" ng-hide='vm.novaQuadra'><i class="zmdi zmdi-plus-square"></i> Nova Quadra</button>
+    <br/>
+    <div class="card" ng-show='vm.novaQuadra'>
+        <div class="card-body card-padding">
+            <form role="form" ng-submit="vm.addQuadra()">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="input-group"  style='width:100%'>
+                            <div class="fg-line">
+                                <input type="text" class="form-control" placeholder="Nome" ng-model="vm.nome">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="input-group" style='width:100%'>
+                            <div class="fg-line">
+                                <input type="text" class="form-control" placeholder="Capacidade" ng-model="vm.capacidade">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4" >
+                        <div class="input-group" style='width:100%'>
+                            <div class="fg-line" style='margin-top: 7px;'>
+                                <select chosen="{width: '100%'}" ng-model="vm.tipo"  disable-search="true" data-placeholder="Tipo da Quadra" class="form-control" >
+                                    <option value="Society">Society</option>
+                                    <option value="Campo">Campo</option>
+                                    <option value="Areia">Areia</option>
+                                    <option value="Salão">Salão</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-30">
+                    <button class="btn btn-primary btn-sm"  type="submit">Salvar</button>
+                    <button class="btn btn-link btn-sm" type="button" ng-click="vm.cancel();" >Cancelar</button>
+                </div>
+            </form>
+        </div>  
+    </div>
+</div> 
+<br/>
+
+<div class="table-responsive">
+    <table ng-table class="table table-striped table-vmiddle">
+        <tr ng-repeat="q in vm.quadras"  ng-class="{ 'active': q.$edit }">
+            <td data-title="'Nome'">
+                <span ng-if="!q.$edit">{{ q.nome }}</span>
+                <div ng-if="q.$edit"><input class="form-control" type="text" ng-model="q.nome" /></div>
+            </td>
+            <td data-title="'Capacidade'">
+                <span ng-if="!q.$edit">{{ q.capacidade }}</span>
+                <div ng-if="q.$edit"><input class="form-control" type="text" ng-model="q.capacidade" /></div>
+            </td>
+            <td data-title="'Tipo'">
+                <span ng-if="!q.$edit">{{ q.tipo }}</span>
+                <select ng-if="q.$edit"  type="text" ng-model="q.tipo" class="form-control" >
+                    <option value="Society">Society</option>
+                    <option value="Campo">Campo</option>
+                    <option value="Areia">Areia</option>
+                    <option value="Salão">Salão</option>
+                    <option value=""></option>
+                </select>
+            </td>
+            <td data-title="'Ações'">
+                <button type="button" class="btn btn-default" ng-if="!q.$edit" ng-click="q.$edit = true;"><i class="zmdi zmdi-edit"></i></button>
+                <button type="button" class="btn btn-default" ng-if="!q.$edit" ng-click="vm.quadras.$remove(q)"><i class="zmdi zmdi-delete"></i></button>
+                <button type="button" class="btn btn-success" ng-if="q.$edit"  ng-click="q.$edit = false; vm.quadras.$save(q)"><i class="zmdi zmdi-check"></i></button>
+                <button type="button" class="btn btn-danger" ng-if="q.$edit"  ng-click="q.$edit = false;"><i class="zmdi zmdi-minus"></i></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+
