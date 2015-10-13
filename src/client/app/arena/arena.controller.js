@@ -150,7 +150,7 @@
         }             
     }
     
-    function FuncionamentoCtrl(uiCalendarConfig, $uibModal, repository){
+    function FuncionamentoCtrl(uiCalendarConfig, $uibModal, repository, blockUI){
         var vm = this;
 
         vm.precos = [];
@@ -191,7 +191,7 @@
         activate();
 
         function activate(){
-            
+            blockUI.start();
             vm.precos = repository.getPrecos(quadraId);
 
             vm.precos.$loaded(function() {
@@ -200,21 +200,28 @@
                 vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;
+                blockUI.stop();
             });    
         }
 
         function eventResize(event, delta, revertFunc){
+            blockUI.start();
             var preco = _.find(vm.precos , {$id: event.$id});
             preco.end = moment(preco.end , "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
-            vm.precos.$save(preco);
+            vm.precos.$save(preco).then(function(ref) {
+                blockUI.stop();
+            });      
         }
 
         function eventDrop(event, delta, revertFunc){
+            blockUI.start();
             var preco = _.find(vm.precos , {$id: event.$id});
             preco.start =  moment(preco.start , "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
             preco.end = moment(preco.end , "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
-            preco.dow = moment(event.dow[0] , "d").add(delta._days, 'days').format('d');
-            vm.precos.$save(preco);
+            preco.dow = moment(preco.dow[0] , "d").add(delta._days, 'days').format('d');
+            vm.precos.$save(preco).then(function(ref) {
+                blockUI.stop();
+            }); 
         }
 
         function eventSelect(start, end){
