@@ -1,6 +1,14 @@
-<br/><br/><br/>
 
-<div id="configFunc" ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" ></div>
+<br/>
+<br/>
+
+<uib-tabset style="text-align:center">
+    <uib-tab ng-repeat="q in vm.quadras" select='vm.selectQuadra(q.$id);' heading="{{q.nome}}" active="q.active" disable="q.disabled">
+    </uib-tab>
+</uib-tabset>
+
+<div id="configFunc" ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources" style="margin:0px"  calendar="myCalendar" ></div>
+
 
 <script type="text/ng-template" id="modalPreco.html">
     <div class="modal-header">
@@ -91,3 +99,5 @@
         </div>
     </form>
 </script>
+
+

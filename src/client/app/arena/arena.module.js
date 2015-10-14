@@ -5,6 +5,6 @@
         'app.core',
         'app.widgets',
         'ngTable',
-        'blockUI'
-      ]);
+        'blockUI',
+     ]);
 })();

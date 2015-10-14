@@ -8,6 +8,11 @@
         .controller('FuncionamentoCtrl', FuncionamentoCtrl)
         .controller('ModalPrecoCtrl', ModalPrecoCtrl);
 
+    ArenaCtr.$inject = ['$scope', 'arenaFactory', 'quadraFactory', 'maps', 'currentPosition', '$timeout'];
+    QuadraCtrl.$inject = ['repository'];
+    FuncionamentoCtrl.$inject = ['uiCalendarConfig', '$uibModal', 'repository', 'blockUI'];
+    ModalPrecoCtrl.$inject = ['$modalInstance', 'data'];
+
     function ArenaCtr($scope, arenaFactory, quadraFactory, maps, currentPosition, $timeout){
         arenaFactory('cesar').$bindTo($scope, "arena").then(function() {
           activate();
@@ -153,9 +158,12 @@
     function FuncionamentoCtrl(uiCalendarConfig, $uibModal, repository, blockUI){
         var vm = this;
 
+        vm.quadras = [];
         vm.precos = [];
+        vm.quadraSelecionada = {};
         vm.eventSources = [[]];
         vm.openModalPreco = openModalPreco;
+        vm.selectQuadra = selectQuadra;
         vm.precoMaximo = 0;
         vm.precoMinimo = 0;
         vm.precoMedio = 0;
@@ -186,22 +194,27 @@
             }
         };
 
-        var quadraId = '-K-6yCu_ALiqSYVYHDZP';
-
         activate();
 
         function activate(){
+            vm.quadras = repository.getQuadras();          
+        }
+
+        function selectQuadra(id){
             blockUI.start();
-            vm.precos = repository.getPrecos(quadraId);
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos); 
+            vm.precos = repository.getPrecos(id);
 
             vm.precos.$loaded(function() {
-                vm.eventSources.push(vm.precos);
-        
+                
                 vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;
+
+                            uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
+        
                 blockUI.stop();
-            });    
+            }); 
         }
 
         function eventResize(event, delta, revertFunc){

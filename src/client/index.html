@@ -46,6 +46,8 @@
             </div>
         </div>
     </div> -->
+    <header id="header"  data-ng-include="'/src/client/app/layout/header.html'" data-ng-controller="HeaderController as hctrl">
+    </header>
 
     <section id="content" >
         <div class="container">
@@ -72,7 +74,6 @@
     <script src="/bower_components/angularfire/dist/angularfire.js"></script>
     <script src="/bower_components/angular-ui-mask/dist/mask.js"></script>
     <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
-    <script src="/bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="/bower_components/chosen/chosen.jquery.min.js"></script>
@@ -81,6 +82,7 @@
     <script src="/bower_components/lightgallery/dist/js/lightgallery.min.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/bower_components/angular-block-ui/dist/angular-block-ui.js"></script>
+    <script src="/bower_components/angular-ui-calendar/src/calendar.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -118,6 +120,7 @@
     <script src="/src/client/app/core/filters/reverse.js"></script>
     <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
     <script src="/src/client/app/dashboard/dashboard.route.js"></script>
+    <script src="/src/client/app/layout/header.controller.js"></script>
     <script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
     <script src="/src/client/app/layout/ht-top-nav.directive.js"></script>
     <script src="/src/client/app/layout/shell.controller.js"></script>

@@ -7,7 +7,19 @@
 <br/><br/>
 <div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" ></div>
 
+<script type="text/ng-template" id="template/tabs/tabset.html">
 
+<div class="clearfix">
+    <ul class="tab-nav" ng-class="{'tn-vertical': vertical, 'tn-justified': justified, 'tab-nav-right': right}" ng-transclude></ul>
+    <div class="tab-content">
+        <div class="tab-pane"
+             ng-repeat="tab in tabs"
+             ng-class="{active: tab.active}"
+             uib-tab-content-transclude="tab">
+        </div>
+    </div>
+</div> 
+</script>
 <script type="text/ng-template" id="modalPelada.html">
 	<div class="modal-header">
 		<h3 class="modal-title">{{vm.title}}</h3>

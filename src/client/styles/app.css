@@ -1077,7 +1077,7 @@ html {
 }
 body {
   font-family: roboto;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.42857143;
   color: #5e5e5e;
   background-color: #edecec;
@@ -4358,7 +4358,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 50px;
+  min-height: 65px;
   margin-bottom: 18px;
   border: 1px solid transparent;
 }
@@ -4464,10 +4464,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  padding: 16px 15px;
+  padding: 23px 15px;
   font-size: 17px;
   line-height: 18px;
-  height: 50px;
+  height: 65px;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -4550,8 +4550,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   .navbar-nav > li > a {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 23.5px;
+    padding-bottom: 23.5px;
   }
 }
 .navbar-form {
@@ -4683,11 +4683,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: #4285F4;
+  border-color: #4285F4;
 }
 .navbar-default .navbar-brand {
-  color: #777777;
+  color: #fff;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -4695,26 +4695,26 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-text {
-  color: #777777;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333333;
+  color: #fff;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #555555;
-  background-color: #e7e7e7;
+  color: #fff;
+  background-color: #2f65bc;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
 .navbar-default .navbar-nav > .disabled > a:focus {
-  color: #cccccc;
+  color: #fff;
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
@@ -8072,7 +8072,6 @@ body #content {
   z-index: 11;
   width: 100%;
   left: 0;
-  padding-right: 10px;
   top: 0;
   -webkit-transition: all;
   -o-transition: all;
@@ -15797,3 +15796,5 @@ hr.fc-divider {
 body.modal-open {
     overflow: visible;
 }
+
+
