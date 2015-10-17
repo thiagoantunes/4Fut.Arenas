@@ -1,5 +1,6 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
+<div ng-show-auth="" style="    position: fixed; z-index: 100; width: 100%;">
+<nav class="navbar navbar-default ">
+  <div class="container-fluid container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" ng-click="navbarCollapsed = !navbarCollapsed">
@@ -12,9 +13,9 @@
     </div>
     <div class="collapse navbar-collapse" uib-collapse="!navbarCollapsed">
       <ul class="nav navbar-nav">
-        <li ng-class="{ active: isActive('/dashboard')}"><a href="/dashboard">DASHBOARD</a></li>
-        <li ng-class="{ active: isActive('/reservas')}"><a href="/reservas">RESERVAS</a></li>
-        <li ng-class="{ active: isActive('/arena/arena-profile')}"><a href="/arena/arena-profile">ARENA</a></li>
+        <li ng-class="{ active: isActive('/arenas/dashboard')}"><a href="/dashboard">DASHBOARD</a></li>
+        <li ng-class="{ active: isActive('/arenas/reservas')}"><a href="/arenas/reservas">RESERVAS</a></li>
+        <li ng-class="{ active: isActive('/arenas/arena/arena-profile') || isActive('/arenas/arena/arena-quadras') || isActive('/arenas/arena/arena-funcionamento') }"><a href="/arenas/arena/arena-profile">ARENA</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Link</a></li>
@@ -31,4 +32,4 @@
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
-</nav>
+</nav></div>

@@ -1,4 +1,6 @@
 
+<div class="card z-depth-1">
+	
 <p>
     <button role="button" ng-click="vm.logout()" class="btn btn-danger">Log Out</button>
   </p>
@@ -6,6 +8,7 @@
 <button type="submit" ng-click='vm.openNovaPeladaModal();' class="btn btn-primary btn-sm m-t-10">Novo Evento</button>
 <br/><br/>
 <div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" ></div>
+</div>
 
 <script type="text/ng-template" id="template/tabs/tabset.html">
 

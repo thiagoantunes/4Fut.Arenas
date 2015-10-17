@@ -5,10 +5,10 @@
     .module('app.login')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout){
+  function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject){
     $scope.oauthLogin = function(provider) {
       $scope.err = null;
-      Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(redirect, showError);
+      Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: "email"}).then(redirect, showError);
     };
 
     $scope.anonymousLogin = function() {
@@ -68,8 +68,20 @@
       return f + str.substr(1);
     }
 
-    function redirect() {
-      $location.path('/calendario');
+    function redirect(user) {
+      var account = Ref.child('user/'+user.uid);
+
+      account.once('value', function(snapshot) {
+        if (snapshot.hasChild('arenas')) {
+          $location.path('/arenas/reservas');
+          $scope.$apply();
+        }
+        else {
+          $location.path('/arenas/account');
+          $scope.$apply();
+        }
+      });
+
     }
 
     function showError(err) {

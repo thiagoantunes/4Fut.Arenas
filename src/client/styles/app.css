@@ -8067,9 +8067,9 @@ body #content {
 #header {
   background: #4285F4;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
-  height: 65px;
-  position: fixed;
-  z-index: 11;
+  height: 260px;
+  position: absolute;
+
   width: 100%;
   left: 0;
   top: 0;
@@ -15797,4 +15797,7 @@ body.modal-open {
     overflow: visible;
 }
 
-
+.form-group.required .control-label:after { 
+   content:" *";
+   color:red;
+}

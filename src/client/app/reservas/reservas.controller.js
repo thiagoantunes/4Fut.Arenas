@@ -4,7 +4,7 @@
     angular
         .module('app.reservas')
         .controller('ReservasCtrl', ReservasCtrl)
-        .controller('ModalReservaCtrl', ModalReservaCtrl);
+        .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
     function ReservasCtrl(uiCalendarConfig, $uibModal, peladaFactory ,Auth){
     	var vm = this; 
@@ -110,6 +110,15 @@
     	    vm.getPreco();
     	});
 	
+        vm.diasSemana = [
+            {dia: 0, ativo:false},
+            {dia: 1, ativo:false},
+            {dia: 2, ativo:false},
+            {dia: 3, ativo:false},
+            {dia: 4, ativo:false},
+            {dia: 5, ativo:false},
+            {dia: 6, ativo:false} 
+        ];
     	
 	
     	vm.getPreco = function(){
