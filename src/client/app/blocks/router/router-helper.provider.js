@@ -22,7 +22,7 @@
         $stateProvider.stateAuthenticated = function(path, route) {
             route.resolve = route.resolve || {};
             route.resolve.user = ['Auth', function(Auth) {
-              return Auth.$requireAuth();
+                return Auth.$requireAuth();
             }];
             $stateProvider.state(path, route);
             SECURED_ROUTES[path] = true;
@@ -46,7 +46,7 @@
 
             var service = {
                 configureStates: configureStates,
-                configureStatesAuthenticated : configureStatesAuthenticated,
+                configureStatesAuthenticated: configureStatesAuthenticated,
                 getStates: getStates,
                 stateCounts: stateCounts
             };
@@ -69,7 +69,7 @@
                 }
             }
 
-            function configureStatesAuthenticated(statesAuthenticated){
+            function configureStatesAuthenticated(statesAuthenticated) {
                 statesAuthenticated.forEach(function(stateAuth) {
                     stateAuth.config.resolve =
                         angular.extend(stateAuth.config.resolve || {}, config.resolveAlways);
@@ -89,7 +89,7 @@
                         stateCounts.errors++;
                         handlingStateChangeError = true;
                         var destination = (toState &&
-                            (toState.title || toState.name || toState.loadedTemplateUrl)) ||
+                                (toState.title || toState.name || toState.loadedTemplateUrl)) ||
                             'unknown target';
                         var msg = 'Error routing to ' + destination + '. ' +
                             (error.data || '') + '. <br/>' + (error.statusText || '') +
@@ -105,7 +105,9 @@
                 updateDocTitle();
             }
 
-            function getStates() { return $state.get(); }
+            function getStates() {
+                return $state.get();
+            }
 
             function updateDocTitle() {
                 $rootScope.$on('$stateChangeSuccess',
@@ -120,24 +122,24 @@
         }
     }
 
-    function run($rootScope, $state, Auth, SECURED_ROUTES, loginRedirectPath){
+    function run($rootScope, $state, Auth, SECURED_ROUTES, loginRedirectPath) {
         // watch for login status changes and redirect if appropriate
         Auth.$onAuth(check);
 
         $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
-          if( error === 'AUTH_REQUIRED' ) {
-             $state.go(loginRedirectPath);
-          }
+            if (error === 'AUTH_REQUIRED') {
+                $state.go(loginRedirectPath);
+            }
         });
-    
+
         function check(user) {
-          if( !user && authRequired($state.current.name) ) {
-            $state.go(loginRedirectPath);
-          }
+            if (!user && authRequired($state.current.name)) {
+                $state.go(loginRedirectPath);
+            }
         }
-    
+
         function authRequired(path) {
-          return SECURED_ROUTES.hasOwnProperty(path);
+            return SECURED_ROUTES.hasOwnProperty(path);
         }
     }
 

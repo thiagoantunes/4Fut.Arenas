@@ -5,15 +5,17 @@
         .module('app.account')
         .controller('AccountCtrl', AccountCtrl);
 
-    function AccountCtrl($scope, Ref, $firebaseObject, $firebaseArray, user) {
+    function AccountCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, $cookies) {
         var vm = this;
         var arenaID = Ref.child("arenas").push().key();
+        $cookies.put('arenaID', angular.isUndefined(arenaID) ? null : arenaID);
         var userID = user.uid;
 
         vm.wellcomeMessage = true;
         vm.usuario = {
-            nome : user.facebook.displayName,
-            email : user.facebook.email
+            nome: user.facebook.displayName,
+            email: user.facebook.email,
+            fotoPerfil: user.facebook.profileImageURL
         };
         vm.arena = {};
         vm.quadras = $firebaseArray(Ref.child('quadras/' + arenaID));
@@ -24,6 +26,13 @@
 
         function addQuadra() {
             var quadraID = Ref.child("quadras").push().key();
+
+            var userData = $firebaseObject(Ref.child('users/' + userID));
+            userData.$loaded(function() {
+                $firebaseObject(Ref.child('arenas/' + userData.arena)).$loaded(function(data) {
+                    var teste = data;
+                });
+            });
 
             var quadraData = {};
             quadraData["arenas/" + arenaID + "/quadras/" + quadraID] = vm.novaQuadra.nome;
@@ -40,7 +49,7 @@
 
         function salvarCadastroInicial() {
             var cadastroInicial = {};
-            cadastroInicial["user/" + userID] = vm.usuario;
+            cadastroInicial["users/" + userID] = vm.usuario;
             cadastroInicial["arenas/" + arenaID] = vm.arena;
 
             Ref.update(cadastroInicial, function(error) {
@@ -48,7 +57,8 @@
                     console.log("Error updating data:", error);
                 } else {
                     var cadastroReferencias = {};
-                    cadastroReferencias["user/" + userID + "/arenas/" + arenaID] = {
+                    cadastroReferencias["users/" + userID + "/arena/"] = arenaID;
+                    cadastroReferencias["users/" + userID + "/arenas/" + arenaID] = {
                         nome: vm.arena.nome,
                         perfilAcesso: 1
                     };

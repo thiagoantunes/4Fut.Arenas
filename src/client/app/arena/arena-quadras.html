@@ -3,16 +3,16 @@
 <div style='margin:20px'>
 
 <br/>
-    <button type="button" class="btn btn-primary" ng-click="vm.novaQuadra = !vm.novaQuadra" ng-hide='vm.novaQuadra'><i class="zmdi zmdi-plus-square"></i> Nova Quadra</button>
+    <button type="button" class="btn btn-primary" ng-click="vm.formQuadra = !vm.formQuadra" ng-hide='vm.formQuadra'><i class="zmdi zmdi-plus-square"></i> Nova Quadra</button>
     <br/>
-    <div class="card" ng-show='vm.novaQuadra'>
+    <div class="card" ng-show='vm.formQuadra'>
         <div class="card-body card-padding">
             <form role="form" ng-submit="vm.addQuadra()">
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="input-group"  style='width:100%'>
                             <div class="fg-line">
-                                <input type="text" class="form-control" placeholder="Nome" ng-model="vm.nome">
+                                <input type="text" class="form-control" placeholder="Nome" ng-model="vm.novaQuadra.nome">
                             </div>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="col-sm-4">
                         <div class="input-group" style='width:100%'>
                             <div class="fg-line">
-                                <input type="text" class="form-control" placeholder="Capacidade" ng-model="vm.capacidade">
+                                <input type="text" class="form-control" placeholder="Capacidade" ng-model="vm.novaQuadra.capacidade">
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                     <div class="col-sm-4" >
                         <div class="input-group" style='width:100%'>
                             <div class="fg-line" style='margin-top: 7px;'>
-                                <select chosen="{width: '100%'}" ng-model="vm.tipo"  disable-search="true" data-placeholder="Tipo da Quadra" class="form-control" >
+                                <select chosen="{width: '100%'}" ng-model="vm.novaQuadra.tipo"  disable-search="true" data-placeholder="Tipo da Quadra" class="form-control" >
                                     <option value="Society">Society</option>
                                     <option value="Campo">Campo</option>
                                     <option value="Areia">Areia</option>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="m-t-30">
                     <button class="btn btn-primary btn-sm"  type="submit">Salvar</button>
-                    <button class="btn btn-link btn-sm" type="button" ng-click="vm.cancel();" >Cancelar</button>
+                    <button class="btn btn-link btn-sm" type="button" ng-click="vm.clearForm();" >Cancelar</button>
                 </div>
             </form>
         </div>  

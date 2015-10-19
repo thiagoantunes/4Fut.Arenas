@@ -9,7 +9,7 @@
         .controller('ModalPrecoCtrl', ModalPrecoCtrl);
 
     ArenaCtr.$inject = ['$scope', 'arenaFactory', 'quadraFactory', 'maps', 'currentPosition', '$timeout'];
-    QuadraCtrl.$inject = ['repository'];
+    QuadraCtrl.$inject = ['quadraService'];
     FuncionamentoCtrl.$inject = ['uiCalendarConfig', '$uibModal', 'repository', 'blockUI'];
     ModalPrecoCtrl.$inject = ['$modalInstance', 'data'];
 
@@ -113,15 +113,15 @@
         }
     }
 
-    function QuadraCtrl(repository) {
+    function QuadraCtrl(quadraService) {
         var vm = this;
 
         vm.novaQuadra = false;
         vm.listaVazia = false;
-        vm.quadras = repository.getQuadras();
+        vm.quadras = quadraService.getQuadras();
         vm.originalRow = {};
         vm.addQuadra = addQuadra;
-        vm.cancel = cancel;
+        vm.clearForm = clearForm;
 
         activate();
 
@@ -134,25 +134,16 @@
         }
 
         function addQuadra() {
-            vm.quadras.$add({
-                nome: vm.nome,
-                capacidade: vm.capacidade,
-                tipo: vm.tipo,
+            quadraService.addQuadra(vm.novaQuadra).then(function(error) {
+                if (error) {
+                    console.log("Error updating data:", error);
+                }
             });
-
-            vm.nome = "";
-            vm.capacidade = "";
-            vm.tipo = "";
-
-            vm.novaQuadra = !vm.novaQuadra
         };
 
-        function cancel() {
-            vm.nome = "";
-            vm.capacidade = "";
-            vm.tipo = "";
-
-            vm.novaQuadra = !vm.novaQuadra
+        function clearForm(){
+            vm.novaQuadra = {};
+            vm.formQuadra = !vm.formQuadra
         }
     }
 

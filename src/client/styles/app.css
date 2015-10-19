@@ -15801,3 +15801,19 @@ body.modal-open {
    content:" *";
    color:red;
 }
+
+
+.cadini-pic {
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.cadini-pic img {
+        width: 120px;
+    display: inline-block;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.19);
+  }

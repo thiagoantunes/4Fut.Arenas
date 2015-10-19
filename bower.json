@@ -49,7 +49,8 @@
     "angular-block-ui": "~0.2.0",
     "angular-wizard": "~0.5.5",
     "angular-input-masks": "~2.1.0",
-    "angular-ui-calendar": "~1.0.1"
+    "angular-ui-calendar": "~1.0.1",
+    "angular-cookies": "~1.4.7"
   },
   "resolutions": {
     "fullcalendar": "~2.4.0",
