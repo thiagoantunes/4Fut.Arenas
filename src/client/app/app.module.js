@@ -10,7 +10,6 @@
         'app.arena',
         'app.reservas',
         'app.login',
-        'app.account'
     ]);
 
 })();

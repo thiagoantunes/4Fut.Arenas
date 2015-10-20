@@ -14,7 +14,7 @@
     function getStates() {
         return [
             {
-                state: 'arenas.arena',
+                state: 'arena',
                 config: {
                     url: '/arena',
                     templateUrl: 'app/arena/arena.html',
@@ -35,14 +35,14 @@
                 }
             },
             {
-                state: 'arenas.arena.arena-profile',
+                state: 'arena.arena-profile',
                 config: {
                     url: '/arena-profile',
                     templateUrl: 'app/arena/arena-profile.html'
                 }
             },
             {
-                state: 'arenas.arena.arena-quadras',
+                state: 'arena.arena-quadras',
                 config: {
                     url: '/arena-quadras',
                     templateUrl: 'app/arena/arena-quadras.html',
@@ -51,7 +51,7 @@
                 }
             },
             {
-                state: 'arenas.arena.arena-funcionamento',
+                state: 'arena.arena-funcionamento',
                 config:{
                     url: '/arena-funcionamento',
                     templateUrl: 'app/arena/arena-funcionamento.html',

@@ -3,7 +3,7 @@
 
     angular
         .module('app.core', [
-            'ngAnimate', 'ngSanitize','ngCookies',
+            'ngAnimate', 'ngSanitize',
             'ngSanitize',
             'blocks.exception', 'blocks.logger', 'blocks.router',
             'firebase', 'firebase.ref', 'firebase.auth',
