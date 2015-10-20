@@ -5,10 +5,10 @@
     .module('app.login')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout){
+  function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, $cookies){
     $scope.oauthLogin = function(provider) {
       $scope.err = null;
-      Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(redirect, showError);
+      Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: "email"}).then(redirect, showError);
     };
 
     $scope.anonymousLogin = function() {
@@ -58,6 +58,7 @@
     };
 
     function firstPartOfEmail(email) {
+
       return ucfirst(email.substr(0, email.indexOf('@'))||'');
     }
 
@@ -68,8 +69,23 @@
       return f + str.substr(1);
     }
 
-    function redirect() {
-      $location.path('/calendario');
+    function redirect(user) {
+      var account = Ref.child('users/'+user.uid);
+
+      $cookies.put('userID', angular.isUndefined(user.uid) ? null : user.uid);
+
+      account.once('value', function(snapshot) {
+        if (snapshot.hasChild('arena')) {
+          $cookies.put('arenaID', angular.isUndefined(snapshot.val().arena) ? null : snapshot.val().arena);
+          $location.path('/arenas/reservas');
+          $scope.$apply();
+        }
+        else {
+          $location.path('/account');
+          $scope.$apply();
+        }
+      });
+
     }
 
     function showError(err) {
