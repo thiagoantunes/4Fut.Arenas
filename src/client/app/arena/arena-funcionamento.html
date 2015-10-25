@@ -1,14 +1,11 @@
-
 <br/>
 <br/>
 
 <uib-tabset style="text-align:center">
-    <uib-tab ng-repeat="q in vm.quadras" select='vm.selectQuadra(q.$id);' heading="{{q.nome}}" active="q.active" disable="q.disabled">
-    </uib-tab>
+    <uib-tab ng-repeat="q in vm.quadras" select='vm.selectQuadra(q.$id);' heading="{{q.nome}}" active="q.active" disable="q.disabled"></uib-tab>
 </uib-tabset>
 
 <div id="configFunc" ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources" style="margin:0px"  calendar="myCalendar" ></div>
-
 
 <script type="text/ng-template" id="modalPreco.html">
     <div class="modal-header">
@@ -36,16 +33,14 @@
                     <div class="input-group" >
                         <span class="input-group-addon"><i class="zmdi zmdi-money-box"></i></span>
                         <div class="fg-line">
-                            <input type="number" class="form-control" ng-model="vm.eventData.precoAvulso" placeholder="Preço Avulso">
-                        </div>
+                            <input type="number" class="form-control" ng-model="vm.eventData.precoAvulso" placeholder="Preço Avulso"></div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="input-group" >
                         <span class="input-group-addon"><i class="zmdi zmdi-money-box"></i></span>
                         <div class="fg-line">
-                            <input type="number" class="form-control" ng-model="vm.eventData.precoMensalista" placeholder="Preço Mensalista">
-                        </div>
+                            <input type="number" class="form-control" ng-model="vm.eventData.precoMensalista" placeholder="Preço Mensalista"></div>
                     </div>
                 </div>
             </div>
@@ -55,13 +50,11 @@
                 <br/><br/>
                 <div>
                     <label class="checkbox checkbox-inline m-r-20">
-                        <input type="checkbox" ng-model='vm.diasSemana[0].ativo'>
-                        <i class="input-helper"></i>
+                        <input type="checkbox" ng-model='vm.diasSemana[0].ativo'> <i class="input-helper"></i>
                         Dom
                     </label>
                     <label class="checkbox checkbox-inline m-r-20">
-                        <input type="checkbox" ng-model='vm.diasSemana[1].ativo'>
-                        <i class="input-helper"></i>
+                        <input type="checkbox" ng-model='vm.diasSemana[1].ativo'> <i class="input-helper"></i>
                         Seg
                     </label>
                     <label class="checkbox checkbox-inline m-r-20">
@@ -99,5 +92,3 @@
         </div>
     </form>
 </script>
-
-

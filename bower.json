@@ -50,12 +50,16 @@
     "angular-wizard": "~0.5.5",
     "angular-input-masks": "~2.1.0",
     "angular-ui-calendar": "~1.0.1",
-    "angular-cookies": "~1.4.7"
+    "angular-cookies": "~1.4.7",
+    "angular-strap": "~2.3.3",
+    "Waves": "waves#~0.7.2",
+    "angular-clndr": "~0.3.2"
   },
   "resolutions": {
     "fullcalendar": "~2.4.0",
     "angular": "^1.4.5",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "chosen": "~1.4.2"
   },
   "overrides": {
     "bootstrap": {

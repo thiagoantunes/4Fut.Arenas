@@ -71,6 +71,7 @@ gulp.task('styles', ['clean-styles'], function() {
         .pipe(gulp.dest(config.temp));
 });
 
+
 /**
  * Copy fonts
  * @return {Stream}

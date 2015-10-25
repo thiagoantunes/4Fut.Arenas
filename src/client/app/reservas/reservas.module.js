@@ -3,6 +3,8 @@
 
     angular.module('app.reservas', [
         'app.core',
-        'app.widgets'
+        'app.widgets',
+        'mgcrea.ngStrap',
+        'tien.clndr'
       ]);
 })();

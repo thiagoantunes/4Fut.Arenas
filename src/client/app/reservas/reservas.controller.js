@@ -6,35 +6,37 @@
         .controller('ReservasCtrl', ReservasCtrl)
         .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
-    function ReservasCtrl(uiCalendarConfig, $uibModal, peladaFactory ,Auth){
+    function ReservasCtrl(quadraService, reservasService, uiCalendarConfig, $uibModal, peladaFactory ,Auth, $popover){
     	var vm = this; 
+        vm.quadras = quadraService.getQuadras();
+        vm.quadrasSelecionadas = [];
+
+
+        vm.quadras.$loaded(function() {
+            _.forEach(vm.quadras, function(q){
+                vm.quadrasSelecionadas.push({
+                    quadra: q,
+                    ativa: true
+                });
+            })
+        }); 
+
+        
+
+        vm.reservas = reservasService.getFilteredArray(function(rec) {
+                return rec.quadra == "-K1BcU2irBrZOVZG-Bow" ;
+        });
 
     	vm.logout = function() { Auth.$unauth(); };
 	
-    	vm.peladas = peladaFactory('cesar');
-	
     	vm.eventSources = [[]];
-	
-    	vm.peladas.avulsas.$loaded(function() {
-    	    vm.eventSources.push({
-    	        events: vm.peladas.avulsas,
-    	        color : 'red'
-    	    });
-    	});    
-	
-    	vm.peladas.escolinhas.$loaded(function(){
-    	    vm.eventSources.push({
-    	        events: vm.peladas.escolinhas,
-    	        color : 'green'
-    	    });
-    	});
-	
-    	vm.peladas.mensalistas.$loaded(function(){
-    	    vm.eventSources.push({
-    	        events: vm.peladas.mensalistas,
-    	        color : 'blue'
-    	    });
-    	});
+
+        vm.reservas.$loaded(function() {
+            vm.eventSources.push({
+                events: vm.reservas,
+                color : 'red'
+            });
+        }); 
 	
     	vm.uiConfig = {
     	  calendar:{
@@ -55,12 +57,22 @@
     	    axisFormat: 'H:mm',  //,'h(:mm)tt',
     	    dayClick: dayClick,
     	    eventClick: eventClick,
+            eventRender: eventRender
     	    }
     	};
+
+        function eventRender(event, element){
+            $popover(element, {
+                placement: 'top',
+                contentTemplate: 'modalPelada.html',
+
+                autoClose: 1
+            });
+        }
 	
     	function eventClick(calEvent){
-    	    var pelada = _.find(vm.peladas , {'id' : calEvent.id });
-    	    vm.openNovaPeladaModal(pelada);
+    	    //var pelada = _.find(vm.reservas , {'id' : calEvent.id });
+    	    //vm.openNovaPeladaModal(pelada);
     	}
 	
     	function dayClick(date, jsEvent, view){
@@ -99,7 +111,7 @@
     function ModalReservaCtrl($scope, $modalInstance, data, quadraFactory, peladaFactory){
     	var vm = this;   
 
-    	vm.quadras = quadraFactory('cesar');
+    	vm.quadras = quadraFactory('-K1BcDhprlXkXEo18kbq');
 	
     	vm.quadras.$loaded(function() {
     	    vm.reservaRadio = 1;
@@ -133,7 +145,7 @@
 	
 	
 	
-    	    peladaFactory('cesar').avulsas.$add({
+    	    peladaFactory('-K1BcDhprlXkXEo18kbq').avulsas.$add({
     	        tipo: vm.reservaRadio,
     	        quadra: vm.quadraSelecionada.$id,
     	        start: moment(vm.date).format('YYYY-MM-DDTHH:mm:ss'),

@@ -10,7 +10,7 @@
 
     ArenaCtr.$inject = ['$scope', 'arenaFactory', 'quadraFactory', 'maps', 'currentPosition', '$timeout'];
     QuadraCtrl.$inject = ['quadraService'];
-    FuncionamentoCtrl.$inject = ['uiCalendarConfig', '$uibModal', 'repository', 'blockUI'];
+    FuncionamentoCtrl.$inject = ['quadraService' , 'funcionamentoService' ,'uiCalendarConfig', '$uibModal', 'blockUI'];
     ModalPrecoCtrl.$inject = ['$modalInstance', 'data'];
 
     function ArenaCtr($scope, arenaFactory, quadraFactory, maps, currentPosition, $timeout) {
@@ -147,15 +147,13 @@
         }
     }
 
-    function FuncionamentoCtrl(uiCalendarConfig, $uibModal, repository, blockUI) {
+    function FuncionamentoCtrl(quadraService, funcionamentoService, uiCalendarConfig, $uibModal, blockUI) {
         var vm = this;
 
         vm.quadras = [];
         vm.precos = [];
         vm.quadraSelecionada = {};
-        vm.eventSources = [
-            []
-        ];
+        vm.eventSources = [[]];
         vm.openModalPreco = openModalPreco;
         vm.selectQuadra = selectQuadra;
         vm.precoMaximo = 0;
@@ -197,13 +195,13 @@
         activate();
 
         function activate() {
-            vm.quadras = repository.getQuadras();
+            vm.quadras = quadraService.getQuadras();
         }
 
         function selectQuadra(id) {
             blockUI.start();
             uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
-            vm.precos = repository.getPrecos(id);
+            vm.precos = funcionamentoService.getPrecos(id);
 
             vm.precos.$loaded(function() {
 
