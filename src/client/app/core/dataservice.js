@@ -21,9 +21,11 @@ app.factory('FilteredArray', function($firebaseArray) {
     angular
         .module('app.core')
         .factory('credentials', credentials)
+        .factory('arenaService', arenaService)
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
+        
         .factory('repository', repository)
         .factory('peladaFactory', peladaFactory)
         .factory('quadraFactory', quadraFactory)
@@ -91,6 +93,30 @@ app.factory('FilteredArray', function($firebaseArray) {
 
             return Ref.update(quadraData);
         }
+    }
+
+    function arenaService(Ref, $firebaseArray, $firebaseObject, credentials){
+        var service = {
+            getRef : getRef,
+
+            getArena : getArena,
+            getQuadras : getQuadras
+        }
+
+        return service;
+
+        function getRef() {
+            return Ref.child('arenas');
+        }
+
+        function getArena() {
+            return $firebaseObject(getRef().child(credentials.arenaID));
+        }
+
+        function getQuadras(){
+            return $firebaseArray(getRef().child(credentials.arenaID+ '/quadras'));
+        }
+
     }
 
     function funcionamentoService(Ref,$firebaseArray, $firebaseObject, credentials){
@@ -175,7 +201,6 @@ app.factory('FilteredArray', function($firebaseArray) {
             var refEscolinha = getRef().child(credentials.arenaID).orderByChild("tipo").equalTo(3);
             return $firebaseArray(refEscolinha);
         }
-
     }
 
     function repository(Ref, $firebaseArray, $firebaseObject, credentials) {
@@ -233,7 +258,6 @@ app.factory('FilteredArray', function($firebaseArray) {
         function getPrecos(quadraId) {
             return $firebaseArray(Ref.child('quadras/' + credentials.arenaID + '/' + quadraId + '/funcionamento/'));
         }
-
     }
 
     function peladaFactory($firebaseArray) {

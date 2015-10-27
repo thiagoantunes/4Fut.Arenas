@@ -6,73 +6,85 @@
         .controller('ReservasCtrl', ReservasCtrl)
         .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
-    function ReservasCtrl(quadraService, reservasService, uiCalendarConfig, $uibModal, peladaFactory ,Auth, $popover){
+    function ReservasCtrl(quadraService, reservasService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
     	var vm = this; 
         vm.quadras = quadraService.getQuadras();
-        vm.quadrasSelecionadas = [];
+        vm.selecaoQuadras = [];
+        vm.eventSources = [[]];
+        vm.reservas = [];
+        vm.uiConfig = {};
+        vm.loadReservas = loadReservas;
+
+        activate();
+
+        function activate(){
+            blockUI.start();
+            vm.quadras.$loaded(loadQuadras); 
+
+            vm.uiConfig = {
+                calendar:{
+                    minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    height: 'auto',
+                    editable: true,
+                    timeFormat: 'H(:mm)',
+                    timezone:'local',
+                    header:{ left:'month agendaWeek agendaDay',center: 'title'},
+                    defaultView:'agendaWeek',
+                    firstHour: 9,
+                    allDaySlot: false,
+                    defaultEventMinutes: 60,
+                    axisFormat: 'H:mm',  //,'h(:mm)tt',
+                    dayClick: dayClick,
+                    eventClick: eventClick,
+                    eventRender: eventRender
+                }
+            };
+        }
+
+    	vm.logout = function() { Auth.$unauth(); };
 
 
-        vm.quadras.$loaded(function() {
+        function loadQuadras(){
             _.forEach(vm.quadras, function(q){
-                vm.quadrasSelecionadas.push({
+                vm.selecaoQuadras.push({
                     quadra: q,
                     ativa: true
                 });
             })
-        }); 
+            blockUI.stop();
+            loadReservas();
+        }
 
-        
+        function loadReservas(){
+            blockUI.start();
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.reservas);
 
-        vm.reservas = reservasService.getFilteredArray(function(rec) {
-                return rec.quadra == "-K1BcU2irBrZOVZG-Bow" ;
-        });
+            vm.reservas = reservasService.getFilteredArray(function(rec) {
+                var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
 
-    	vm.logout = function() { Auth.$unauth(); };
-	
-    	vm.eventSources = [[]];
-
-        vm.reservas.$loaded(function() {
-            vm.eventSources.push({
-                events: vm.reservas,
-                color : 'red'
+                return _.some(qdrs, { '$id': rec.quadra});
             });
-        }); 
-	
-    	vm.uiConfig = {
-    	  calendar:{
-    	    minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    	    maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    	    height: 'auto',
-    	    editable: true,
-    	    timeFormat: 'H(:mm)',
-    	    timezone:'local',
-    	    header:{
-    	        left:'month agendaWeek agendaDay',
-    	        center: 'title'
-    	    },
-    	    defaultView:'agendaWeek',
-    	    firstHour: 9,
-    	    allDaySlot: false,
-    	    defaultEventMinutes: 60,
-    	    axisFormat: 'H:mm',  //,'h(:mm)tt',
-    	    dayClick: dayClick,
-    	    eventClick: eventClick,
-            eventRender: eventRender
-    	    }
-    	};
+
+            vm.reservas.$loaded(function() {
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.reservas);
+                blockUI.stop();
+            }); 
+        }
 
         function eventRender(event, element){
+            element.attr("class" , element.attr("class") +  " " + _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
             $popover(element, {
                 placement: 'top',
                 contentTemplate: 'modalPelada.html',
-
+                container: 'body',
                 autoClose: 1
             });
         }
 	
     	function eventClick(calEvent){
-    	    //var pelada = _.find(vm.reservas , {'id' : calEvent.id });
-    	    //vm.openNovaPeladaModal(pelada);
+    	    var pelada = _.find(vm.reservas , {'id' : calEvent.id });
+    	    vm.openNovaPeladaModal(pelada);
     	}
 	
     	function dayClick(date, jsEvent, view){

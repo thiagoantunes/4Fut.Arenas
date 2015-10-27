@@ -5,6 +5,7 @@
         'app.core',
         'app.widgets',
         'mgcrea.ngStrap',
-        'tien.clndr'
+        'tien.clndr',
+        //'localytics.directives'
       ]);
 })();

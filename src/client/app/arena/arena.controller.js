@@ -5,11 +5,13 @@
         .module('app.arena')
         .controller('ArenaCtr', ArenaCtr)
         .controller('QuadraCtrl', QuadraCtrl)
+        .controller('NovaQuadraModalCtrl', NovaQuadraModalCtrl)
         .controller('FuncionamentoCtrl', FuncionamentoCtrl)
         .controller('ModalPrecoCtrl', ModalPrecoCtrl);
 
     ArenaCtr.$inject = ['$scope', 'arenaFactory', 'quadraFactory', 'maps', 'currentPosition', '$timeout'];
-    QuadraCtrl.$inject = ['quadraService'];
+    QuadraCtrl.$inject = ['quadraService', '$uibModal'];
+    NovaQuadraModalCtrl.$inject = ['$modalInstance'];
     FuncionamentoCtrl.$inject = ['quadraService' , 'funcionamentoService' ,'uiCalendarConfig', '$uibModal', 'blockUI'];
     ModalPrecoCtrl.$inject = ['$modalInstance', 'data'];
 
@@ -113,15 +115,13 @@
         }
     }
 
-    function QuadraCtrl(quadraService) {
+    function QuadraCtrl(quadraService, $uibModal) {
         var vm = this;
 
-        vm.novaQuadra = false;
         vm.listaVazia = false;
         vm.quadras = quadraService.getQuadras();
         vm.originalRow = {};
-        vm.addQuadra = addQuadra;
-        vm.clearForm = clearForm;
+        vm.novaQuadra = novaQuadra;
 
         activate();
 
@@ -133,18 +133,47 @@
             });
         }
 
-        function addQuadra() {
-            quadraService.addQuadra(vm.novaQuadra).then(function(error) {
-                if (error) {
-                    console.log("Error updating data:", error);
-                }
+        function novaQuadra() {
+            var modalInstance = $uibModal.open({
+              animation: true,
+              templateUrl: 'novaQuadraModal.html',
+              controller: 'NovaQuadraModalCtrl',
+              controllerAs: 'vm'
+            });
+        
+            modalInstance.result.then(function (novaQuadra) {
+              quadraService.addQuadra(novaQuadra);
             });
         };
+    }
 
-        function clearForm(){
-            vm.novaQuadra = {};
-            vm.formQuadra = !vm.formQuadra
-        }
+    function NovaQuadraModalCtrl($modalInstance){
+        var vm = this;
+        vm.novaQuadra = {};
+        vm.cores = [
+            'bgm-teal',
+            'bgm-red',
+            'bgm-bluegray',
+            'bgm-pink',
+            'bgm-blue',
+            'bgm-lime',
+            'bgm-cyan',
+            'bgm-orange',
+            'bgm-purple',
+            'bgm-brown',
+            'bgm-amber',
+        ]
+
+        vm.salvar = salvar;
+        vm.cancelar = cancelar;
+
+        function salvar() {
+            $modalInstance.close(vm.novaQuadra);
+        };
+
+        function cancelar() {
+            $modalInstance.dismiss();
+        };
     }
 
     function FuncionamentoCtrl(quadraService, funcionamentoService, uiCalendarConfig, $uibModal, blockUI) {

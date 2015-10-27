@@ -32,11 +32,10 @@
 			<div class="row quadras">
 				<h5>Quadras</h5>
 				<div class="qdr"> 
-					<a class="qdr-item" ng-repeat="qdr in vm.quadrasSelecionadas" ng-click="qdr.ativa = !qdr.ativa " href="">
+					<a class="qdr-item" ng-repeat="qdr in vm.selecaoQuadras" ng-click="qdr.ativa = !qdr.ativa ; vm.loadReservas();" href="">
 						<div class="media">
 							<div class="quadra-tag pull-left p-relative">
-								<span ng-if="qdr.ativa" style="background-color: {{qdr.quadra.color}} !important;"></span>
-								<span ng-if="!qdr.ativa" style="background-color: #4b4c4f !important;"></span>
+								<span data-ng-class="{ '{{qdr.quadra.color}}': qdr.ativa , 'bgm-gray' :!qdr.ativa }"></span>
 							</div>
 							<div class="media-body">
 								<div class="qdr-title" ng-class="{ 'quadra-inativa': !qdr.ativa }">{{qdr.quadra.nome}}</div>
@@ -71,9 +70,9 @@
 				<div class="col-sm-12">
 					<div class="fg-line">
 						<div class="btn-group btn-group-justified">
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" btn-radio="1">Avulsa</label>
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" btn-radio="2">Mensalista</label>
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" btn-radio="3">Escola</label>
+							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="1">Avulsa</label>
+							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="2">Mensalista</label>
+							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="3">Escola</label>
 						</div>
 					</div>
 				</div>
@@ -155,7 +154,7 @@
 						<span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
 						<div class="date-picker input-group dp-blue" ng-class="{ 'is-opened': opened == true }">
 							<div class="fg-line" ng-class="{ 'fg-toggled': opened == true }">
-								<input ng-click="vm.openDatepicker($event, 'opened')" ng-change='vm.getPreco();'  show-button-bar="false"  type="text" class="form-control" placeholder="Dia" datepicker-popup="dd/MM/yyyy"  show-weeks="false" ng-model="vm.date" is-open="opened" />		
+								<input ng-click="vm.openDatepicker($event, 'opened')" ng-change='vm.getPreco();'  show-button-bar="false"  type="text" class="form-control" placeholder="Dia" uib-datepicker-popup="dd/MM/yyyy"  show-weeks="false" ng-model="vm.date" is-open="opened" />		
 							</div>
 						</div>
 					</div>
