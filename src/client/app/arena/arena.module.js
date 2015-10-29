@@ -6,6 +6,5 @@
         'app.widgets',
         'ngTable',
         'blockUI',
-        'localytics.directives'
      ]);
 })();

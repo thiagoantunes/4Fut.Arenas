@@ -7,7 +7,8 @@
         .controller('QuadraCtrl', QuadraCtrl)
         .controller('NovaQuadraModalCtrl', NovaQuadraModalCtrl)
         .controller('FuncionamentoCtrl', FuncionamentoCtrl)
-        .controller('ModalPrecoCtrl', ModalPrecoCtrl);
+        .controller('ModalPrecoCtrl', ModalPrecoCtrl)
+        .controller('ContatosCtrl', ContatosCtrl);
 
     ArenaCtr.$inject = ['$scope', 'arenaFactory', 'quadraFactory', 'maps', 'currentPosition', '$timeout'];
     QuadraCtrl.$inject = ['quadraService', '$uibModal'];
@@ -119,7 +120,7 @@
         var vm = this;
 
         vm.listaVazia = false;
-        vm.quadras = quadraService.getQuadras();
+        vm.quadras = quadraService.getQuadrasArena();
         vm.originalRow = {};
         vm.novaQuadra = novaQuadra;
 
@@ -142,14 +143,15 @@
             });
         
             modalInstance.result.then(function (novaQuadra) {
-              quadraService.addQuadra(novaQuadra);
+                novaQuadra.fkArena = true;
+                vm.quadras.$add(novaQuadra);
+              //quadraService.addQuadra(novaQuadra);
             });
         };
     }
 
     function NovaQuadraModalCtrl($modalInstance){
         var vm = this;
-        vm.novaQuadra = {};
         vm.cores = [
             'bgm-teal',
             'bgm-red',
@@ -213,7 +215,7 @@
                 selectable: true,
                 selectOverlap: false,
                 selectHelper: true,
-                eventResize: eventResize,
+                eventResize: eventResize, 
                 eventDrop: eventDrop,
                 select: eventSelect,
                 eventClick: eventClick,
@@ -442,6 +444,30 @@
                 edicao: vm.edicao
             });
         }
+    }
+
+    function ContatosCtrl(contatosService){
+        var vm = this;
+
+        vm.contatos = contatosService.getContatosArena();
+        vm.salvarContato = salvarContato;
+        vm.excluirContato = excluirContato;
+
+        function salvarContato(){
+            if(vm.edicao){
+                vm.contatos.$save(vm.contatoSelecionado);
+            }
+            else{
+                vm.contatoSelecionado.fkArena = true;
+                vm.contatos.$add(vm.contatoSelecionado);   
+            }
+        }
+
+        function excluirContato(){
+            vm.contatoSelecionado.fkArena = false;
+            vm.contatos.$save(vm.contatoSelecionado);
+        }
+
     }
 
 })();

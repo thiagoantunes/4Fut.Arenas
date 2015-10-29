@@ -26,12 +26,17 @@
     width: auto;
 } 
 
+.modal .modal-content{
+    border-radius: 0px
+}
+
 .media-object {
     border-radius: 2px;
 }
 
 .close { 
     .opacity(0.5);
+    font-size: 28px;
     font-weight: normal;
     text-shadow: none;
 
@@ -48,4 +53,21 @@
 .navbar-default .navbar-nav > li > a {
     font-size: 1.15em;
     font-weight: bold;
+}
+
+.modal-backdrop.am-fade {
+  opacity: .5;
+  transition: opacity .15s linear;
+  &.ng-enter {
+    opacity: 0;
+    &.ng-enter-active {
+      opacity: .5;
+    }
+  }
+  &.ng-leave {
+    opacity: .5;
+    &.ng-leave-active {
+      opacity: 0;
+    }
+  }
 }

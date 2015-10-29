@@ -48,19 +48,6 @@
                     templateUrl: 'app/arena/arena-quadras.html',
                     controller:'QuadraCtrl',
                     controllerAs:'vm',
-                    resolve: {
-                        loadPlugin: function($ocLazyLoad) {
-                            return $ocLazyLoad.load ([
-                                {
-                                    name: 'css',
-                                    insertBefore: '#app-level',
-                                    files: [
-                                        'bower_components/chosen/chosen.min.css'
-                                    ]
-                                  },
-                            ])
-                        }   
-                    }
                 }
             },
             {
@@ -69,6 +56,15 @@
                     url: '/arena-funcionamento',
                     templateUrl: 'app/arena/arena-funcionamento.html',
                     controller:'FuncionamentoCtrl',
+                    controllerAs:'vm',
+                }
+            },
+            {
+                state: 'arenas.arena.arena-contatos',
+                config:{
+                    url: '/arena-contatos',
+                    templateUrl: 'app/arena/arena-contatos.html',
+                    controller:'ContatosCtrl',
                     controllerAs:'vm',
                 }
             }

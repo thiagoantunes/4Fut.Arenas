@@ -6,9 +6,9 @@
         .controller('ReservasCtrl', ReservasCtrl)
         .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
-    function ReservasCtrl(quadraService, reservasService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
+    function ReservasCtrl($scope, quadraService, reservasService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
     	var vm = this; 
-        vm.quadras = quadraService.getQuadras();
+        vm.quadras = quadraService.getQuadrasLight();
         vm.selecaoQuadras = [];
         vm.eventSources = [[]];
         vm.reservas = [];
@@ -36,6 +36,13 @@
                     defaultEventMinutes: 60,
                     axisFormat: 'H:mm',  //,'h(:mm)tt',
                     dayClick: dayClick,
+                    editable: true,
+                    selectable: true,
+                    selectHelper: true,
+                    unselectCancel: "reservasForm",
+                    //eventResize: eventResize,
+                    //  eventDrop: eventDrop,
+                    select: eventSelect,
                     eventClick: eventClick,
                     eventRender: eventRender
                 }
@@ -72,19 +79,35 @@
             }); 
         }
 
+        function eventSelect(start, end, jsEvent, view){
+            var element = $(jsEvent.target).closest('.fc-event');
+            var popover = $popover(element, {
+                placement: 'top',
+                title:"Teste",
+                contentTemplate: 'popupReserva.html',
+                container: '#reservas',
+                autoClose: 1, 
+                scope: $scope
+            });
+
+            popover.$promise.then(popover.show);
+        }
+
         function eventRender(event, element){
             element.attr("class" , element.attr("class") +  " " + _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
             $popover(element, {
                 placement: 'top',
-                contentTemplate: 'modalPelada.html',
-                container: 'body',
-                autoClose: 1
+                title:"Teste",
+                contentTemplate: 'popupReserva.html',
+                container: '#reservas   ',
+                autoClose: 1, 
+                scope: $scope
             });
         }
 	
     	function eventClick(calEvent){
-    	    var pelada = _.find(vm.reservas , {'id' : calEvent.id });
-    	    vm.openNovaPeladaModal(pelada);
+    	    //var pelada = _.find(vm.reservas , {'id' : calEvent.id });
+    	    //vm.openNovaPeladaModal(pelada);
     	}
 	
     	function dayClick(date, jsEvent, view){

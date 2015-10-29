@@ -25,7 +25,8 @@ app.factory('FilteredArray', function($firebaseArray) {
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
-        
+        .factory('contatosService', contatosService)
+
         .factory('repository', repository)
         .factory('peladaFactory', peladaFactory)
         .factory('quadraFactory', quadraFactory)
@@ -67,11 +68,13 @@ app.factory('FilteredArray', function($firebaseArray) {
 
             getQuadra: getQuadra,
             getQuadras: getQuadras,
-
-            addQuadra: addQuadra,
+            getQuadrasArena : getQuadrasArena,
+            getQuadrasLight : getQuadrasLight
         }
 
         return service;
+
+        var quadraRef = Ref.child('quadras');
 
         function getRef() {
             return Ref.child('quadras');
@@ -85,13 +88,33 @@ app.factory('FilteredArray', function($firebaseArray) {
             return $firebaseArray(getRef().child(credentials.arenaID));
         }
 
-        function addQuadra(quadra) {
-            var quadraID = Ref.child("quadras").push().key();
-            var quadraData = {};
-            quadraData["arenas/" + credentials.arenaID + "/quadras/" + quadraID] = quadra.nome;
-            quadraData["quadras/" + credentials.arenaID + "/" + quadraID] = quadra;
+        function getQuadrasArena(){
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child("/quadras/"+credentials.arenaID+""), "quadra"],
+              [Ref.child("/arenas/"+ credentials.arenaID+"/quadras"), "arena"]
+            ).select(
+              "quadra.nome",
+              "quadra.color",
+              "quadra.tipo",
+              "quadra.capacidade",
+              "arena.$value",
+              {"key":"arena.$value","alias":"fkArena"}
+            ).ref();
 
-            return Ref.update(quadraData);
+            return $firebaseArray(joinedRef);
+        }
+
+        function getQuadrasLight(){
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child("/quadras/"+credentials.arenaID+""), "quadra"],
+              [Ref.child("/arenas/"+ credentials.arenaID+"/quadras"), "arena"]
+            ).select(
+              "quadra.nome",
+              "quadra.color",
+              "arena.$value"
+            ).ref();
+
+            return $firebaseArray(joinedRef);
         }
     }
 
@@ -116,7 +139,6 @@ app.factory('FilteredArray', function($firebaseArray) {
         function getQuadras(){
             return $firebaseArray(getRef().child(credentials.arenaID+ '/quadras'));
         }
-
     }
 
     function funcionamentoService(Ref,$firebaseArray, $firebaseObject, credentials){
@@ -202,6 +224,62 @@ app.factory('FilteredArray', function($firebaseArray) {
             return $firebaseArray(refEscolinha);
         }
     }
+
+    function contatosService(Ref, $firebaseArray, $firebaseObject, credentials, FilteredArray){
+        var service = {
+            getRef : getRef,
+            getContato: getContato,
+            getContatos: getContatos,
+            searchContatos: searchContatos,
+            getContatosArena: getContatosArena
+        }
+
+        return service;
+
+        function getRef(){
+            return Ref.child('contatos');    
+        }
+
+        function getContato(id){
+            return $firebaseObject(getRef().child(credentials.arenaID + '/' + id));
+        }
+
+        function getContatos(){
+            return $firebaseArray(getRef().child(credentials.arenaID));
+        }
+
+        function searchContatos(fn){
+            var ref = getRef().child(credentials.arenaID);
+            return new FilteredArray(ref, fn);
+        }
+
+        function getContatosArena(){
+            var norm = new Firebase.util.NormalizedCollection(
+              [Ref.child("/perfil/"), "perfil"],
+              [Ref.child("/arenas/"+ credentials.arenaID+"/contatos"), "arena"]
+            ).select(
+              "perfil.nome",
+              "perfil.telefone",
+              "perfil.email",
+              "perfil.fotoPerfil",
+              "arena.$value",
+              {"key":"arena.$value","alias":"fkArena"}
+            );
+
+            norm.filter(
+                function(data, key, priority) { return data.fkArena === true; }
+            );
+
+            var joinedRef = norm.ref();
+
+            return $firebaseArray(joinedRef);
+        }
+    }
+
+
+
+
+
 
     function repository(Ref, $firebaseArray, $firebaseObject, credentials) {
         var service = {

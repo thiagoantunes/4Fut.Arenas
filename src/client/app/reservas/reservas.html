@@ -1,6 +1,5 @@
-<div class="row">
+<div id="reservas" class="row">
 	<div class="col-md-2">
-
 		<button 
 			type="submit" 
 			ng-click='vm.openNovaPeladaModal();' 
@@ -12,17 +11,22 @@
 			<div class="row">
 				<tien-clndr class="clndr" tien-clndr-object="clndr">
 					<div class="clndr-controls">
-						<div class="clndr-previous-button" ng-click="clndr.back()">&lsaquo;</div>
-						<div class="month">{{month}}</div>
-						<div class="clndr-next-button" ng-click="clndr.forward()">&rsaquo;</div>
+						<div class="clndr-previous-button" ng-click="clndr.back()">&lsaquo;
+						</div>
+						<div class="month">{{month}}
+						</div>
+						<div class="clndr-next-button" ng-click="clndr.forward()">&rsaquo;
+						</div>
 					</div>
 					<div class="clndr-grid">
 						<div class="days-of-the-week">
-							<div class="header-day" ng-repeat="day in daysOfTheWeek track by $index">{{day}}</div>
+							<div class="header-day" ng-repeat="day in daysOfTheWeek track by $index">{{day}}
+							</div>
 						</div>
 						<div class="days">
 							<div class="{{day.classes}}" ng-repeat="day in days">
-								<div class="event-indicator" ng-show="day.events.length" ng-click="showEvents(day.events)">{{day.events.length}}</div>
+								<div class="event-indicator" ng-show="day.events.length" ng-click="showEvents(day.events)">{{day.events.length}}
+								</div>
 								{{day.day}}
 							</div>
 						</div>
@@ -31,33 +35,29 @@
 			</div>
 			<div class="row quadras">
 				<h5>Quadras</h5>
-				<div class="qdr"> 
+				<div class="qdr">
 					<a class="qdr-item" ng-repeat="qdr in vm.selecaoQuadras" ng-click="qdr.ativa = !qdr.ativa ; vm.loadReservas();" href="">
 						<div class="media">
 							<div class="quadra-tag pull-left p-relative">
 								<span data-ng-class="{ '{{qdr.quadra.color}}': qdr.ativa , 'bgm-gray' :!qdr.ativa }"></span>
 							</div>
 							<div class="media-body">
-								<div class="qdr-title" ng-class="{ 'quadra-inativa': !qdr.ativa }">{{qdr.quadra.nome}}</div>
+								<div class="qdr-title" ng-class="{ 'quadra-inativa': !qdr.ativa }">{{qdr.quadra.nome}}
+								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 			</div>
-
 		</div>
-
-		<!-- <button role="button" ng-click="vm.logout()" class="btn btn-danger">Log Out</button>
-	-->
-</div>
-<div class="col-md-10">
-	<div class="card z-depth-3">
-
-		<!-- <pre id="custom-spacing">{{ vm.peladas | json }}</pre>
-	-->
-	<div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" ></div>
-</div>
-</div>
+	</div>
+	<div class="col-md-10">
+		<div class="card z-depth-3">
+			<div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" >
+				
+			</div>
+		</div>
+	</div>
 </div>
 
 <script type="text/ng-template" id="modalPelada.html">
@@ -164,7 +164,8 @@
 					<div class="input-group">
 						<span class="input-group-addon"><i class="zmdi zmdi-time"></i></span>
 						<div class="fg-line">
-							<input type="time" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.date" placeholder="Início"></div>
+							<input type="time" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.date" placeholder="Início">
+						</div>
 					</div>
 				</div>
 
@@ -172,7 +173,8 @@
 					<div class="input-group">
 						<span class="input-group-addon"><i class="zmdi zmdi-time-interval"></i></span>
 						<div class="fg-line">
-							<input type="number" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.duracao" placeholder="Duração"></div>
+							<input type="number" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.duracao" placeholder="Duração">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -182,7 +184,8 @@
 					<div class="input-group" >
 						<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
 						<div class="fg-line">
-							<input type="text" class="form-control" placeholder="Responsável"></div>
+							<input type="text" class="form-control" placeholder="Responsável">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -192,15 +195,49 @@
 					<div class="input-group" >
 						<span class="input-group-addon"><i class="zmdi zmdi-money-box"></i></span>
 						<div class="fg-line">
-							<input type="text" class="form-control" ng-model="vm.funcionamento.precoAvulso" placeholder="Valor"></div>
+							<input type="text" class="form-control" ng-model="vm.funcionamento.precoAvulso" placeholder="Valor">
+						</div>
 					</div>
 				</div>
 			</div>
 
 
 
-			
 
+
+		</div>
+		<div class="modal-footer">
+			<button type="submit" ng-click='vm.salvar();' class="btn btn-primary btn-sm m-t-10">Salvar</button>
+			<button  ng-click='vm.cancel();' class="btn btn-default btn-sm m-t-10">Cancelar</button>
+		</div>
+	</form>
+</script>
+
+<script type="text/ng-template" id="popupReserva.html">
+	<form class="form-horizontal reservasForm" ng-submit="submitPelada()">
+		<div class="required has-feedback" ng-class="{ 'has-error' : quadraForm.nome.$invalid && !quadraForm.nome.$pristine , 'has-  success' : quadraForm.nome.$valid && !quadraForm.nome.$pristine }">
+			<label for="inputNome" class="col-sm-2 control-label">Quadra</label>
+			<div class="col-sm-10">
+				<div class="fg-line">
+					<select chosen="{width: '100%'}" disable-search="true" ng-change='vm.getPreco();'  data-placeholder="Selecione uma quadra..." ng-model="vm.quadraSelecionada" ng-options="quadra.nome for quadra in vm.quadras">
+						<option value=""></option>
+					</select>
+				</div>
+				<span ng-show="quadraForm.nome.$invalid && !quadraForm.nome.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
+				<span ng-show="quadraForm.nome.$valid && !quadraForm.nome.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
+				<small ng-show="quadraForm.nome.$invalid && !quadraForm.nome.$pristine" class="help-block">O nome é obrigatório</small>
+			</div>
+		</div>
+		<div class="required has-feedback" ng-class="{ 'has-error' : quadraForm.nome.$invalid && !quadraForm.nome.$pristine , 'has-  success' : quadraForm.nome.$valid && !quadraForm.nome.$pristine }">
+			<label for="inputNome" class="col-sm-2 control-label">Nome</label>
+			<div class="col-sm-10">
+				<div class="fg-line">
+					<input id="inputNome" required name="nome" type="text" placeholder="Nome para identificar a quadra" ng-model="vm.novaQuadra.nome" class="form-control" />
+				</div>
+				<span ng-show="quadraForm.nome.$invalid && !quadraForm.nome.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
+				<span ng-show="quadraForm.nome.$valid && !quadraForm.nome.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
+				<small ng-show="quadraForm.nome.$invalid && !quadraForm.nome.$pristine" class="help-block">O nome é obrigatório</small>
+			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="submit" ng-click='vm.salvar();' class="btn btn-primary btn-sm m-t-10">Salvar</button>
