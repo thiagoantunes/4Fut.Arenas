@@ -231,7 +231,8 @@ app.factory('FilteredArray', function($firebaseArray) {
             getContato: getContato,
             getContatos: getContatos,
             searchContatos: searchContatos,
-            getContatosArena: getContatosArena
+            getContatosArena: getContatosArena,
+            getContatosArenaLight : getContatosArenaLight
         }
 
         return service;
@@ -262,6 +263,25 @@ app.factory('FilteredArray', function($firebaseArray) {
               "perfil.telefone",
               "perfil.email",
               "perfil.fotoPerfil",
+              "arena.$value",
+              {"key":"arena.$value","alias":"fkArena"}
+            );
+
+            norm.filter(
+                function(data, key, priority) { return data.fkArena === true; }
+            );
+
+            var joinedRef = norm.ref();
+
+            return $firebaseArray(joinedRef);
+        }
+
+        function getContatosArenaLight(){
+            var norm = new Firebase.util.NormalizedCollection(
+              [Ref.child("/perfil/"), "perfil"],
+              [Ref.child("/arenas/"+ credentials.arenaID+"/contatos"), "arena"]
+            ).select(
+              "perfil.nome",
               "arena.$value",
               {"key":"arena.$value","alias":"fkArena"}
             );

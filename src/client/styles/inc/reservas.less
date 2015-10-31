@@ -1,17 +1,46 @@
 #reservas{
 	.popover{
 		min-width: 400px;
-		margin-top: 20px;
+		margin-top: 10px;
+		margin-bottom: 50px;
 		border: 1px solid #ccc;
 		box-shadow: 0 2px 4px rgba(0,0,0,.2);
+		border-top: 3px solid @brand-danger;
 	}
 
 	.popover-content{
 		padding: 0px
 	}
 
+	.popover.bottom > .arrow:after{
+		border-bottom-color: @brand-danger;
+	}
+
 	.popover.top > .arrow{
-		border-top-color: #ccc !important;
+		border-top-color: @brand-danger !important;
+	}
+
+	.popover.bottom > .arrow{
+		border-bottom-color: @brand-danger !important;
+	}
+
+	.ppo-reserva-footer{
+		font-size: 18px; 
+		padding: 25px 0px 0px 15px; 
+		color: @brand-primary; 
+		font-weight: bold;
+
+		.no-price{
+			color: @brand-warning;
+			font-size: 0.6em;
+			font-weight: normal;
+		}
+
+		.no-room{
+			color: @brand-danger;
+			font-size: 0.6em;
+			font-weight: normal;
+		}
 	}
 }
 

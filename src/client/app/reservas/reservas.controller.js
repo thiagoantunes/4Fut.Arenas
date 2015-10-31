@@ -6,14 +6,18 @@
         .controller('ReservasCtrl', ReservasCtrl)
         .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
-    function ReservasCtrl($scope, quadraService, reservasService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
+    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
     	var vm = this; 
-        vm.quadras = quadraService.getQuadrasLight();
+        vm.quadras = quadraService.getQuadras();
+        vm.contatos = contatosService.getContatosArenaLight();
         vm.selecaoQuadras = [];
         vm.eventSources = [[]];
         vm.reservas = [];
         vm.uiConfig = {};
         vm.loadReservas = loadReservas;
+        vm.atualizaDisponibilidade = atualizaDisponibilidade;
+        vm.horarioLivre = false;
+        vm.salvarReservaAvulsa = salvarReservaAvulsa;
 
         activate();
 
@@ -39,7 +43,7 @@
                     editable: true,
                     selectable: true,
                     selectHelper: true,
-                    unselectCancel: "reservasForm",
+                    unselectCancel: ".reservasForm",
                     //eventResize: eventResize,
                     //  eventDrop: eventDrop,
                     select: eventSelect,
@@ -82,14 +86,22 @@
         function eventSelect(start, end, jsEvent, view){
             var element = $(jsEvent.target).closest('.fc-event');
             var popover = $popover(element, {
-                placement: 'top',
-                title:"Teste",
-                contentTemplate: 'popupReserva.html',
+                placement: 'bottom',
+                title:"",
+                templateUrl: 'popupReserva.html',
                 container: '#reservas',
                 autoClose: 1, 
                 scope: $scope
             });
+            vm.novaReserva = {
+                responsavel : {},
+                quadra : vm.quadras[0],
+                dataLabel : moment(start).format('ddd, DD [de] MMMM') + ", " + moment(start._d).format('HH:mm') + " às " + moment(end._d).format('HH:mm'),
+                start : start._d,
+                end : end._d
+            }
 
+            atualizaDisponibilidade();
             popover.$promise.then(popover.show);
         }
 
@@ -115,11 +127,36 @@
     	        uiCalendarConfig.calendars.myCalendar.fullCalendar('changeView', 'agendaDay');
     	        uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate', date);
     	    }
-    	    else{
-    	        vm.openNovaPeladaModal(date);
-    	    }
-	
+    	    //else{
+    	    //    vm.openNovaPeladaModal(date);
+    	    //}	
     	}
+
+        function atualizaDisponibilidade(){
+            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f){
+                return f.start <= moment(vm.novaReserva.start).format("HH:mm") && 
+                        f.end >= moment(vm.novaReserva.end).format("HH:mm") && 
+                        _.any(f.dow , function(n){return n == vm.novaReserva.start.getDay()})  
+            });
+
+            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), function(f){
+                return  (vm.novaReserva.start >= moment(f.end) || vm.novaReserva.end <= moment(f.start));
+            })
+        }
+
+        function salvarReservaAvulsa(){
+            vm.reservas.$add({
+                tipo : 1,
+                quadra: vm.novaReserva.quadra.$id,
+                start : vm.novaReserva.start.getTime(),
+                end : vm.novaReserva.end.getTime(),
+                responsavel : vm.novaReserva.responsavel.$id
+            }).then(function(ref) {
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.reservas);
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.reservas);
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
+            });
+        }
 	
     	vm.openNovaPeladaModal = function(date) {
     	    var modalInstance = $uibModal.open({
