@@ -8,23 +8,18 @@
     appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+        routerHelper.configureStatesAuthenticated(getStates());
     }
 
     function getStates() {
         return [
             {
-                state: 'dashboard',
+                state: 'arenas.dashboard',
                 config: {
-                    url: '/',
+                    url: '/dashboard',
                     templateUrl: 'app/dashboard/dashboard.html',
-                    controller: 'DashboardController',
+                    controller: 'DashboardCtrl',
                     controllerAs: 'vm',
-                    title: 'dashboard',
-                    settings: {
-                        nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Dashboard'
-                    }
                 }
             }
         ];

@@ -1,11 +1,22 @@
 #reservas{
+
 	.popover{
-		min-width: 400px;
-		margin-top: 10px;
-		margin-bottom: 50px;
 		border: 1px solid #ccc;
 		box-shadow: 0 2px 4px rgba(0,0,0,.2);
-		border-top: 3px solid @brand-danger;
+	}
+
+	.popover.novaReserva{
+		min-width: 400px;	
+	}
+
+	.popover.top{
+		border-bottom: 3px solid #555555;
+		margin-top: 43px;
+	}
+
+	.popover.bottom{
+		border-top: 3px solid #555555;
+		margin-top: 10px;
 	}
 
 	.popover-content{
@@ -13,15 +24,19 @@
 	}
 
 	.popover.bottom > .arrow:after{
-		border-bottom-color: @brand-danger;
+		border-bottom-color: #555555;
+	}
+
+	.popover.top > .arrow:after{
+		border-top-color: #555555;
 	}
 
 	.popover.top > .arrow{
-		border-top-color: @brand-danger !important;
+		border-top-color: transparent !important;
 	}
 
 	.popover.bottom > .arrow{
-		border-bottom-color: @brand-danger !important;
+		border-bottom-color: transparent !important;
 	}
 
 	.ppo-reserva-footer{
@@ -42,6 +57,98 @@
 			font-weight: normal;
 		}
 	}
+
+
+
+	.popover.bgm-teal.bottom{
+		border-top: 3px solid @m-teal !important;
+		background-color: white !important;
+	}
+	.popover.bgm-teal.bottom > .arrow:after{
+		border-bottom-color: @m-teal;
+	}
+
+	.popover.bgm-red{
+		border-top: 3px solid @m-red !important;
+		background-color: white !important;
+	}
+	.popover.bgm-red.bottom > .arrow:after{
+		border-bottom-color: @m-red;
+	}
+
+	.popover.bgm-bluegray{
+		border-top: 3px solid @m-bluegray !important;
+		background-color: white !important;
+	}
+	.popover.bgm-bluegray.bottom > .arrow:after{
+		border-bottom-color: @m-bluegray;
+	}
+
+	.popover.bgm-pink{
+		border-top: 3px solid @m-pink !important;
+		background-color: white !important;
+	}
+	.popover.bgm-pink.bottom > .arrow:after{
+		border-bottom-color: @m-pink;
+	}
+
+	.popover.bgm-blue{
+		border-top: 3px solid @m-blue !important;
+		background-color: white !important;
+	}
+	.popover.bgm-blue.bottom > .arrow:after{
+		border-bottom-color: @m-blue;
+	}
+
+	.popover.bgm-lime{
+		border-top: 3px solid @m-lime !important;
+		background-color: white !important;
+	}
+	.popover.bgm-lime.bottom > .arrow:after{
+		border-bottom-color: @m-lime;
+	}
+
+	.popover.bgm-cyan{
+		border-top: 3px solid @m-cyan !important;
+		background-color: white !important;
+	}
+	.popover.bgm-cyan.bottom > .arrow:after{
+		border-bottom-color: @m-cyan;
+	}
+
+	.popover.bgm-orange{
+		border-top: 3px solid @m-orange !important;
+		background-color: white !important;
+	}
+	.popover.bgm-orange.bottom > .arrow:after{
+		border-bottom-color: @m-orange;
+	}
+
+	.popover.bgm-purple{
+		border-top: 3px solid @m-purple !important;
+		background-color: white !important;
+	}
+	.popover.bgm-purple.bottom > .arrow:after{
+		border-bottom-color: @m-purple;
+	}
+
+	.popover.bgm-brown{
+		border-top: 3px solid @m-brown !important;
+		background-color: white !important;
+	}
+	.popover.bgm-brown.bottom > .arrow:after{
+		border-bottom-color: @m-brown;
+	}
+
+	.popover.bgm-amber{
+		border-top: 3px solid @m-amber !important;
+		background-color: white !important;
+	}
+	.popover.bgm-amber.bottom > .arrow:after{
+		border-bottom-color: @m-amber;
+	}
+
+
 }
 
 #sideBarCal{

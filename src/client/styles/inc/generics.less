@@ -92,20 +92,33 @@
 /* 
  * Material Background Colors
  */
-@array: c-white bgm-white @m-white, c-black bgm-black @m-black, c-brown bgm-brown @m-brown, c-pink bgm-pink @m-pink, c-red bgm-red @m-red, c-blue bgm-blue @m-blue, c-purple bgm-purple @m-purple, c-deeppurple bgm-deeppurple @m-deeppurple, c-lightblue bgm-lightblue @m-lightblue, c-cyan bgm-cyan @m-cyan, c-teal bgm-teal @m-teal, c-green bgm-green @m-green, c-lightgreen bgm-lightgreen @m-lightgreen, c-lime bgm-lime @m-lime, c-yellow bgm-yellow @m-yellow, c-amber bgm-amber @m-amber, c-orange bgm-orange @m-orange, c-deeporange bgm-deeporange @m-deeporange, c-gray bgm-gray @m-gray, c-bluegray bgm-bluegray @m-bluegray, c-indigo bgm-indigo @m-indigo;
+@array: c-white bgm-white bgm-white-l bgm-white-d @m-white @m-white-l @m-white-d, c-black bgm-black bgm-black-l bgm-black-d @m-black @m-black-l @m-black-d, c-brown bgm-brown bgm-brown-l bgm-brown-d @m-brown @m-brown-l @m-brown-d, c-pink bgm-pink bgm-pink-l bgm-pink-d @m-pink @m-pink-l @m-pink-d, c-red bgm-red bgm-red-l bgm-red-d @m-red @m-red-l @m-red-d, c-blue bgm-blue bgm-blue-l bgm-blue-d @m-blue @m-blue-l @m-blue-d, c-purple bgm-purple bgm-purple-l bgm-purple-d @m-purple @m-purple-l @m-purple-d, c-deeppurple bgm-deeppurple bgm-deeppurple-l bgm-deeppurple-d @m-deeppurple @m-deeppurple-l @m-deeppurple-d, c-lightblue bgm-lightblue bgm-lightblue-l bgm-lightblue-d @m-lightblue @m-lightblue-l @m-lightblue-d, c-cyan bgm-cyan bgm-cyan-l bgm-cyan-d @m-cyan @m-cyan-l @m-cyan-d, c-teal bgm-teal bgm-teal-l bgm-teal-d @m-teal @m-teal-l @m-teal-d, c-green bgm-green bgm-green-l bgm-green-d @m-green @m-green-l @m-green-d, c-lightgreen bgm-lightgreen bgm-lightgreen-l bgm-lightgreen-d @m-lightgreen @m-lightgreen-l @m-lightgreen-d, c-lime bgm-lime bgm-lime-l bgm-lime-d @m-lime @m-lime-l @m-lime-d, c-yellow bgm-yellow bgm-yellow-l bgm-yellow-d @m-yellow @m-yellow-l @m-yellow-d, c-amber bgm-amber bgm-amber-l bgm-amber-d @m-amber @m-amber-l @m-amber-d, c-orange bgm-orange bgm-orange-l bgm-orange-d @m-orange @m-orange-l @m-orange-d, c-deeporange bgm-deeporange bgm-deeporange-l bgm-deeporange-d @m-deeporange @m-deeporange-l @m-deeporange-d, c-gray bgm-gray bgm-gray-l bgm-gray-d @m-gray @m-gray-l @m-gray-d, c-bluegray bgm-bluegray bgm-bluegray-l bgm-bluegray-d @m-bluegray @m-bluegray-l @m-bluegray-d, c-indigo bgm-indigo bgm-indigo-l bgm-indigo-d @m-indigo @m-indigo-l @m-indigo-d;
 
 .for(@array); .-each(@value) {
     @name:  extract(@value, 1);
     @name2:  extract(@value, 2);
-    @color: extract(@value, 3); 
+    @name3:  extract(@value, 3);
+    @name4:  extract(@value, 4);
+    @color: extract(@value, 5); 
+    @color2: extract(@value, 6); 
+    @color3: extract(@value, 7); 
     &.@{name2} {
         background-color: @color !important;
+    }
+
+    &.@{name3} {
+        background-color: @color2 !important;
+    }
+
+    &.@{name4} {
+        background-color: @color3 !important;
     }
     
     &.@{name} {
         color: @color !important;
     }
 } 
+
 
 /*
  * Background Colors

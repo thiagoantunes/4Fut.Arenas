@@ -230,6 +230,7 @@
         }
 
         function selectQuadra(id) {
+            vm.quadraSelecionada  = id;
             blockUI.start();
             uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
             vm.precos = funcionamentoService.getPrecos(id);
@@ -293,6 +294,7 @@
         }
 
         function eventRender(event, element) {
+            var quadraColor = _.find(vm.quadras, '$id', vm.quadraSelecionada).color;
             var barato = Math.abs(event.precoAvulso - vm.precoMinino);
             var medio = Math.abs(event.precoAvulso - vm.precoMedio);
             var caro = Math.abs(event.precoAvulso - vm.precoMaximo);
@@ -304,11 +306,11 @@
             element.css('margin-top', '2px');
 
             if (barato < medio && barato < caro) {
-                element.css('background-color', '#01bfac');
+                element.context.classList.add(quadraColor + '-l');
             } else if (medio < barato && medio < caro) {
-                element.css('background-color', '#009587');
+                element.context.classList.add(quadraColor);
             } else {
-                element.css('background-color', '#017c70');
+                element.context.classList.add(quadraColor+'-d');
             }
         }
 
@@ -359,7 +361,10 @@
                     } else {
                         _.forEach(data.dow, function(d) {
                             data.eventData.dow = [d];
-                            vm.precos.$add(data.eventData);
+                            vm.precos.$add(data.eventData).then(function(ref) {
+                                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
+                                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
+                            });;
                         });
                     }
                 } else

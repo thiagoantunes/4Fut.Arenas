@@ -53,7 +53,7 @@
 </div>
 <div class="col-md-10">
 	<div class="card z-depth-3">
-		<div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="myCalendar" >
+		<div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources"  calendar="reservasCalendar" >
 
 		</div>
 	</div>
@@ -213,14 +213,14 @@
 	</form>
 </script>
 
-<script type="text/ng-template" id="popupReserva.html">
-	<div class="popover" tabindex="-1">
+<script type="text/ng-template" id="popupNovaReserva.html">
+	<div class="popover novaReserva" ng-class="vm.novaReserva.placement" tabindex="-1">
 		<div class="arrow"></div>
 		<button type="button" class="close m-r-15 m-t-5" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
 		<form class="form-horizontal reservasForm" name="reservaForm" ng-submit="submitPelada()">
-			<h3 class="popover-title">
+			<h4 class="popover-title">
 				Reserva Avulsa<br/>
-			</h3>
+			</h4>
 			<div class="popover-content" >
 				<div class="row">
 					<div class="col-sm-offset-1 col-sm-10">
@@ -277,6 +277,36 @@
 				<div class="col-sm-6 text-right p-15">
 					<button type="submit" ng-click='vm.submitted = true; vm.salvarReservaAvulsa(); $hide()' ng-disabled="!vm.horarioLivre" class="btn btn-primary btn-sm m-t-10">Salvar Reserva</button>
 				</div>
+			</div>
+		</form>
+	</div>
+</script>
+
+<script type="text/ng-template" id="popupReserva.html">
+	<div class="popover reservaSelecionada" ng-class="vm.reservaSelecionada.color" tabindex="-1">
+		<div class="arrow"></div>
+		<button type="button" class="close m-r-15 m-t-5" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+		<form class="form-horizontal reservasForm" name="reservaForm" ng-submit="submitPelada()">
+			<div class="popover-title">
+				<h5> Reserva Avulsa </h5>  
+				<h5><a><i class="zmdi zmdi-account"> </i> {{vm.reservaSelecionada.responsavel}} </a></h5>
+				<small>{{vm.reservaSelecionada.quando}}</small>
+			</div>
+			<div class="popover-content" >
+
+				<div class="row" style="padding:15px" >
+					<div class="col-md-12">
+						<button type="button" class="btn btn-default btn-icon-text col-md-12"><i class="zmdi zmdi-edit"></i> Editar</button>
+					</div>
+					<br/><br/>
+					<div class="col-md-12">
+						<button type="button" class="btn btn-default btn-icon-text col-md-12"><i class="zmdi zmdi-money"></i> Pagar</button>
+					</div>
+					<br/><br/>
+					<div class="col-md-12">
+						<button type="button" class="btn btn-default btn-icon-text  col-md-12"><i class="zmdi zmdi-minus-circle"></i> Cancelar</button>
+					</div>
+				</div>		
 			</div>
 		</form>
 	</div>

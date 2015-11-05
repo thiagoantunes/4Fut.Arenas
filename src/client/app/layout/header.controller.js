@@ -5,10 +5,15 @@
 	.module('app.layout')
 	.controller('HeaderController', HeaderController);
 
-	HeaderController.$inject = ['$scope', '$location'];
+	HeaderController.$inject = ['$scope', '$location', 'Auth'];
 	/* @ngInject */
-	function HeaderController($scope, $location) 
+	function HeaderController($scope, $location, Auth) 
 	{ 
+		var vm = this;
+		vm.logout = function() { 
+			Auth.$unauth(); 
+		};
+
 		$scope.isActive = function (viewLocation) { 
 			return viewLocation === $location.path();
 		};

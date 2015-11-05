@@ -3,12 +3,20 @@
 
     angular
         .module('app.arena')
+        .config(googleMaps)
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
+    }
+
+    function googleMaps(uiGmapGoogleMapApiProvider){
+        uiGmapGoogleMapApiProvider.configure({
+            v: '3.20', 
+            libraries: 'places'
+        });
     }
 
     function getStates() {

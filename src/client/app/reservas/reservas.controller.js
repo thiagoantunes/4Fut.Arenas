@@ -6,25 +6,25 @@
         .controller('ReservasCtrl', ReservasCtrl)
         .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
 
-    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig, $uibModal ,Auth, $popover, blockUI){
+    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig, $uibModal ,$popover, blockUI){
     	var vm = this; 
         vm.quadras = quadraService.getQuadras();
         vm.contatos = contatosService.getContatosArenaLight();
         vm.selecaoQuadras = [];
-        vm.eventSources = [[]];
         vm.reservas = [];
+        vm.eventSources = [[]];
         vm.uiConfig = {};
+        vm.novaReserva = {};
+        vm.reservaSelecionada = {};
+        vm.horarioLivre = false;
         vm.loadReservas = loadReservas;
         vm.atualizaDisponibilidade = atualizaDisponibilidade;
-        vm.horarioLivre = false;
         vm.salvarReservaAvulsa = salvarReservaAvulsa;
 
         activate();
 
         function activate(){
             blockUI.start();
-            vm.quadras.$loaded(loadQuadras); 
-
             vm.uiConfig = {
                 calendar:{
                     minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -51,44 +51,56 @@
                     eventRender: eventRender
                 }
             };
+
+
+            vm.quadras.$loaded(loadQuadras); 
+
         }
 
-    	vm.logout = function() { Auth.$unauth(); };
-
-
         function loadQuadras(){
+            
             _.forEach(vm.quadras, function(q){
                 vm.selecaoQuadras.push({
                     quadra: q,
                     ativa: true
                 });
-            })
-            blockUI.stop();
-            loadReservas();
+            });
+
+            getReservas();
+
+            vm.reservas.$loaded(function() {
+                vm.eventSources.push(vm.reservas);
+                blockUI.stop();
+            }); 
         }
 
         function loadReservas(){
             blockUI.start();
-            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.reservas);
+            uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+            getReservas();
 
+            vm.reservas.$loaded(function() {
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+                blockUI.stop();
+            }); 
+        }
+
+        function getReservas(){
             vm.reservas = reservasService.getFilteredArray(function(rec) {
                 var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
 
                 return _.some(qdrs, { '$id': rec.quadra});
             });
-
-            vm.reservas.$loaded(function() {
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.reservas);
-                blockUI.stop();
-            }); 
         }
 
         function eventSelect(start, end, jsEvent, view){
             var element = $(jsEvent.target).closest('.fc-event');
+            var placement = ( jsEvent.clientY < 320 ) ? 'bottom' : 'top';
+
             var popover = $popover(element, {
-                placement: 'bottom',
+                placement: placement,
                 title:"",
-                templateUrl: 'popupReserva.html',
+                templateUrl: 'popupNovaReserva.html',
                 container: '#reservas',
                 autoClose: 1, 
                 scope: $scope
@@ -98,7 +110,8 @@
                 quadra : vm.quadras[0],
                 dataLabel : moment(start).format('ddd, DD [de] MMMM') + ", " + moment(start._d).format('HH:mm') + " às " + moment(end._d).format('HH:mm'),
                 start : start._d,
-                end : end._d
+                end : end._d,
+                placement : placement
             }
 
             atualizaDisponibilidade();
@@ -108,18 +121,27 @@
         function eventRender(event, element){
             element.attr("class" , element.attr("class") +  " " + _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
             $popover(element, {
-                placement: 'top',
-                title:"Teste",
-                contentTemplate: 'popupReserva.html',
-                container: '#reservas   ',
+                placement: 'bottom',
+                title:"",
+                templateUrl: 'popupReserva.html',
+                container: '#reservas',
                 autoClose: 1, 
                 scope: $scope
             });
         }
 	
     	function eventClick(calEvent){
-    	    //var pelada = _.find(vm.reservas , {'id' : calEvent.id });
-    	    //vm.openNovaPeladaModal(pelada);
+    	    var reserva = _.find(vm.reservas , {'$id' : calEvent.$id });
+            var responsavel = _.result( _.find(vm.contatos , {'$id' : reserva.responsavel }), 'nome');
+            var color = _.result(_.find(vm.quadras , {'$id' : reserva.quadra }), 'color');
+
+            vm.reservaSelecionada = {
+                responsavel: responsavel,
+                quando: moment(reserva.start).format('ddd, DD [de] MMMM') + ", " + moment(reserva.start).format('HH:mm') + " às " + moment(reserva.end).format('HH:mm'),
+                quadra: reserva.quadra,
+                color: color,
+                varlor: "R$ 150,00"
+            }
     	}
 	
     	function dayClick(date, jsEvent, view){

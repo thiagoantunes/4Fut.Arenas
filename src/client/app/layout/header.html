@@ -1,4 +1,4 @@
-<div ng-show-auth="" >
+  <div ng-show-auth="" >
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid  container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,7 +14,7 @@
       <div class="collapse navbar-collapse" uib-collapse="!navbarCollapsed">
         <ul class="nav navbar-nav">
           <li ng-class="{ active: isActive('/arenas/dashboard')}">
-            <a href="/dashboard">DASHBOARD</a>
+            <a href="/arenas/dashboard">DASHBOARD</a>
           </li>
           <li ng-class="{ active: isActive('/arenas/reservas')}">
             <a href="/arenas/reservas">RESERVAS</a>
@@ -88,28 +88,28 @@
             <a uib-dropdown-toggle class="tm-profile" href="">
               <img src="https://scontent-gru1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10525685_920901341304897_6903052953168543422_n.jpg?oh=f911c27973d49852218f0df910ecec8c&oe=56BF0768" alt=""></a>
             <ul class="dropdown-menu dm-icon pull-right">
-              <li class="hidden-xs">
-                <a data-ng-click="hctrl.fullScreen()" href="">
-                  <i class="zmdi zmdi-fullscreen"></i>
-                  Toggle Fullscreen
-                </a>
-              </li>
               <li>
-                <a data-ng-click="hctrl.clearLocalStorage()" href="">
-                  <i class="zmdi zmdi-delete"></i>
-                  Clear Local Storage
+                <a href="">
+                  <i class="zmdi zmdi-face"></i>
+                  Perfil
                 </a>
               </li>
               <li>
                 <a href="">
-                  <i class="zmdi zmdi-face"></i>
-                  Privacy Settings
+                  <i class="zmdi zmdi-accounts"></i>
+                  Funcionários
                 </a>
               </li>
               <li>
                 <a href="">
                   <i class="zmdi zmdi-settings"></i>
-                  Other Settings
+                  Configurações
+                </a>
+              </li>
+              <li>
+                <a data-ng-click="hctrl.logout()"  href="">
+                  <i class="zmdi zmdi-power"></i>
+                  Sair
                 </a>
               </li>
             </ul>
