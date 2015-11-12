@@ -5,7 +5,7 @@ var del = require('del');
 var glob = require('glob');
 var gulp = require('gulp');
 var path = require('path');
-var _ = require('lodash');
+var lodash = require('lodash');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 var colors = $.util.colors;
@@ -70,7 +70,6 @@ gulp.task('styles', ['clean-styles'], function() {
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
 });
-
 
 /**
  * Copy fonts
@@ -682,7 +681,7 @@ function notify(options) {
         contentImage: path.join(__dirname, 'gulp.png'),
         icon: path.join(__dirname, 'gulp.png')
     };
-    _.assign(notifyOptions, options);
+    lodash.assign(notifyOptions, options);
     notifier.notify(notifyOptions);
 }
 

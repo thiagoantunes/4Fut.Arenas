@@ -1,3 +1,5 @@
+/*global $:false */
+/*global nicescrollService:false */
 (function () {
     'use strict';
 
@@ -14,6 +16,6 @@
                     nicescrollService.niceScroll(element, 'rgba(0,0,0,0.3)', '5px');
                 }
             }
-        }
+        };
     }
 })();

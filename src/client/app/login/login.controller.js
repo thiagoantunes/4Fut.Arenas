@@ -1,96 +1,97 @@
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('app.login')
-    .controller('LoginCtrl', LoginCtrl);
+    angular
+      .module('app.login')
+      .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, $cookies){
-    $scope.oauthLogin = function(provider) {
-      $scope.err = null;
-      Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: "email"}).then(redirect, showError);
-    };
+    function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, subdomainService) {
+        $scope.oauthLogin = function(provider) {
+            $scope.err = null;
+            Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: 'email'}).then(redirect, showError);
+        };
 
-    $scope.anonymousLogin = function() {
-      $scope.err = null;
-      Auth.$authAnonymously({rememberMe: true}).then(redirect, showError);
-    };
+        $scope.anonymousLogin = function() {
+            $scope.err = null;
+            Auth.$authAnonymously({rememberMe: true}).then(redirect, showError);
+        };
 
-    $scope.passwordLogin = function(email, pass) {
-      $scope.err = null;
-      Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(
-        redirect, showError
-      );
-    };
+        $scope.passwordLogin = function(email, pass) {
+            $scope.err = null;
+            Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(
+              redirect, showError
+            );
+        };
 
-    $scope.createAccount = function(email, pass, confirm) {
-      $scope.err = null;
-      if( !pass ) {
-        $scope.err = 'Please enter a password';
-      }
-      else if( pass !== confirm ) {
-        $scope.err = 'Passwords do not match';
-      }
-      else {
-        Auth.$createUser({email: email, password: pass})
+        $scope.createAccount = function(email, pass, confirm) {
+            $scope.err = null;
+            if (!pass) {
+                $scope.err = 'Please enter a password';
+            }
+            else if (pass !== confirm) {
+                $scope.err = 'Passwords do not match';
+            }
+            else {
+                Auth.$createUser({email: email, password: pass})
           .then(function () {
-            // authenticate so we have permission to write to Firebase
-            return Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true});
+              // authenticate so we have permission to write to Firebase
+              return Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true});
           })
           .then(createProfile)
           .then(redirect, showError);
-      }
-
-      function createProfile(user) {
-        var ref = Ref.child('users', user.uid), def = $q.defer();
-        ref.set({email: email, name: firstPartOfEmail(email)}, function(err) {
-          $timeout(function() {
-            if( err ) {
-              def.reject(err);
             }
-            else {
-              def.resolve(ref);
+
+            function createProfile(user) {
+                var ref = Ref.child('users', user.uid), def = $q.defer();
+                ref.set({email: email, name: firstPartOfEmail(email)}, function(err) {
+                    $timeout(function() {
+                        if (err) {
+                            def.reject(err);
+                        }
+                        else {
+                            def.resolve(ref);
+                        }
+                    });
+                });
+                return def.promise;
             }
-          });
-        });
-        return def.promise;
-      }
-    };
+        };
 
-    function firstPartOfEmail(email) {
+        function firstPartOfEmail(email) {
 
-      return ucfirst(email.substr(0, email.indexOf('@'))||'');
-    }
-
-    function ucfirst (str) {
-      // inspired by: http://kevin.vanzonneveld.net
-      str += '';
-      var f = str.charAt(0).toUpperCase();
-      return f + str.substr(1);
-    }
-
-    function redirect(user) {
-      var account = Ref.child('users/'+user.uid);
-
-      $cookies.put('userID', angular.isUndefined(user.uid) ? null : user.uid);
-
-      account.once('value', function(snapshot) {
-        if (snapshot.hasChild('arena')) {
-          $cookies.put('arenaID', angular.isUndefined(snapshot.val().arena) ? null : snapshot.val().arena);
-          $location.path('/arenas/reservas');
-          $scope.$apply();
+            return ucfirst(email.substr(0, email.indexOf('@')) || '');
         }
-        else {
-          $location.path('/account');
-          $scope.$apply();
+
+        function ucfirst (str) {
+            // inspired by: http://kevin.vanzonneveld.net
+            str += '';
+            var f = str.charAt(0).toUpperCase();
+            return f + str.substr(1);
         }
-      });
 
-    }
+        function redirect(user) {
+            var arena = Ref.child('arenas/' + subdomainService.arena);
 
-    function showError(err) {
-      $scope.err = err;
+            arena.once('value', function(snapshot) {
+                if (snapshot.hasChild('staff/' + user.uid)) {
+                    if(snapshot.val().configurado){
+                        $location.path('/admin/reservas');
+                        $scope.$apply();
+                    }
+                    else{
+                        $location.path('/admin/setup-arena');
+                        $scope.$apply();
+                    }
+                }
+                else {
+                    Auth.$unauth();
+                }
+            });
+        }
+
+        function showError(err) {
+            $scope.err = err;
+        }
     }
-  }
 
 })();

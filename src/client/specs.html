@@ -32,6 +32,9 @@
 <div id="mocha"></div>
 
     <!-- inject:testlibraries:js -->
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/node_modules/sinon-chai/lib/sinon-chai.js"></script>
     <!-- endinject -->
 
     <script>
@@ -42,18 +45,116 @@
     </script>
 
     <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/toastr/toastr.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/firebase/firebase.js"></script>
+    <script src="/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="/bower_components/jquery.nicescroll/jquery.nicescroll.js"></script>
+    <script src="/bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="/bower_components/angular-ui-mask/dist/mask.js"></script>
+    <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script src="/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="/bower_components/chosen/chosen.jquery.min.js"></script>
+    <script src="/bower_components/angular-chosen-localytics/chosen.js"></script>
+    <script src="/bower_components/fileinput/dist/fileinput.js"></script>
+    <script src="/bower_components/lightgallery/dist/js/lightgallery.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/bower_components/angular-block-ui/dist/angular-block-ui.js"></script>
+    <script src="/bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
+    <script src="/bower_components/br-validations/releases/br-validations.js"></script>
+    <script src="/bower_components/string-mask/src/string-mask.js"></script>
+    <script src="/bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+    <script src="/bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="/bower_components/Waves/dist/waves.min.js"></script>
+    <script src="/bower_components/clndr/clndr.min.js"></script>
+    <script src="/bower_components/angular-clndr/angular-clndr.js"></script>
+    <script src="/bower_components/firebase-util/dist/firebase-util.min.js"></script>
+    <script src="/bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="/bower_components/sinon/index.js"></script>
+    <script src="/bower_components/bardjs/dist/bard.js"></script>
+    <script src="/bower_components/bardjs/dist/bard-ngRouteTester.js"></script>
     <!-- endbower -->
 
     <!-- inject:js -->
+    <script src="/src/client/app/app.module.js"></script>
+    <script src="/src/client/app/account/account.module.js"></script>
+    <script src="/src/client/app/admin/admin.module.js"></script>
+    <script src="/src/client/app/arena/arena.module.js"></script>
+    <script src="/src/client/app/blocks/exception/exception.module.js"></script>
+    <script src="/src/client/app/blocks/logger/logger.module.js"></script>
+    <script src="/src/client/app/blocks/router/router.module.js"></script>
+    <script src="/src/client/app/core/core.module.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.module.js"></script>
+    <script src="/src/client/app/layout/layout.module.js"></script>
+    <script src="/src/client/app/login/login.module.js"></script>
+    <script src="/src/client/app/reservas/reservas.module.js"></script>
+    <script src="/src/client/app/widgets/widgets.module.js"></script>
+    <script src="/src/client/app/account/account.controller.js"></script>
+    <script src="/src/client/app/account/account.route.js"></script>
+    <script src="/src/client/app/admin/admin.controller.js"></script>
+    <script src="/src/client/app/admin/admin.route.js"></script>
+    <script src="/src/client/app/arena/arena.controller.js"></script>
+    <script src="/src/client/app/arena/arena.route.js"></script>
+    <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
+    <script src="/src/client/app/blocks/exception/exception.js"></script>
+    <script src="/src/client/app/blocks/logger/logger.js"></script>
+    <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+    <script src="/src/client/app/core/angularfire/auth.js"></script>
+    <script src="/src/client/app/core/angularfire/config.js"></script>
+    <script src="/src/client/app/core/angularfire/firebase.ref.js"></script>
+    <script src="/src/client/app/core/config.js"></script>
+    <script src="/src/client/app/core/constants.js"></script>
+    <script src="/src/client/app/core/core.route.js"></script>
+    <script src="/src/client/app/core/dataservice.js"></script>
+    <script src="/src/client/app/core/directives/ngHideAuth.js"></script>
+    <script src="/src/client/app/core/directives/ngShowAuth.js"></script>
+    <script src="/src/client/app/core/filters/reverse.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.route.js"></script>
+    <script src="/src/client/app/layout/header.controller.js"></script>
+    <script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
+    <script src="/src/client/app/layout/ht-top-nav.directive.js"></script>
+    <script src="/src/client/app/layout/sidebar.controller.js"></script>
+    <script src="/src/client/app/login/login.controller.js"></script>
+    <script src="/src/client/app/login/login.route.js"></script>
+    <script src="/src/client/app/reservas/reservas.controller.js"></script>
+    <script src="/src/client/app/reservas/reservas.route.js"></script>
+    <script src="/src/client/app/widgets/btn-directive.js"></script>
+    <script src="/src/client/app/widgets/chosen-results.directive.js"></script>
+    <script src="/src/client/app/widgets/fg-line.directive.js"></script>
+    <script src="/src/client/app/widgets/ht-img-person.directive.js"></script>
+    <script src="/src/client/app/widgets/ht-widget-header.directive.js"></script>
     <!-- endinject -->
 
     <!-- inject:spechelpers:js -->
+    <script src="/src/client/test-helpers/bind-polyfill.js"></script>
+    <script src="/src/client/test-helpers/mock-data.js"></script>
     <!-- endinject -->
 
     <!-- inject:specs:js -->
+    <script src="/src/client/app/admin/admin.controller.spec.js"></script>
+    <script src="/src/client/app/admin/admin.route.spec.js"></script>
+    <script src="/src/client/app/blocks/exception/exception-handler.provider.spec.js"></script>
+    <script src="/src/client/app/core/core.route.spec.js"></script>
+    <script src="/src/client/app/layout/ht-sidebar.directive.spec.js"></script>
+    <script src="/src/client/app/layout/sidebar.controller.spec.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->
+    <script src="/.tmp/templates.js"></script>
     <!-- endinject -->
 
     <script>

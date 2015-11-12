@@ -14,7 +14,7 @@
     function getStates() {
         return [
             {
-                state: 'arenas.dashboard',
+                state: 'admin.dashboard',
                 config: {
                     url: '/dashboard',
                     templateUrl: 'app/dashboard/dashboard.html',

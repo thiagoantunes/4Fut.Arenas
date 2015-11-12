@@ -12,9 +12,9 @@
         routerHelper.configureStates(getStates());
     }
 
-    function googleMaps(uiGmapGoogleMapApiProvider){
+    function googleMaps(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
-            v: '3.20', 
+            v: '3.20',
             libraries: 'places'
         });
     }
@@ -22,19 +22,20 @@
     function getStates() {
         return [
             {
-                state: 'arenas.arena',
+                state: 'admin.arena',
                 config: {
                     url: '/arena',
                     templateUrl: 'app/arena/arena.html',
                     controller:'ArenaCtr',
                     controllerAs:'vm',
+                    redirectTo: 'admin.arena.arena-profile',
                     resolve: {
-                        maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi){
+                        maps: ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi) {
                             return uiGmapGoogleMapApi;
                         }],
-                        currentPosition: ['$q', function($q){
+                        currentPosition: ['$q', function($q) {
                             var deferred = $q.defer();
-                            navigator.geolocation.getCurrentPosition(function(position){
+                            navigator.geolocation.getCurrentPosition(function(position) {
                                 deferred.resolve(position);
                             });
                             return deferred.promise;
@@ -43,14 +44,14 @@
                 }
             },
             {
-                state: 'arenas.arena.arena-profile',
+                state: 'admin.arena.arena-profile',
                 config: {
                     url: '/arena-profile',
                     templateUrl: 'app/arena/arena-profile.html'
                 }
             },
             {
-                state: 'arenas.arena.arena-quadras',
+                state: 'admin.arena.arena-quadras',
                 config: {
                     url: '/arena-quadras',
                     templateUrl: 'app/arena/arena-quadras.html',
@@ -59,7 +60,7 @@
                 }
             },
             {
-                state: 'arenas.arena.arena-funcionamento',
+                state: 'admin.arena.arena-funcionamento',
                 config:{
                     url: '/arena-funcionamento',
                     templateUrl: 'app/arena/arena-funcionamento.html',
@@ -68,7 +69,7 @@
                 }
             },
             {
-                state: 'arenas.arena.arena-contatos',
+                state: 'admin.arena.arena-contatos',
                 config:{
                     url: '/arena-contatos',
                     templateUrl: 'app/arena/arena-contatos.html',

@@ -19,7 +19,7 @@
                     url:'/login',
                     templateUrl: 'app/login/login.html',
                     controller: 'LoginCtrl',
-                    controllerAs: 'lctrl'
+                    controllerAs: 'lctrl',
                 }
             }
         ];

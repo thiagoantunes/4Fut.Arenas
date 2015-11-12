@@ -5,10 +5,13 @@
     angular
         .module('blocks.router')
         .provider('routerHelper', routerHelperProvider)
-        .run(run)
-        .constant('SECURED_ROUTES', {});
+        .constant('SECURED_ROUTES', {})
+        .factory('subdomainService' , subdomainService)
+        .run(run);
 
     routerHelperProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider', 'SECURED_ROUTES'];
+    run.$inject = ['$rootScope', '$state', 'Auth', 'SECURED_ROUTES' , 'loginRedirectPath' ,  'subdomainService'];
+    subdomainService.$inject = ['$location'];
     /* @ngInject */
     function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider, SECURED_ROUTES) {
         /* jshint validthis:true */
@@ -18,16 +21,6 @@
         };
 
         $locationProvider.html5Mode(true);
-
-        $stateProvider.stateAuthenticated = function(path, route) {
-            route.resolve = route.resolve || {};
-            route.resolve.user = ['Auth', function(Auth) {
-                return Auth.$requireAuth();
-            }];
-            $stateProvider.state(path, route);
-            SECURED_ROUTES[path] = true;
-            return $stateProvider;
-        };
 
         this.configure = function(cfg) {
             angular.extend(config, cfg);
@@ -120,15 +113,42 @@
                 );
             }
         }
+
+        $stateProvider.stateAuthenticated = function(path, route) {
+            route.resolve = route.resolve || {};
+            route.resolve.user = ['Auth', function(Auth) {
+                return Auth.$requireAuth();
+            }];
+            $stateProvider.state(path, route);
+            SECURED_ROUTES[path] = true;
+            return $stateProvider;
+        };
     }
 
-    function run($rootScope, $state, Auth, SECURED_ROUTES, loginRedirectPath) {
+    function run($rootScope, $state, Auth, SECURED_ROUTES, loginRedirectPath ,subdomainService) {
         // watch for login status changes and redirect if appropriate
         Auth.$onAuth(check);
 
-        $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
             if (error === 'AUTH_REQUIRED') {
                 $state.go(loginRedirectPath);
+            }
+        });
+
+        $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
+
+            if (subdomainService.arena && !toState.name.startsWith('admin') && toState.name !== loginRedirectPath) {
+                evt.preventDefault();
+                $state.go('admin');
+            }
+            else if (!subdomainService.arena  && toState.name.startsWith('admin')) {
+                evt.preventDefault();
+                $state.go('root');
+            }
+
+            if (toState.redirectTo) {
+                evt.preventDefault();
+                $state.go(toState.redirectTo, toParams);
             }
         });
 
@@ -141,6 +161,16 @@
         function authRequired(path) {
             return SECURED_ROUTES.hasOwnProperty(path);
         }
+    }
+
+    function subdomainService($location) {
+        var service = {};
+        var host = $location.host();
+
+        if (host.indexOf('.') >= 0) {
+            service.arena = host.split('.')[0];
+        }
+        return service;
     }
 
 })();

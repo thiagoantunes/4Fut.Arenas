@@ -1,17 +1,8 @@
-<section class="mainbar">
-    <section class="matter">
-        <div class="container">
-            <div class="row">
-                <div class="widget wviolet">
-                    <div ht-widget-header title="{{vm.title}}"></div>
-                    <div class="widget-content user">
-                        <h3>TODO: Implement Your Features</h3>
-                    </div>
-                    <div class="widget-foot">
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<header id="header"   data-ng-include="'/src/client/app/layout/header.html'" data-ng-controller="HeaderController as hctrl">
+</header>
+
+<section id="content" style="margin-top:-120px">
+    <div class="container">
+        <data class="page-view" data-ui-view></data>
+    </div>
 </section>

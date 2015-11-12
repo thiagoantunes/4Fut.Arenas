@@ -17,7 +17,7 @@
     ModalPrecoCtrl.$inject = ['$modalInstance', 'data'];
 
     function ArenaCtr($scope, arenaFactory, quadraFactory, maps, currentPosition, $timeout) {
-        arenaFactory('cesar').$bindTo($scope, "arena").then(function() {
+        arenaFactory('cesar').$bindTo($scope, 'arena').then(function() {
             activate();
         });
 
@@ -46,12 +46,13 @@
                 autocomplete: true,
             },
             events: {
-                place_changed: function(autocomplete) {
+                /*jshint camelcase: false */
+                PLACE_CHANGED: function(autocomplete) {
 
-                    var place = autocomplete.getPlace()
+                    var place = autocomplete.getPlace();
                     $scope.arena.endereco = place.name;
 
-                    if (place.address_components) {
+                    if (place.ADRESS_COMPONENTS) {
                         $scope.map.center = {
                             latitude: place.geometry.location.lat(),
                             longitude: place.geometry.location.lng(),
@@ -74,7 +75,7 @@
                     $scope.arena.coords = {
                         latitude: $scope.map.center.latitude,
                         longitude: $scope.map.center.longitude
-                    }
+                    };
                 }
             }
         };
@@ -136,21 +137,21 @@
 
         function novaQuadra() {
             var modalInstance = $uibModal.open({
-              animation: true,
-              templateUrl: 'novaQuadraModal.html',
-              controller: 'NovaQuadraModalCtrl',
-              controllerAs: 'vm'
+                animation: true,
+                templateUrl: 'novaQuadraModal.html',
+                controller: 'NovaQuadraModalCtrl',
+                controllerAs: 'vm'
             });
-        
+
             modalInstance.result.then(function (novaQuadra) {
                 novaQuadra.fkArena = true;
                 vm.quadras.$add(novaQuadra);
-              //quadraService.addQuadra(novaQuadra);
+                //quadraService.addQuadra(novaQuadra);
             });
-        };
+        }
     }
 
-    function NovaQuadraModalCtrl($modalInstance){
+    function NovaQuadraModalCtrl($modalInstance) {
         var vm = this;
         vm.cores = [
             'bgm-teal',
@@ -164,18 +165,18 @@
             'bgm-purple',
             'bgm-brown',
             'bgm-amber',
-        ]
+        ];
 
         vm.salvar = salvar;
         vm.cancelar = cancelar;
 
         function salvar() {
             $modalInstance.close(vm.novaQuadra);
-        };
+        }
 
         function cancelar() {
             $modalInstance.dismiss();
-        };
+        }
     }
 
     function FuncionamentoCtrl(quadraService, funcionamentoService, uiCalendarConfig, $uibModal, blockUI) {
@@ -215,7 +216,7 @@
                 selectable: true,
                 selectOverlap: false,
                 selectHelper: true,
-                eventResize: eventResize, 
+                eventResize: eventResize,
                 eventDrop: eventDrop,
                 select: eventSelect,
                 eventClick: eventClick,
@@ -252,7 +253,7 @@
             var preco = _.find(vm.precos, {
                 $id: event.$id
             });
-            preco.end = moment(preco.end, "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
+            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
             vm.precos.$save(preco).then(function(ref) {
                 blockUI.stop();
             });
@@ -263,16 +264,16 @@
             var preco = _.find(vm.precos, {
                 $id: event.$id
             });
-            preco.start = moment(preco.start, "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
-            preco.end = moment(preco.end, "HH:mm").add(delta._milliseconds, 'milliseconds').format("HH:mm");
-            preco.dow = moment(preco.dow[0], "d").add(delta._days, 'days').format('d');
+            preco.start = moment(preco.start, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
+            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
+            preco.dow = moment(preco.dow[0], 'd').add(delta._days, 'days').format('d');
             vm.precos.$save(preco).then(function(ref) {
                 blockUI.stop();
             });
         }
 
         function eventSelect(start, end) {
-            if (end._d.getDate() != start._d.getDate()) {
+            if (end._d.getDate() !== start._d.getDate()) {
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
             } else {
                 var eventData = {
@@ -310,16 +311,18 @@
             } else if (medio < barato && medio < caro) {
                 element.context.classList.add(quadraColor);
             } else {
-                element.context.classList.add(quadraColor+'-d');
+                element.context.classList.add(quadraColor + '-d');
             }
         }
 
         function isValidPrice(eventData, end, dow) {
             return _.every(dow, function(d) {
                 return _.every(vm.precos, function(f) {
-                    return f.$id != eventData.$id || f.dow[0] != d || (eventData.start >= f.end || eventData.end <= f.start);
+                    return f.$id !== eventData.$id ||
+                        f.dow[0] !== d ||
+                        (eventData.start >= f.end || eventData.end <= f.start);
                 });
-            })
+            });
         }
 
         function openModalPreco(eventData, edicao) {
@@ -335,7 +338,7 @@
                         return {
                             edicao: edicao,
                             eventData: eventData
-                        }
+                        };
                     }
                 }
             });
@@ -364,15 +367,17 @@
                             vm.precos.$add(data.eventData).then(function(ref) {
                                 uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
                                 uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
-                            });;
+                            });
                         });
                     }
-                } else
-                    alert("erro!!");
+                } else {
+                    console('erro!!');
+                }
 
             }, function(data) {
-                if (!data.edicao)
+                if (!data.edicao) {
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents', [data.id]);
+                }
             });
         }
     }
@@ -385,7 +390,7 @@
         vm.diasSemana = [];
         vm.salvar = salvar;
         vm.cancel = cancel;
-        vm.idProvisorio = data.eventData.id
+        vm.idProvisorio = data.eventData.id;
 
         activate();
 
@@ -398,13 +403,15 @@
                 precoAvulso: data.eventData.precoAvulso,
                 precoMensalista: data.eventData.precoMensalista,
                 dow: [],
-                title: ""
-            }
+                title: ''
+            };
 
-            if (vm.edicao)
-                vm.title = "Editar Preço";
-            else
-                vm.title = "Novo Preço";
+            if (vm.edicao) {
+                vm.title = 'Editar Preço';
+            }
+            else {
+                vm.title = 'Novo Preço';
+            }
 
             vm.diasSemana = [{
                 dia: 0,
@@ -432,7 +439,10 @@
         }
 
         function salvar() {
-            vm.eventData.title = "A:  R$ " + vm.eventData.precoAvulso + "  |  " + "M: R$ " + vm.eventData.precoMensalista;
+            vm.eventData.title = 'A:  R$ ' + vm.eventData.precoAvulso + '  |  ' + 'M: R$ ' + vm.eventData.precoMensalista;
+            vm.eventData.title = 'A:  R$ ' +
+                vm.eventData.precoAvulso +
+                '  |  ' + 'M: R$ ' + vm.eventData.precoMensalista;
             $modalInstance.close({
                 id: vm.idProvisorio,
                 eventData: vm.eventData,
@@ -451,24 +461,24 @@
         }
     }
 
-    function ContatosCtrl(contatosService){
+    function ContatosCtrl(contatosService) {
         var vm = this;
 
         vm.contatos = contatosService.getContatosArena();
         vm.salvarContato = salvarContato;
         vm.excluirContato = excluirContato;
 
-        function salvarContato(){
-            if(vm.edicao){
+        function salvarContato() {
+            if (vm.edicao) {
                 vm.contatos.$save(vm.contatoSelecionado);
             }
-            else{
+            else {
                 vm.contatoSelecionado.fkArena = true;
-                vm.contatos.$add(vm.contatoSelecionado);   
+                vm.contatos.$add(vm.contatoSelecionado);
             }
         }
 
-        function excluirContato(){
+        function excluirContato() {
             vm.contatoSelecionado.fkArena = false;
             vm.contatos.$save(vm.contatoSelecionado);
         }

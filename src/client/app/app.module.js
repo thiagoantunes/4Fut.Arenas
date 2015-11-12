@@ -3,6 +3,7 @@
 
     angular.module('app', [
         'app.core',
+        'app.home',
         'app.widgets',
         'app.admin',
         'app.dashboard',
@@ -10,7 +11,9 @@
         'app.arena',
         'app.reservas',
         'app.login',
-        'app.account'
+        'app.nova-arena',
+        'app.setup-arena',
+        'app.sistema-arena'
     ]);
 
 })();

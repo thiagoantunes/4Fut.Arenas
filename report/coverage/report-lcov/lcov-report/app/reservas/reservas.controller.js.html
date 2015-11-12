@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app/reservas/reservas.controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">app/reservas/reservas.controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">14.43% <small>(14 / 97)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">3.13% <small>(1 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">14.43% <small>(14 / 97)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/reservas/</a> &#187; reservas.controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global $:false */
+(function() {
+    'use strict';
+&nbsp;
+    angular
+        .module('app.reservas')
+        .controller('ReservasCtrl', ReservasCtrl)
+        .controller('ModalReservaCtrl', ModalReservaCtrl)   ;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig, $uibModal ,$popover, blockUI) {</span>
+<span class="cstat-no" title="statement not covered" >        var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >        vm.quadras = quadraService.getQuadras();</span>
+<span class="cstat-no" title="statement not covered" >        vm.contatos = contatosService.getContatosArenaLight();</span>
+<span class="cstat-no" title="statement not covered" >        vm.selecaoQuadras = [];</span>
+<span class="cstat-no" title="statement not covered" >        vm.reservas = [];</span>
+<span class="cstat-no" title="statement not covered" >        vm.eventSources = [[]];</span>
+<span class="cstat-no" title="statement not covered" >        vm.uiConfig = {};</span>
+<span class="cstat-no" title="statement not covered" >        vm.novaReserva = {};</span>
+<span class="cstat-no" title="statement not covered" >        vm.reservaSelecionada = {};</span>
+<span class="cstat-no" title="statement not covered" >        vm.horarioLivre = false;</span>
+<span class="cstat-no" title="statement not covered" >        vm.loadReservas = loadReservas;</span>
+<span class="cstat-no" title="statement not covered" >        vm.atualizaDisponibilidade = atualizaDisponibilidade;</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarReservaAvulsa = salvarReservaAvulsa;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        activate();</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function activate() {</span>
+<span class="cstat-no" title="statement not covered" >            blockUI.start();</span>
+<span class="cstat-no" title="statement not covered" >            vm.uiConfig = {</span>
+                calendar:{
+                    minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    height: 'auto',
+                    timeFormat: 'H(:mm)',
+                    timezone:'local',
+                    header:{left:'month agendaWeek agendaDay',center: 'title'},
+                    defaultView:'agendaWeek',
+                    firstHour: 9,
+                    allDaySlot: false,
+                    defaultEventMinutes: 60,
+                    axisFormat: 'H:mm',  //,'h(:mm)tt',
+                    dayClick: dayClick,
+                    editable: true,
+                    selectable: true,
+                    selectHelper: true,
+                    unselectCancel: '.reservasForm',
+                    //eventResize: eventResize,
+                    //  eventDrop: eventDrop,
+                    select: eventSelect,
+                    eventClick: eventClick,
+                    eventRender: eventRender
+                }
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.quadras.$loaded(loadQuadras);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function loadQuadras() {</span>
+<span class="cstat-no" title="statement not covered" >            _.forEach(vm.quadras, <span class="fstat-no" title="function not covered" >function(q) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.selecaoQuadras.push({</span>
+                    quadra: q,
+                    ativa: true
+                });
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            getReservas();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$loaded(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.eventSources.push(vm.reservas);</span>
+<span class="cstat-no" title="statement not covered" >                blockUI.stop();</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function loadReservas() {</span>
+<span class="cstat-no" title="statement not covered" >            blockUI.start();</span>
+<span class="cstat-no" title="statement not covered" >            uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);</span>
+<span class="cstat-no" title="statement not covered" >            getReservas();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$loaded(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);</span>
+<span class="cstat-no" title="statement not covered" >                blockUI.stop();</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function getReservas() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas = reservasService.getFilteredArray(<span class="fstat-no" title="function not covered" >function(rec) {</span></span>
+<span class="cstat-no" title="statement not covered" >                var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return _.some(qdrs, {'$id': rec.quadra});</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventSelect(start, end, jsEvent, view) {</span>
+<span class="cstat-no" title="statement not covered" >            var element = $(jsEvent.target).closest('.fc-event');</span>
+<span class="cstat-no" title="statement not covered" >            var placement = (jsEvent.clientY &lt; 320) ? 'bottom' : 'top';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var popover = $popover(element, {</span>
+                placement: placement,
+                title:'',
+                templateUrl: 'popupNovaReserva.html',
+                container: '#reservas',
+                autoClose: 1,
+                scope: $scope
+            });
+<span class="cstat-no" title="statement not covered" >            vm.novaReserva = {</span>
+                responsavel : {},
+                quadra : vm.quadras[0],
+                dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
+                    moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
+                start : start._d,
+                end : end._d,
+                placement : placement
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            atualizaDisponibilidade();</span>
+<span class="cstat-no" title="statement not covered" >            popover.$promise.then(popover.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventRender(event, element) {</span>
+<span class="cstat-no" title="statement not covered" >            element.attr('class' , element.attr('class') +  ' ' +</span>
+                _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
+<span class="cstat-no" title="statement not covered" >            $popover(element, {</span>
+                placement: 'bottom',
+                title:'',
+                templateUrl: 'popupReserva.html',
+                container: '#reservas',
+                autoClose: 1,
+                scope: $scope
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventClick(calEvent) {</span>
+<span class="cstat-no" title="statement not covered" >            var reserva = _.find(vm.reservas , {'$id' : calEvent.$id});</span>
+<span class="cstat-no" title="statement not covered" >            var responsavel = _.result(_.find(vm.contatos , {'$id' : reserva.responsavel}), 'nome');</span>
+<span class="cstat-no" title="statement not covered" >            var color = _.result(_.find(vm.quadras , {'$id' : reserva.quadra}), 'color');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.reservaSelecionada = {</span>
+                responsavel: responsavel,
+                quando: moment(reserva.start).format('ddd, DD [de] MMMM') + ', ' +
+                    moment(reserva.start).format('HH:mm') + ' às ' +
+                    moment(reserva.end).format('HH:mm'),
+                quadra: reserva.quadra,
+                color: color,
+                varlor: 'R$ 150,00'
+            };
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function dayClick(date, jsEvent, view) {</span>
+<span class="cstat-no" title="statement not covered" >            if (view.name === 'month') {</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('changeView', 'agendaDay');</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('gotoDate', date);</span>
+            }
+            //else{
+            //    vm.openNovaPeladaModal(date);
+            //}
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function atualizaDisponibilidade() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return f.start &lt;= moment(vm.novaReserva.start).format('HH:mm') &amp;&amp;</span>
+                        f.end &gt;= moment(vm.novaReserva.end).format('HH:mm') &amp;&amp;
+                        _.any(f.dow , <span class="fstat-no" title="function not covered" >function(n) {</span>
+<span class="cstat-no" title="statement not covered" >                            return n === vm.novaReserva.start.getDay();</span>
+                        });
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return (vm.novaReserva.start &gt;= moment(f.end) || vm.novaReserva.end &lt;= moment(f.start));</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function salvarReservaAvulsa() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$add({</span>
+                tipo : 1,
+                quadra: vm.novaReserva.quadra.$id,
+                start : vm.novaReserva.start.getTime(),
+                end : vm.novaReserva.end.getTime(),
+                responsavel : vm.novaReserva.responsavel.$id
+            }).then(<span class="fstat-no" title="function not covered" >function(ref) {</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');</span>
+            });
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.openNovaPeladaModal = <span class="fstat-no" title="function not covered" >function(date) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var modalInstance = $uibModal.open({</span>
+                animation: true,
+                templateUrl: 'modalPelada.html',
+                controller: 'ModalReservaCtrl',
+                controllerAs:'vm',
+                resolve: {
+                    data: <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                        return {</span>
+                            title : 'Nova Pelada',
+                            date : date,
+                        };
+                    }
+                }
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            modalInstance.result.then(<span class="fstat-no" title="function not covered" >function (selectedItem) {</span></span>
+                }, <span class="fstat-no" title="function not covered" >function () {</span>
+            });
+        };
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function ModalReservaCtrl($scope, $modalInstance, data, quadraFactory, peladaFactory) {</span>
+<span class="cstat-no" title="statement not covered" >        var vm = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.quadras = quadraFactory('-K1BcDhprlXkXEo18kbq');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.quadras.$loaded(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.reservaRadio = 1;</span>
+<span class="cstat-no" title="statement not covered" >            vm.title = data.title;</span>
+<span class="cstat-no" title="statement not covered" >            vm.date = data.date._d;</span>
+<span class="cstat-no" title="statement not covered" >            vm.duracao =  1;</span>
+<span class="cstat-no" title="statement not covered" >            vm.quadraSelecionada = vm.quadras[0];</span>
+<span class="cstat-no" title="statement not covered" >            vm.getPreco();</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.diasSemana = [</span>
+            {dia: 0, ativo:false},
+            {dia: 1, ativo:false},
+            {dia: 2, ativo:false},
+            {dia: 3, ativo:false},
+            {dia: 4, ativo:false},
+            {dia: 5, ativo:false},
+            {dia: 6, ativo:false}
+        ];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.getPreco = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.funcionamento =  _.find(vm.quadraSelecionada.funcionamento , <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return f.start &lt;= moment(vm.date).format('HH:mm') &amp;&amp;</span>
+                        f.end &gt;= moment(vm.date).add(vm.duracao,'hours').format('HH:mm') &amp;&amp;
+                        _.any(f.dow , <span class="fstat-no" title="function not covered" >function(n) {</span>
+<span class="cstat-no" title="statement not covered" >                            return n === vm.date.getDay();</span>
+                        });
+            });
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.salvar = <span class="fstat-no" title="function not covered" >function () {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            peladaFactory('-K1BcDhprlXkXEo18kbq').avulsas.$add({</span>
+                tipo: vm.reservaRadio,
+                quadra: vm.quadraSelecionada.$id,
+                start: moment(vm.date).format('YYYY-MM-DDTHH:mm:ss'),
+                end:  moment(vm.date).add(vm.duracao,'hours').format('YYYY-MM-DDTHH:mm:ss'),
+                title: vm.quadraSelecionada.nome
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $modalInstance.close();</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.cancel = <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            $modalInstance.dismiss('cancel');</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.openDatepicker = <span class="fstat-no" title="function not covered" >function($event, opened) {</span></span>
+<span class="cstat-no" title="statement not covered" >            $event.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >            $event.stopPropagation();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $scope[opened] = true;</span>
+        };
+    }
+&nbsp;
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 05 2015 23:59:34 GMT-0200 (BRST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
