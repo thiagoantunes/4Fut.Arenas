@@ -69,10 +69,10 @@
 			<div class="form-group">
 				<div class="col-sm-12">
 					<div class="fg-line">
-						<div class="btn-group btn-group-justified">
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="1">Avulsa</label>
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="2">Mensalista</label>
-							<label class="btn btn-primary" ng-model="vm.reservaRadio" uib-btn-radio="3">Escola</label>
+						<div class="btn-group btn-group-justified" ng-model="vm.reservaRadio" bs-radio-group>
+							<label class="btn btn-primary"><input type="radio" value="1">Avulsa</label>
+							<label class="btn btn-primary"><input type="radio" vabrlue="2">Mensalista</label>
+							<label class="btn btn-primary"><input type="radio" value="3">Escola</label>
 						</div>
 					</div>
 				</div>
@@ -149,7 +149,7 @@
 			</div>
 			<br/>
 			<div class="row">
-				<div class="col-sm-4">
+				<!-- <div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
 						<div class="date-picker input-group dp-blue" ng-class="{ 'is-opened': opened == true }">
@@ -158,7 +158,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				
 				<div class="col-sm-4">
 					<div class="input-group">

@@ -1,138 +1,69 @@
-.login-content {
-    overflow: hidden;
-    height: 100%;
+#login-page{
+    h1, input::-webkit-input-placeholder, button {
+      font-family: 'roboto', sans-serif;
+      transition: all 0.3s ease-in-out;
+  }
+
+  h1 {
+      height: 100px;
+      width: 100%;
+      font-size: 24px;
+      background: @brand-primary;
+      color: white;
+      line-height: 150%;
+      border-radius: 3px 3px 0 0;
+      box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  form {
+      box-sizing: border-box;
+      width: 350px;
+      margin: 100px auto 0;
+      box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+      padding-bottom: 40px;
+      border-radius: 3px;
+      background: #fff;
+  }
+  form h1 {
+      box-sizing: border-box;
+      padding: 20px;
+  }
+
+  input {
+      margin: 40px 25px;
+      width: 300px;
+      display: block;
+      border: none;
+      padding: 10px 0;
+      border-bottom: solid 1px #1abc9c;
+      transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+      background-position: -300px 0;
+      background-size: 300px 100%;
+      background-repeat: no-repeat;
+      color: @brand-primary;
+  }
+
+    .checkbox{
+        margin: 30px 25px 10px 25px;
+    }
+
+  input:focus, input:valid {
+      box-shadow: none;
+      outline: none;
+      background-position: 0 0;
+  }
+  input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
+      color: #1abc9c;
+      font-size: 11px;
+      transform: translateY(-20px);
+      visibility: visible !important;
+  }
+
+  button {
+      width: 300px;
+      margin-left: 25px;
+  }
+
 }
 
-.lc-block {
-    background: #fff;
-    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-    border-radius: 2px;
-    width: 500px;
-    display: inline-block; 
-    margin-top: 42px;
-    vertical-align: middle;
-    position: relative; 
-    
-    &:not(.lcb-alt) {
-        padding: 35px 55px 35px; 
-        
-        .btn-login {
-            top: 50%;
-            margin-top: -25px;  
-            right: -25px; 
-        }
-    }
-    
-    &:not(.toggled) {
-        display: none;
-    }
-
-    @media (max-width: @screen-xs-max) {
-        padding: 15px 35px 25px 20px;
-        width: ~"calc(100% - 60px)";
-    }
-
-    .checkbox {
-        margin: 5px 0 0 42px;
-        text-align: left; 
-    }
-
-    &.toggled {
-        z-index: 10; 
-    } 
-}
-
-.login-navigation {     
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    left: 0%;
-    bottom: -45px;
-
-    & > li {
-        display: inline-block;
-        margin: 0 2px;
-        .transition(all);
-        .transition-duration(150ms);
-        cursor: pointer;
-        vertical-align: top;
-        color: #fff;
-        line-height: 16px;
-        min-width: 16px;
-        min-height: 16px;
-        text-transform: uppercase;
-        .backface-visibility(hidden);
-
-        & > span {
-            .opacity(0);
-        }
-
-        &:not(:hover) {
-            font-size: 0px;
-            border-radius: 100%;
-        }
-
-        &:hover {
-            border-radius: 10px;
-            padding: 0 5px;
-            font-size: 8px; 
-
-            & > span {
-                .opacity(1);
-            } 
-        }
-
-    }
-}
- 
-.lcb-alt {
-    padding: 70px 55px 60px;
-    
-    .btn-login {
-        bottom: -25px;
-        left: 50%;
-        margin-left: -25px;
-    }
-    
-    .login-navigation {
-        bottom: -75px;
-    }
-}
-
-.lcb-user {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    margin-left: -50px;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.18);
-}
-
-body.login-content {
-    text-align: center;
-    
-    &:after {
-        content: "";
-        vertical-align: middle; 
-        display: inline-block;
-        width: 1px;
-        height: 100%;
-    }
-    
-    &:before {
-        height: 50%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: @m-cyan;
-        content: "";
-        z-index: 0;
-    }
-}

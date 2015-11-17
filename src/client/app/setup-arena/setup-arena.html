@@ -51,17 +51,6 @@
                                         <small ng-show="userForm.nome.$invalid && !userForm.nome.$pristine" class="help-block">O nome é obrigatório</small>
                                     </div>
                                 </div>
-                                <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.cpf.$invalid && !userForm.cpf.$pristine , 'has-success' : userForm.cpf.$valid && !userForm.cpf.$pristine }">
-                                    <label for="inputCpf" class="col-sm-3 control-label">CPF</label>
-                                    <div class="col-sm-8">
-                                        <div class="fg-line">
-                                            <input id="inputCpf" required name="cpf" ui-br-cpf-mask type="text" ng-model="vm.usuario.cpf" class="form-control" />
-                                        </div>
-                                        <span ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
-                                        <span ng-show="userForm.cpf.$valid && !userForm.cpf.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-                                        <small ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="help-block">Informe um CPF válido</small>
-                                    </div>
-                                </div>
                                 <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine , 'has-success' : userForm.email.$valid && !userForm.email.$pristine }">
                                     <label for="inputEmail" class="col-sm-3 control-label">Email</label>
                                     <div class="col-sm-8">
@@ -72,6 +61,17 @@
                                         <span ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
                                         <span ng-show="userForm.email.$valid && !userForm.email.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
                                         <small ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um email válido</small>
+                                    </div>
+                                </div>
+                                <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.cpf.$invalid && !userForm.cpf.$pristine , 'has-success' : userForm.cpf.$valid && !userForm.cpf.$pristine }">
+                                    <label for="inputCpf" class="col-sm-3 control-label">CPF</label>
+                                    <div class="col-sm-8">
+                                        <div class="fg-line">
+                                            <input id="inputCpf" required name="cpf" ui-br-cpf-mask type="text" ng-model="vm.usuario.cpf" class="form-control" />
+                                        </div>
+                                        <span ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
+                                        <span ng-show="userForm.cpf.$valid && !userForm.cpf.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
+                                        <small ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="help-block">Informe um CPF válido</small>
                                     </div>
                                 </div>
                                 <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.telefone.$invalid && !userForm.telefone.$pristine , 'has-success' : userForm.telefone.$valid && !userForm.telefone.$pristine }">
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="pull-right">
-                                        <button type="button" ng-disabled="userForm.$invalid" class="btn btn-primary btn-sm" wz-next >Próximo passo</button>
+                                        <button type="button" ng-disabled="userForm.$invalid" ng-click="vm.usuario.$save();" class="btn btn-primary btn-sm" wz-next >Próximo passo</button>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                                             <button type="submit" wz-previous class="btn btn-danger btn-sm">Passo anterior</button>
                                         </div>
                                         <div class="pull-right">
-                                            <button type="submit" ng-click="vm.salvarCadastroInicial();" ng-disabled="arenaForm.$invalid" class="btn btn-primary btn-sm" wz-next >Próximo passo</button>
+                                            <button type="submit" ng-click="vm.arena.$save();" ng-disabled="arenaForm.$invalid" class="btn btn-primary btn-sm" wz-next >Próximo passo</button>
                                         </div>
                                     </div>
 
@@ -197,7 +197,7 @@
                             </h2>
                         </div>
                         <div class="card-body card-padding">
-                            <div data-ng-include="'/src/client/app/arena/arena-quadras.html'" data-ng-controller="QuadraCtrl"></div>
+                            <div data-ng-include="'/src/client/app/arena/arena-quadras.html'" data-ng-controller="QuadraCtrl as vm"></div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6">

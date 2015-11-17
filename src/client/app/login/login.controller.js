@@ -6,6 +6,12 @@
       .controller('LoginCtrl', LoginCtrl);
 
     function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, subdomainService) {
+
+        $scope.login = 1;
+        $scope.register = 0;
+        $scope.forgot = 0;
+
+        
         $scope.oauthLogin = function(provider) {
             $scope.err = null;
             Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: 'email'}).then(redirect, showError);

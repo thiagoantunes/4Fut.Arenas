@@ -119,6 +119,9 @@
             route.resolve.user = ['Auth', function(Auth) {
                 return Auth.$requireAuth();
             }];
+            route.resolve.arena = ['subdomainService', function(subdomainService){
+                return subdomainService.arena;
+            }];
             $stateProvider.state(path, route);
             SECURED_ROUTES[path] = true;
             return $stateProvider;

@@ -5,11 +5,10 @@
         .module('app.setup-arena')
         .controller('SetupArenaCtrl', SetupArenaCtrl);
 
-    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, $cookies) {
+    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, arena) {
         var vm = this;
 
-        var arenaID = Ref.child('arenas').push().key();
-        $cookies.put('arenaID', angular.isUndefined(arenaID) ? null : arenaID);
+        var arenaID = arena;
         var userID = user.uid;
 
         vm.wellcomeMessage = true;
@@ -18,10 +17,10 @@
         //    email: user.facebook.email,
         //    fotoPerfil: user.facebook.profileImageURL
         //};
-        vm.arena = {};
+        vm.usuario = $firebaseObject(Ref.child('users/' + userID));
+        vm.arena = $firebaseObject(Ref.child('arenas/' + arenaID));
         vm.quadras = $firebaseArray(Ref.child('quadras/' + arenaID));
         vm.novaQuadra = {};
-        vm.salvarCadastroInicial = salvarCadastroInicial;
         vm.addQuadra = addQuadra;
 
         function addQuadra() {
@@ -47,34 +46,6 @@
             vm.novaQuadra = {};
         }
 
-        function salvarCadastroInicial() {
-            var cadastroInicial = {};
-            cadastroInicial['users/' + userID] = vm.usuario;
-            cadastroInicial['arenas/' + arenaID] = vm.arena;
-
-            Ref.update(cadastroInicial, function(error) {
-                if (error) {
-                    console.log('Error updating data:', error);
-                } else {
-                    var cadastroReferencias = {};
-                    cadastroReferencias['users/' + userID + '/arena/'] = arenaID;
-                    cadastroReferencias['users/' + userID + '/arenas/' + arenaID] = {
-                        nome: vm.arena.nome,
-                        perfilAcesso: 1
-                    };
-                    cadastroReferencias['arenas/' + arenaID + '/staff/' + userID] = {
-                        nome: vm.usuario.nome,
-                        perfilAcesso: 1
-                    };
-
-                    Ref.update(cadastroReferencias, function(error) {
-                        if (error) {
-                            console.log('Error updating data:', error);
-                        }
-                    });
-                }
-            });
-        }
     }
 
 })();

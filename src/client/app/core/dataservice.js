@@ -19,13 +19,11 @@ app.factory('FilteredArray', function($firebaseArray) {
 
     angular
         .module('app.core')
-        .factory('credentials', credentials)
         .factory('arenaService', arenaService)
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
         .factory('contatosService', contatosService)
-
         .factory('repository', repository)
         .factory('peladaFactory', peladaFactory)
         .factory('quadraFactory', quadraFactory)
@@ -35,32 +33,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         return $cacheFactory('appCache');
     }
 
-    function credentials(Auth , $cookies) {
-        var service = {
-            userID : getUserID(),
-            arenaID : getArenaID()
-        };
-
-        return service;
-
-        function getUserID() {
-            var userID = $cookies.get('userID');
-            if (!userID) {
-                Auth.$unauth();
-            }
-            return userID;
-        }
-
-        function getArenaID() {
-            var arenaID = $cookies.get('arenaID');
-            if (!arenaID) {
-                Auth.$unauth();
-            }
-            return arenaID;
-        }
-    }
-
-    function quadraService(Ref, $firebaseArray, $firebaseObject, credentials) {
+    function quadraService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
         var service = {
             getRef: getRef,
             //queryQuadra: queryQuadra,
@@ -78,17 +51,17 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
 
         function getQuadra(id) {
-            return $firebaseObject(getRef().child(credentials.arenaID + '/' + id));
+            return $firebaseObject(getRef().child(subdomainService.arena + '/' + id));
         }
 
         function getQuadras() {
-            return $firebaseArray(getRef().child(credentials.arenaID));
+            return $firebaseArray(getRef().child(subdomainService.arena));
         }
 
         function getQuadrasArena() {
             var joinedRef = new Firebase.util.NormalizedCollection(
-              [Ref.child('/quadras/' + credentials.arenaID + ''), 'quadra'],
-              [Ref.child('/arenas/' + credentials.arenaID + '/quadras'), 'arena']
+              [Ref.child('/quadras/' + subdomainService.arena + ''), 'quadra'],
+              [Ref.child('/arenas/' + subdomainService.arena + '/quadras'), 'arena']
             ).select(
               'quadra.nome',
               'quadra.color',
@@ -103,8 +76,8 @@ app.factory('FilteredArray', function($firebaseArray) {
 
         function getQuadrasLight() {
             var joinedRef = new Firebase.util.NormalizedCollection(
-              [Ref.child('/quadras/' + credentials.arenaID + ''), 'quadra'],
-              [Ref.child('/arenas/' + credentials.arenaID + '/quadras'), 'arena']
+              [Ref.child('/quadras/' + subdomainService.arena + ''), 'quadra'],
+              [Ref.child('/arenas/' + subdomainService.arena + '/quadras'), 'arena']
             ).select(
               'quadra.nome',
               'quadra.color',
@@ -115,7 +88,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
     }
 
-    function arenaService(Ref, $firebaseArray, $firebaseObject, credentials) {
+    function arenaService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
 
         var service = {
             getRef : getRef,
@@ -133,11 +106,11 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
 
         function getArena() {
-            return $firebaseObject(getRef().child(credentials.arenaID));
+            return $firebaseObject(getRef().child(subdomainService.arena));
         }
 
         function getQuadras() {
-            return $firebaseArray(getRef().child(credentials.arenaID + '/quadras'));
+            return $firebaseArray(getRef().child(subdomainService.arena + '/quadras'));
         }
 
         function isValidArenaName(arenaName) {
@@ -147,7 +120,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
     }
 
-    function funcionamentoService(Ref,$firebaseArray, $firebaseObject, credentials) {
+    function funcionamentoService(Ref,$firebaseArray, $firebaseObject, subdomainService) {
         var service = {
             getPreco: getPreco,
             getPrecos: getPrecos,
@@ -157,16 +130,16 @@ app.factory('FilteredArray', function($firebaseArray) {
 
         function getPreco(quadraId, id) {
             return $firebaseObject(
-                Ref.child('quadras/' + credentials.arenaID + '/' + quadraId + '/funcionamento/' + id)
+                Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id)
             );
         }
 
         function getPrecos(quadraId) {
-            return $firebaseArray(Ref.child('quadras/' + credentials.arenaID + '/' + quadraId + '/funcionamento/'));
+            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
         }
     }
 
-    function reservasService(Ref, $firebaseArray, $firebaseObject, credentials, FilteredArray) {
+    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
         var service = {
             getRef: getRef,
 
@@ -188,30 +161,30 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
 
         function getFilteredArray(fn) {
-            var ref = getRef().child(credentials.arenaID);
+            var ref = getRef().child(subdomainService.arena);
             return new FilteredArray(ref, fn);
         }
 
         function getAll() {
-            return $firebaseArray(getRef().child(credentials.arenaID));
+            return $firebaseArray(getRef().child(subdomainService.arena));
         }
 
         function getReserva(id) {
-            return $firebaseArray(getRef().child(credentials.arenaID + '/' + id));
+            return $firebaseArray(getRef().child(subdomainService.arena + '/' + id));
         }
 
         function getByQuadra(quadraId) {
-            var ref = getRef().child(credentials.arenaID).orderByChild('quadra').startAt(quadraId).endAt(quadraId);
+            var ref = getRef().child(subdomainService.arena).orderByChild('quadra').startAt(quadraId).endAt(quadraId);
             return $firebaseArray(ref);
         }
 
         function getByType() {
             var refAvulsas = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                credentials.arenaID).orderByChild('tipo').equalTo(1);
+                subdomainService.arena).orderByChild('tipo').equalTo(1);
             var refMensalistas = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                credentials.arenaID).orderByChild('tipo').equalTo(2);
+                subdomainService.arena).orderByChild('tipo').equalTo(2);
             var refEscolinha = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                credentials.arenaID).orderByChild('tipo').equalTo(3);
+                subdomainService.arena).orderByChild('tipo').equalTo(3);
 
             return {
                 avulsas: $firebaseArray(refAvulsas),
@@ -221,22 +194,22 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
 
         function getAvulsas() {
-            var refAvulsas = getRef().child(credentials.arenaID).orderByChild('tipo').equalTo(1);
+            var refAvulsas = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(1);
             return $firebaseArray(refAvulsas);
         }
 
         function getMensalistas() {
-            var refMensalistas = getRef().child(credentials.arenaID).orderByChild('tipo').equalTo(2);
+            var refMensalistas = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(2);
             return $firebaseArray(refMensalistas);
         }
 
         function getEscolinhas() {
-            var refEscolinha = getRef().child(credentials.arenaID).orderByChild('tipo').equalTo(3);
+            var refEscolinha = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(3);
             return $firebaseArray(refEscolinha);
         }
     }
 
-    function contatosService(Ref, $firebaseArray, $firebaseObject, credentials, FilteredArray) {
+    function contatosService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
         var service = {
             getRef : getRef,
             getContato: getContato,
@@ -253,22 +226,22 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
 
         function getContato(id) {
-            return $firebaseObject(getRef().child(credentials.arenaID + '/' + id));
+            return $firebaseObject(getRef().child(subdomainService.arena + '/' + id));
         }
 
         function getContatos() {
-            return $firebaseArray(getRef().child(credentials.arenaID));
+            return $firebaseArray(getRef().child(subdomainService.arena));
         }
 
         function searchContatos(fn) {
-            var ref = getRef().child(credentials.arenaID);
+            var ref = getRef().child(subdomainService.arena);
             return new FilteredArray(ref, fn);
         }
 
         function getContatosArena() {
             var norm = new Firebase.util.NormalizedCollection(
               [Ref.child('/perfil/'), 'perfil'],
-              [Ref.child('/arenas/' + credentials.arenaID + '/contatos'), 'arena']
+              [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
             ).select(
               'perfil.nome',
               'perfil.telefone',
@@ -290,7 +263,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         function getContatosArenaLight() {
             var norm = new Firebase.util.NormalizedCollection(
               [Ref.child('/perfil/'), 'perfil'],
-              [Ref.child('/arenas/' + credentials.arenaID + '/contatos'), 'arena']
+              [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
             ).select(
               'perfil.nome',
               'arena.$value',
@@ -307,7 +280,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
     }
 
-    function repository(Ref, $firebaseArray, $firebaseObject, credentials) {
+    function repository(Ref, $firebaseArray, $firebaseObject, subdomainService) {
         var service = {
             getArena: getArena,
 
@@ -324,44 +297,44 @@ app.factory('FilteredArray', function($firebaseArray) {
         return service;
 
         function getArena() {
-            return $firebaseObject(Ref.child('arenas/' + credentials.arenaID));
+            return $firebaseObject(Ref.child('arenas/' + subdomainService.arena));
         }
 
         function getQuadra(id) {
-            return $firebaseObject(Ref.child('quadras/' + credentials.arenaID + '/' + id));
+            return $firebaseObject(Ref.child('quadras/' + subdomainService.arena + '/' + id));
         }
 
         function getQuadras() {
-            return $firebaseArray(Ref.child('quadras/' + credentials.arenaID));
+            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena));
         }
 
         function getReserva(id) {
-            return $firebaseObject(Ref.child('pelada/' + credentials.arenaID + '/' + id));
+            return $firebaseObject(Ref.child('pelada/' + subdomainService.arena + '/' + id));
         }
 
         function getReservas() {
-            return $firebaseArray(Ref.child('pelada/' + credentials.arenaID));
+            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena));
         }
 
         function getReservasAvulsas() {
-            return $firebaseArray(Ref.child('pelada/' + credentials.arenaID).orderByChild('tipo').equalTo(1));
+            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(1));
         }
 
         function getReservasMensais() {
-            return $firebaseArray(Ref.child('pelada/' + credentials.arenaID).orderByChild('tipo').equalTo(2));
+            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(2));
         }
 
         function getReservasEscola() {
-            return $firebaseArray(Ref.child('pelada/' + credentials.arenaID).orderByChild('tipo').equalTo(3));
+            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(3));
         }
 
         function getPreco(quadraId, id) {
             return $firebaseObject(
-                Ref.child('quadras/' + credentials.arenaID + '/' + quadraId + '/funcionamento/' + id));
+                Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id));
         }
 
         function getPrecos(quadraId) {
-            return $firebaseArray(Ref.child('quadras/' + credentials.arenaID + '/' + quadraId + '/funcionamento/'));
+            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
         }
     }
 
