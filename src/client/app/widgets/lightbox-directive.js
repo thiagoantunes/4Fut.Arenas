@@ -12,7 +12,7 @@
             link: function(scope, element) {
                 element.lightGallery({
                     enableTouch: true
-                }); 
+                });
             }
         };
     }

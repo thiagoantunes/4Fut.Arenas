@@ -4,7 +4,8 @@
     angular.module('app.arena', [
         'app.core',
         'app.widgets',
-        'ngTable',
         'blockUI',
+        'ngMap',
+        'ngImgCrop'
      ]);
 })();

@@ -5,7 +5,6 @@
         'app.core',
         'app.widgets',
         'mgo-angular-wizard',
-        'ngTable',
         'ui.utils.masks'
       ]);
 })();

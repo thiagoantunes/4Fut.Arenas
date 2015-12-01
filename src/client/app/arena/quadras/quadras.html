@@ -1,0 +1,121 @@
+<div class="pmb-block">
+    <div class="row">
+        <div class="col-md-4" ng-repeat="q in vm.quadras">
+            <div class="well well-sm card-quadra" ng-class="[q.color + '-bdr']" >
+                <div class="row" >
+                    <div class="col-md-12">
+                        <h4>
+                            {{q.nome}}
+                        </h4>
+                    </div>
+                    <div class="col-md-4">
+                        <b>Tipo de Piso</b> <br/> {{ q.tipo }}
+                    </div>
+                    <div class="col-md-4">
+                        <b>Capacidade</b> <br/> {{ q.capacidade }}
+                    </div>
+                    <div class="col-md-4">
+                        <b>Coberta</b> <br/> {{ q.coberta }}
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default btn-sm " ng-click="vm.openPrecosModal(q)">
+                                  <i class="zmdi zmdi-money"></i>&nbsp;Preços
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="vm.novaQuadra = q; vm.edicao = true;" data-animation="am-fade-and-slide-top" data-template-url="novaQuadraModal.html" bs-modal="modal">
+                                  <i class="zmdi zmdi-edit"></i>&nbsp;Editar
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm " ng-click="vm.quadras.$remove(q)">
+                                  <i class="zmdi zmdi-delete"></i>&nbsp;Excluir
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well well-sm card-new-reg" data-animation="am-fade-and-slide-top" ng-click="vm.novaQuadra = {}; vm.edicao = false;" data-template-url="novaQuadraModal.html" bs-modal="modal">
+                    <i class="zmdi zmdi-plus-square"></i> Nova Quadra
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="novaQuadraModal.html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="$hide(); vm.novaQuadra = {}"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Nova Quadra</h4>
+                </div>
+                <form class="form-horizontal" name="quadraForm" ng-submit="vm.salvarNovaQuadra(); $hide(); vm.novaQuadra = {}" novalidate>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group required">
+                                    <label for="inputNome" class="col-sm-3 control-label">Nome</label>
+                                    <div class="col-sm-8">
+                                        <div class="fg-line">
+                                            <input id="inputNome" required name="nome" type="text" placeholder="Nome para identificar a quadra" ng-model="vm.novaQuadra.nome" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescricao" class="col-sm-3 control-label">Capacidade</label>
+                                    <div class="col-sm-8">
+                                        <div class="fg-line">
+                                            <input id="inputDescricao" name="capacidade" type="number" placeholder="Até quantos jogadores de cada lado?" ng-model="vm.novaQuadra.capacidade" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescricao" class="col-sm-3 control-label">Coberta?</label>
+                                    <div class="col-sm-8">
+                                        <label class="checkbox checkbox-inline m-t-10 m-r-20">
+                                            <input type="checkbox" ng-model="vm.novaQuadra.coberta" ng-checked="vm.novaQuadra.coberta">
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescricao" class="col-sm-3 control-label">Tipo de Piso</label>
+                                    <div class="col-sm-8">
+
+                                        <div class="fg-line">
+                                            <select chosen="{width: '100%'}" ng-model="vm.novaQuadra.tipo"  disable-search="true" class="form-control" >
+                                                <option value="Sintético">Sintético</option>
+                                                <option value="Grama">Grama</option>
+                                                <option value="Areia">Areia</option>
+                                                <option value="Cimento">Cimento</option>
+                                                <option value="Taco">Taco</option>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <label for="inputDescricao" class="col-sm-3 control-label">Cor da Quadra</label>
+                                    <div class="col-sm-8">
+                                        <small>Selecione uma cor para representar a quadra no sistema</small>
+                                        <div class="event-tag" data-ng-class="{ 'active': vm.novaQuadra.color }">
+                                            <span data-ng-repeat="cor in vm.cores" data-tag="{{ cor }}" class="{{ cor }}" data-ng-class="{ 'selected': vm.novaQuadra.color === cor }" data-ng-click="vm.novaQuadra.color = cor;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" ng-disabled="quadraForm.$invalid" class="btn btn-primary btn-sm m-t-10">Salvar</button>
+                        <button  type="button" ng-click='$hide(); vm.novaQuadra = {}' class="btn btn-default btn-sm m-t-10">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>

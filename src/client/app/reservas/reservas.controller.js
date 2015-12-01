@@ -6,7 +6,9 @@
         .module('app.reservas')
         .controller('ReservasCtrl', ReservasCtrl);
 
-    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig ,$popover, blockUI) {
+    ReservasCtrl.$inject = ['$scope', 'quadraService', 'reservasService' , 'contatosService' ,'uiCalendarConfig' , '$popover' ,'blockUI' , '$modal'];
+
+    function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig ,$popover, blockUI, $modal) {
         var vm = this;
         vm.quadras = quadraService.getQuadras();
         vm.contatos = contatosService.getContatosArenaLight();
@@ -17,9 +19,11 @@
         vm.novaReserva = {};
         vm.reservaSelecionada = {};
         vm.horarioLivre = false;
-        vm.loadReservas = loadReservas;
+        vm.refreshCalendar = refreshCalendar;
         vm.atualizaDisponibilidade = atualizaDisponibilidade;
         vm.salvarReservaAvulsa = salvarReservaAvulsa;
+        vm.openPrecosModal = openPrecosModal;
+        vm.gotoDate = gotoDate;
 
         activate();
 
@@ -46,7 +50,9 @@
                     //  eventDrop: eventDrop,
                     select: eventSelect,
                     eventClick: eventClick,
-                    eventRender: eventRender
+                    eventRender: eventRender,
+                    viewRender: viewRender,
+                    gotoDate : gotoDate
                 }
             };
 
@@ -60,29 +66,31 @@
                     ativa: true
                 });
             });
-
-            getReservas();
-
-            vm.reservas.$loaded(function() {
-                vm.eventSources.push(vm.reservas);
-            });
         }
 
-        function loadReservas() {
+        function getReservas(start, end) {     
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
-            getReservas();
-
+            vm.reservas = reservasService.getFilteredArray(filterFunc, start , end);
             vm.reservas.$loaded(function() {
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
             });
         }
 
-        function getReservas() {
-            vm.reservas = reservasService.getFilteredArray(function(rec) {
-                var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
+        function filterFunc(rec) {
+            var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
+            return _.some(qdrs, {'$id': rec.quadra});
+        }
 
-                return _.some(qdrs, {'$id': rec.quadra});
-            });
+        function refreshCalendar() {
+            var start = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start._d.getTime();
+            var end = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end._d.getTime();
+
+            getReservas(start, end);
+        }
+
+        function viewRender(view, element){
+
+            getReservas(view.start._d.getTime(), view.end._d.getTime());
         }
 
         function eventSelect(start, end, jsEvent, view) {
@@ -99,7 +107,6 @@
             });
             vm.novaReserva = {
                 responsavel : {},
-                quadra : vm.quadras[0],
                 dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
                     moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
                 start : start._d,
@@ -107,7 +114,7 @@
                 placement : placement
             };
 
-            atualizaDisponibilidade();
+            //atualizaDisponibilidade();
             popover.$promise.then(popover.show);
         }
 
@@ -172,32 +179,30 @@
                 end : vm.novaReserva.end.getTime(),
                 responsavel : vm.novaReserva.responsavel.$id
             }).then(function(ref) {
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
             });
         }
 
-        // vm.openNovaPeladaModal = function(date) {
-        //     var modalInstance = $uibModal.open({
-        //         animation: true,
-        //         templateUrl: 'modalPelada.html',
-        //         controller: 'ModalReservaCtrl',
-        //         controllerAs:'vm',
-        //         resolve: {
-        //             data: function () {
-        //                 return {
-        //                     title : 'Nova Pelada',
-        //                     date : date,
-        //                 };
-        //             }
-        //         }
-        //     });
+        function openPrecosModal(q) {
+            $modal({
+                controllerAs: 'vm',
+                controller: 'PrecosCtrl',
+                templateUrl: 'app/arena/quadras/precos/precos.html',
+                resolve: {
+                    quadra: function() {
+                        return {
+                            id: q.$id,
+                            color: q.color
+                        };
+                    }
+                }
+            });
+        }
 
-        //     modalInstance.result.then(function (selectedItem) {
-        //         }, function () {
-        //     });
-        // };
+        function gotoDate(date){
+            uiCalendarConfig.calendars.reservasCalendar.fullCalendar('gotoDate', date);
+        }
     }
 
     // function ModalReservaCtrl($scope, $modalInstance, data, quadraFactory, peladaFactory) {

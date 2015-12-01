@@ -11,7 +11,6 @@
         $scope.register = 0;
         $scope.forgot = 0;
 
-        
         $scope.oauthLogin = function(provider) {
             $scope.err = null;
             Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: 'email'}).then(redirect, showError);
@@ -80,11 +79,11 @@
 
             arena.once('value', function(snapshot) {
                 if (snapshot.hasChild('staff/' + user.uid)) {
-                    if(snapshot.val().configurado){
+                    if (snapshot.val().configurado) {
                         $location.path('/admin/reservas');
                         $scope.$apply();
                     }
-                    else{
+                    else {
                         $location.path('/admin/setup-arena');
                         $scope.$apply();
                     }

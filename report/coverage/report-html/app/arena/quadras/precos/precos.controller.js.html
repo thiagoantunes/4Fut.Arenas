@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app/arena/quadras/precos/precos.controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../../prettify.css">
+    <link rel="stylesheet" href="../../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">app/arena/quadras/precos/precos.controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">17.14% <small>(12 / 70)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">6.25% <small>(1 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">17.14% <small>(12 / 70)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">app/arena/quadras/precos/</a> &#187; precos.controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global $:false */
+(function() {
+    'use strict';
+    angular
+    .module('app.arena')
+    .controller('PrecosCtrl', PrecosCtrl);
+    PrecosCtrl.$inject = ['$scope', 'quadra' , 'funcionamentoService', 'uiCalendarConfig'  , '$popover' , 'blockUI'];
+    /* @ngInject */
+<span class="fstat-no" title="function not covered" >    function PrecosCtrl($scope, quadra, funcionamentoService, uiCalendarConfig, $popover , blockUI) {</span>
+<span class="cstat-no" title="statement not covered" >        var vm = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        vm.precos = [];</span>
+<span class="cstat-no" title="statement not covered" >        vm.eventSources = [[]];</span>
+<span class="cstat-no" title="statement not covered" >        vm.precoMaximo = 0;</span>
+<span class="cstat-no" title="statement not covered" >        vm.precoMinimo = 0;</span>
+<span class="cstat-no" title="statement not covered" >        vm.precoMedio = 0;</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarNovoPreco = salvarNovoPreco;</span>
+<span class="cstat-no" title="statement not covered" >        vm.uiConfig = {</span>
+            calendar: {
+                minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                businessHours: {
+                    start: '10:00',
+                    end: '24:00',
+                    dow: [0, 1, 2, 3, 4, 5, 6]
+                },
+                height: 'auto',
+                timeFormat: 'H(:mm)',
+                header: false,
+                defaultView: 'agendaWeek',
+                firstHour: 9,
+                allDaySlot: false,
+                timezone: 'local',
+                axisFormat: 'H:mm',
+                columnFormat: {
+                    week: 'dddd'
+                },
+                editable: true,
+                eventOverlap: false,
+                selectable: true,
+                selectOverlap: false,
+                selectHelper: true,
+                eventResize: eventResize,
+                eventDrop: eventDrop,
+                select: eventSelect,
+                eventClick: eventClick,
+                eventRender: eventRender,
+                unselectCancel: '.precoForm',
+            }
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        activate();</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function activate() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.precos = funcionamentoService.getPrecos(quadra.id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.precos.$loaded(<span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;</span>
+<span class="cstat-no" title="statement not covered" >                vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;</span>
+<span class="cstat-no" title="statement not covered" >                vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;</span>
+<span class="cstat-no" title="statement not covered" >                vm.eventSources.push(vm.precos);</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventResize(event, delta, revertFunc) {</span>
+<span class="cstat-no" title="statement not covered" >            blockUI.start();</span>
+<span class="cstat-no" title="statement not covered" >            var preco = _.find(vm.precos, {</span>
+                $id: event.$id
+            });
+<span class="cstat-no" title="statement not covered" >            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');</span>
+<span class="cstat-no" title="statement not covered" >            vm.precos.$save(preco).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >                blockUI.stop();</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventDrop(event, delta, revertFunc) {</span>
+<span class="cstat-no" title="statement not covered" >            blockUI.start();</span>
+<span class="cstat-no" title="statement not covered" >            var preco = _.find(vm.precos, {</span>
+                $id: event.$id
+            });
+<span class="cstat-no" title="statement not covered" >            preco.start = moment(preco.start, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');</span>
+<span class="cstat-no" title="statement not covered" >            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');</span>
+<span class="cstat-no" title="statement not covered" >            preco.dow = moment(preco.dow[0], 'd').add(delta._days, 'days').format('d');</span>
+<span class="cstat-no" title="statement not covered" >            vm.precos.$save(preco).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >                blockUI.stop();</span>
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventSelect(start, end, jsEvent, view) {</span>
+<span class="cstat-no" title="statement not covered" >            var element = $(jsEvent.target).closest('.fc-event');</span>
+<span class="cstat-no" title="statement not covered" >            var placement = (jsEvent.clientY &lt; 320) ? 'bottom' : 'top';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var popover = $popover(element, {</span>
+                placement: placement,
+                title:'',
+                templateUrl: 'app/arena/quadras/precos/novo-preco.html',
+                container: '#mdlPreco',
+                autoClose: 1,
+                scope: $scope
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.novoPreco = {</span>
+                start : moment(start._d).format('HH:mm'),
+                end : moment(end._d).format('HH:mm'),
+                dow: start._d.getDay().toString(),
+                precoAvulso : '',
+                precoMensalista : ''
+            };
+<span class="cstat-no" title="statement not covered" >            vm.dataLabel = moment(start).format('ddd') + ' de ' +</span>
+            moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            popover.$promise.then(popover.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventClick(calEvent, jsEvent, view) {</span>
+<span class="cstat-no" title="statement not covered" >            var left =  jsEvent.pageX - $('.modal-dialog').css('margin-left').replace('px', '') -  ($('.popover').width() / 2) ;</span>
+<span class="cstat-no" title="statement not covered" >            var top = (jsEvent.pageY - 15);</span>
+<span class="cstat-no" title="statement not covered" >            $('.popover').attr('style' , 'top: ' +</span>
+                top + 'px; left: ' +
+                left + 'px; display: block; visibility: visible; background:#fff');
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function eventRender(event, element) {</span>
+<span class="cstat-no" title="statement not covered" >            var quadraColor = quadra.color;</span>
+<span class="cstat-no" title="statement not covered" >            var barato = Math.abs(event.precoAvulso - vm.precoMinino);</span>
+<span class="cstat-no" title="statement not covered" >            var medio = Math.abs(event.precoAvulso - vm.precoMedio);</span>
+<span class="cstat-no" title="statement not covered" >            var caro = Math.abs(event.precoAvulso - vm.precoMaximo);</span>
+<span class="cstat-no" title="statement not covered" >            event.id = event.$id;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            element.css('color', '#fff');</span>
+<span class="cstat-no" title="statement not covered" >            element.css('border-radius', '4px');</span>
+<span class="cstat-no" title="statement not covered" >            element.css('font-weight', 'bold');</span>
+<span class="cstat-no" title="statement not covered" >            element.css('margin-top', '2px');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (barato &lt; medio &amp;&amp; barato &lt; caro) {</span>
+<span class="cstat-no" title="statement not covered" >                element.context.classList.add(quadraColor + '-l');</span>
+            } else <span class="cstat-no" title="statement not covered" >if (medio &lt; barato &amp;&amp; medio &lt; caro) {</span>
+<span class="cstat-no" title="statement not covered" >                element.context.classList.add(quadraColor);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                element.context.classList.add(quadraColor + '-d');</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $popover(element, {</span>
+                placement: 'bottom',
+                title:'',
+                templateUrl: 'app/arena/quadras/precos/novo-preco.html',
+                container: '#mdlPreco',
+                autoClose: 1,
+                scope: $scope
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function isValidPrice(eventData, end, dow) {</span>
+<span class="cstat-no" title="statement not covered" >            return _.every(dow, <span class="fstat-no" title="function not covered" >function(d) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return _.every(vm.precos, <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    return f.$id !== eventData.$id ||</span>
+                    f.dow[0] !== d ||
+                    (eventData.start &gt;= f.end || eventData.end &lt;= f.start);
+                });
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function salvarNovoPreco() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.novoPreco.title = 'A:  R$ ' +</span>
+            vm.novoPreco.precoAvulso +
+            '  |  ' + 'M: R$ ' + vm.novoPreco.precoMensalista;
+<span class="cstat-no" title="statement not covered" >            vm.precos.$add(vm.novoPreco).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);</span>
+            });
+        }
+&nbsp;
+    }
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 24 2015 01:06:25 GMT-0200 (BRST)</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

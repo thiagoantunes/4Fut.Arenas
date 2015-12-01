@@ -92,16 +92,37 @@
 /* 
  * Material Background Colors
  */
-@array: c-white bgm-white bgm-white-l bgm-white-d @m-white @m-white-l @m-white-d, c-black bgm-black bgm-black-l bgm-black-d @m-black @m-black-l @m-black-d, c-brown bgm-brown bgm-brown-l bgm-brown-d @m-brown @m-brown-l @m-brown-d, c-pink bgm-pink bgm-pink-l bgm-pink-d @m-pink @m-pink-l @m-pink-d, c-red bgm-red bgm-red-l bgm-red-d @m-red @m-red-l @m-red-d, c-blue bgm-blue bgm-blue-l bgm-blue-d @m-blue @m-blue-l @m-blue-d, c-purple bgm-purple bgm-purple-l bgm-purple-d @m-purple @m-purple-l @m-purple-d, c-deeppurple bgm-deeppurple bgm-deeppurple-l bgm-deeppurple-d @m-deeppurple @m-deeppurple-l @m-deeppurple-d, c-lightblue bgm-lightblue bgm-lightblue-l bgm-lightblue-d @m-lightblue @m-lightblue-l @m-lightblue-d, c-cyan bgm-cyan bgm-cyan-l bgm-cyan-d @m-cyan @m-cyan-l @m-cyan-d, c-teal bgm-teal bgm-teal-l bgm-teal-d @m-teal @m-teal-l @m-teal-d, c-green bgm-green bgm-green-l bgm-green-d @m-green @m-green-l @m-green-d, c-lightgreen bgm-lightgreen bgm-lightgreen-l bgm-lightgreen-d @m-lightgreen @m-lightgreen-l @m-lightgreen-d, c-lime bgm-lime bgm-lime-l bgm-lime-d @m-lime @m-lime-l @m-lime-d, c-yellow bgm-yellow bgm-yellow-l bgm-yellow-d @m-yellow @m-yellow-l @m-yellow-d, c-amber bgm-amber bgm-amber-l bgm-amber-d @m-amber @m-amber-l @m-amber-d, c-orange bgm-orange bgm-orange-l bgm-orange-d @m-orange @m-orange-l @m-orange-d, c-deeporange bgm-deeporange bgm-deeporange-l bgm-deeporange-d @m-deeporange @m-deeporange-l @m-deeporange-d, c-gray bgm-gray bgm-gray-l bgm-gray-d @m-gray @m-gray-l @m-gray-d, c-bluegray bgm-bluegray bgm-bluegray-l bgm-bluegray-d @m-bluegray @m-bluegray-l @m-bluegray-d, c-indigo bgm-indigo bgm-indigo-l bgm-indigo-d @m-indigo @m-indigo-l @m-indigo-d;
+@array: 
+bgm-white-bdr c-white bgm-white bgm-white-l bgm-white-d @m-white @m-white-l @m-white-d, 
+bgm-black-bdr c-black bgm-black bgm-black-l bgm-black-d @m-black @m-black-l @m-black-d, 
+bgm-brown-bdr c-brown bgm-brown bgm-brown-l bgm-brown-d @m-brown @m-brown-l @m-brown-d, 
+bgm-pink-bdr c-pink bgm-pink bgm-pink-l bgm-pink-d @m-pink @m-pink-l @m-pink-d, 
+bgm-red-bdr c-red bgm-red bgm-red-l bgm-red-d @m-red @m-red-l @m-red-d, 
+bgm-blue-bdr c-blue bgm-blue bgm-blue-l bgm-blue-d @m-blue @m-blue-l @m-blue-d, 
+bgm-purple-bdr c-purple bgm-purple bgm-purple-l bgm-purple-d @m-purple @m-purple-l @m-purple-d, 
+bgm-lightblue-bdr c-lightblue bgm-lightblue bgm-lightblue-l bgm-lightblue-d @m-lightblue @m-lightblue-l @m-lightblue-d, 
+bgm-cyan-bdr c-cyan bgm-cyan bgm-cyan-l bgm-cyan-d @m-cyan @m-cyan-l @m-cyan-d, 
+bgm-teal-bdr c-teal bgm-teal bgm-teal-l bgm-teal-d @m-teal @m-teal-l @m-teal-d, 
+bgm-green-bdr c-green bgm-green bgm-green-l bgm-green-d @m-green @m-green-l @m-green-d, 
+bgm-lightgreen-bdr c-lightgreen bgm-lightgreen bgm-lightgreen-l bgm-lightgreen-d @m-lightgreen @m-lightgreen-l @m-lightgreen-d, 
+bgm-lime-bdr c-lime bgm-lime bgm-lime-l bgm-lime-d @m-lime @m-lime-l @m-lime-d, 
+bgm-yellow-bdr c-yellow bgm-yellow bgm-yellow-l bgm-yellow-d @m-yellow @m-yellow-l @m-yellow-d, 
+bgm-amber-bdr c-amber bgm-amber bgm-amber-l bgm-amber-d @m-amber @m-amber-l @m-amber-d, 
+bgm-orange-bdr c-orange bgm-orange bgm-orange-l bgm-orange-d @m-orange @m-orange-l @m-orange-d, 
+bgm-deeporange-bdr c-deeporange bgm-deeporange bgm-deeporange-l bgm-deeporange-d @m-deeporange @m-deeporange-l @m-deeporange-d, 
+bgm-gray-bdr c-gray bgm-gray bgm-gray-l bgm-gray-d @m-gray @m-gray-l @m-gray-d, 
+bgm-bluegray-bdr c-bluegray bgm-bluegray bgm-bluegray-l bgm-bluegray-d @m-bluegray @m-bluegray-l @m-bluegray-d, 
+bgm-indigo-bdr c-indigo bgm-indigo bgm-indigo-l bgm-indigo-d @m-indigo @m-indigo-l @m-indigo-d;
 
 .for(@array); .-each(@value) {
-    @name:  extract(@value, 1);
-    @name2:  extract(@value, 2);
-    @name3:  extract(@value, 3);
-    @name4:  extract(@value, 4);
-    @color: extract(@value, 5); 
-    @color2: extract(@value, 6); 
-    @color3: extract(@value, 7); 
+    @name0:  extract(@value, 1);
+    @name:  extract(@value, 2);
+    @name2:  extract(@value, 3);
+    @name3:  extract(@value, 4);
+    @name4:  extract(@value, 5);
+    @color: extract(@value, 6); 
+    @color2: extract(@value, 7); 
+    @color3: extract(@value, 8); 
     &.@{name2} {
         background-color: @color !important;
     }
@@ -116,6 +137,10 @@
     
     &.@{name} {
         color: @color !important;
+    }
+
+    &.@{name0}{
+        border-color: @color !important;
     }
 } 
 

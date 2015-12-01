@@ -1,0 +1,46 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Novo Contato</h4>
+			</div>
+			<form class="form-horizontal" name="contatoForm" ng-submit="vm.salvarContato(); $hide()" novalidate>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group required">
+								<label for="inputNome" class="col-sm-3 control-label">Nome</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputNome" required name="nome" type="text" ng-model="vm.contatoSelecionado.nome" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+                                <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-8">
+                                    <div class="fg-line">
+                                        <input id="inputEmail" name="email" type="email" ng-model="vm.contatoSelecionado.email" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label for="inputCelular" class="col-sm-3 control-label">Telefone</label>
+                                <div class="col-sm-8">
+                                    <div class="fg-line">
+                                        <input id="inputCelular" ng-minlength="10" name="telefone" ui-br-phone-number type="text" ng-model="vm.contatoSelecionado.telefone" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+						</div>  
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary btn-sm m-t-10">Salvar</button>
+					<button  type="button" ng-click="$hide()" class="btn btn-default btn-sm m-t-10">Cancelar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

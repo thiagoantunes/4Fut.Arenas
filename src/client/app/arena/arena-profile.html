@@ -11,7 +11,7 @@
                 <dt class="p-t-10">Nome</dt>
                 <dd>
                     <div class="fg-line">
-                        <input data-ng-model="vm.nome" type="text" class="form-control" value="{{ vm.nome }}" placeholder="ex: Arena Fantastica">
+                        <input data-ng-model="arena.nome" type="text" class="form-control" placeholder="ex: Arena Fantastica">
                     </div>
 
                 </dd>
@@ -20,7 +20,7 @@
                 <dt class="p-t-10">Descrição</dt>
                 <dd>
                     <div class="fg-line">
-                        <textarea data-ng-model="vm.descricao" class="form-control" rows="5" placeholder="ex: Essa é a melhor arena do Brasil porquê....">{{vm.descricao}}</textarea>
+                        <textarea data-ng-model="arena.descricao" class="form-control" rows="5" placeholder="ex: Essa é a melhor arena do Brasil porquê...."></textarea>
                     </div>
 
                 </dd>
@@ -41,7 +41,7 @@
             <dt class="p-t-10">Telefone</dt>
                 <dd>
                     <div class="fg-line">
-                        <input data-ng-model="vm.telefone" type="text" class="form-control" placeholder="ex: (031) 1111-1111">
+                        <input data-ng-model="arena.telefone" ng-minlength="10" type="text" ui-br-phone-number  class="form-control" placeholder="ex: (031) 1111-1111">
                     </div>
                 </dd>
             </dl>
@@ -49,7 +49,7 @@
                 <dt class="p-t-10">Celular</dt>
                 <dd>
                     <div class="fg-line">
-                        <input data-ng-model="vm.celular" type="text" class="form-control" placeholder="ex: (031) 1111-1111">
+                        <input data-ng-model="arena.celular" ng-minlength="10" name="telefone" ui-br-phone-number type="text" class="form-control" placeholder="ex: (031) 1111-1111">
                     </div>
                 </dd>
             </dl>
@@ -57,7 +57,7 @@
                 <dt class="p-t-10">Email</dt>
                 <dd>
                     <div class="fg-line">
-                        <input data-ng-model="vm.email" type="email" class="form-control" placeholder="ex: arena.fantastica@gmail.com">
+                        <input data-ng-model="arena.email" type="email" class="form-control" placeholder="ex: arena.fantastica@gmail.com">
                     </div>
                 </dd>
             </dl>
@@ -65,7 +65,7 @@
                 <dt class="p-t-10">Site</dt>
                 <dd>
                     <div class="fg-line">
-                        <input data-ng-model="vm.site" type="text" class="form-control" placeholder="ex: aernafantastica.com.br">
+                        <input data-ng-model="arena.site" type="text" class="form-control" placeholder="ex: aernafantastica.com.br">
                     </div>
                 </dd>
             </dl>
@@ -76,35 +76,22 @@
 
 <div class="pmb-block">
     <div class="pmbb-header">
-        <h2><i class="zmdi zmdi-pin m-r-5"></i> Endereço : {{ vm.endereco }}</h2>
+        <h2><i class="zmdi zmdi-pin m-r-5"></i> Endereço : {{ arena.endereco }}</h2>
     </div>
     <div class="pmbb-body p-l-30">
 
-        <form class="pmbb-edit" >
-            <script type="text/ng-template" id="searchbox.tpl.html">
-                <input  type="text" class="googleMapsSearch" placeholder="Digite o endereço para encontrar no mapa">
-            </script>
-
-            <ui-gmap-google-map
-                center="map.center" 
-                zoom="map.zoom"
-                bounds="map.bounds"
-                options="map.options">
-
-                 <ui-gmap-search-box 
-                    options="searchbox.options" 
-                    template="searchbox.template"
-                    events="searchbox.events">
-                </ui-gmap-search-box>
-
-                 <ui-gmap-marker 
-                    idKey="marker.id" 
-                    models="map.markers"
-                    coords="marker.coords" 
-                    options="marker.options">
-                </ui-gmap-marker>
-
-            </ui-gmap-google-map> 
+        <form class="pmbb-edit form-group" >
+            <div map-lazy-load="http://maps.googleapis.com/maps/api/js?libraries=places">
+            <input places-auto-complete size=80
+                ng-model="arena.endereco"
+                component-restrictions="{country:'br'}"
+                types="address"
+                placeholder="Digite o endereço para encontrar no mapa"
+                class="googleMapsSearch" /> <br/>
+                <ng-map center="{{arena.endereco | mapsAddress}}">
+                    <marker position="{{arena.endereco | mapsAddress}}" title="{{arena.endereco}}" centered="true"></marker>
+                </ng-map>
+            </div>
         </form>
     </div>
 </div>

@@ -2,7 +2,8 @@
 	<div class="col-md-2">
 		<button 
 		type="submit" 
-		ng-click='vm.openNovaPeladaModal();' 
+		data-animation="am-fade-and-slide-top" 
+		data-template-url="modalPelada.html" bs-modal
 		class="btn btn-danger col-md-12 p-10 m-t-20 m-b-20"> <i class="zmdi zmdi-calendar"></i>
 		Nova Reserva
 	</button>
@@ -24,10 +25,10 @@
 					</div>
 				</div>
 				<div class="days">
-					<div class="{{day.classes}}" ng-repeat="day in days">
-						<div class="event-indicator" ng-show="day.events.length" ng-click="showEvents(day.events)">{{day.events.length}}
+					<div class="{{day.classes}}"  ng-repeat="day in days">
+						<div ng-click="vm.gotoDate(day.date)">
+							{{day.day}}
 						</div>
-						{{day.day}}
 					</div>
 				</div>
 			</div>
@@ -36,17 +37,20 @@
 	<div class="row quadras">
 		<h5>Quadras</h5>
 		<div class="qdr">
-			<a class="qdr-item" ng-repeat="qdr in vm.selecaoQuadras" ng-click="qdr.ativa = !qdr.ativa ; vm.loadReservas();" href="">
+			<div class="qdr-item" ng-repeat="qdr in vm.selecaoQuadras"  >
 				<div class="media">
-					<div class="quadra-tag pull-left p-relative">
+					<div class="quadra-tag pull-left p-relative" ng-click="qdr.ativa = !qdr.ativa ; vm.refreshCalendar();">
 						<span data-ng-class="{ '{{qdr.quadra.color}}': qdr.ativa , 'bgm-gray' :!qdr.ativa }"></span>
+					</div>
+					<div class="pull-right p-relative"  data-title="Editar preços da quadra" bs-tooltip ng-click="vm.openPrecosModal(qdr.quadra)">
+						<i class="zmdi zmdi-edit"></i>
 					</div>
 					<div class="media-body">
 						<div class="qdr-title" ng-class="{ 'quadra-inativa': !qdr.ativa }">{{qdr.quadra.nome}}
 						</div>
 					</div>
 				</div>
-			</a>
+			</div>
 		</div>
 	</div>
 </div>
@@ -60,157 +64,159 @@
 </div>
 </div>
 
+
 <script type="text/ng-template" id="modalPelada.html">
-	<div class="modal-header">
-		<h3 class="modal-title">{{vm.title}}</h3>
-	</div>
-	<form class="form-horizontal" ng-submit="submitPelada()">
-		<div class="modal-body">
-			<div class="form-group">
-				<div class="col-sm-12">
-					<div class="fg-line">
-						<div class="btn-group btn-group-justified" ng-model="vm.reservaRadio" bs-radio-group>
-							<label class="btn btn-primary"><input type="radio" value="1">Avulsa</label>
-							<label class="btn btn-primary"><input type="radio" vabrlue="2">Mensalista</label>
-							<label class="btn btn-primary"><input type="radio" value="3">Escola</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="card" ng-show="vm.reservaRadio == 2">
-				<div class="card-body card-padding">
-					<label for="inputTime" class=" control-label">Selecione os dias da semana</label>
-					<br/><br/>
-					<div>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option1"> <i class="input-helper"></i>
-							Seg
-						</label>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option2"> <i class="input-helper"></i>
-							Ter
-						</label>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option3">
-							<i class="input-helper"></i>
-							Quar
-						</label>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option3">
-							<i class="input-helper"></i>
-							Qui
-						</label>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option3">
-							<i class="input-helper"></i>
-							Sex
-						</label>
-						<label class="checkbox checkbox-inline m-r-20">
-							<input type="checkbox" value="option3">
-							<i class="input-helper"></i>
-							Sab
-						</label>
-					</div>
-					<br/>
-					<label for="inputTime" class=" control-label">Selecione a frequencia</label>
-					<br/><br/>
-					<div>
-						<label class="radio radio-inline m-r-20">
-							<input type="radio" name="inlineRadioOptions" value="option1">
-							<i class="input-helper"></i>
-							Semanal
-						</label>
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                	<h3 class="modal-title">{{vm.title}}</h3>
+                </div>
+                <form class="form-horizontal" ng-submit="submitPelada()">
+                	<div class="modal-body">
+                		<div class="form-group">
+                			<div class="col-sm-12">
+                				<div class="fg-line">
+                					<div class="btn-group btn-group-justified" ng-model="vm.reservaRadio" bs-radio-group>
+                						<label class="btn btn-primary"><input type="radio" value="1">Avulsa</label>
+                						<label class="btn btn-primary"><input type="radio" vabrlue="2">Mensalista</label>
+                						<label class="btn btn-primary"><input type="radio" value="3">Escola</label>
+                					</div>
+                				</div>
+                			</div>
+                		</div>
+                		<div class="card" ng-show="vm.reservaRadio == 2">
+                				<div class="card-body card-padding">
+                					<label for="inputTime" class=" control-label">Selecione os dias da semana</label>
+                					<br/><br/>
+                					<div>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option1"> <i class="input-helper"></i>
+                							Seg
+                						</label>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option2"> <i class="input-helper"></i>
+                							Ter
+                						</label>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option3">
+                							<i class="input-helper"></i>
+                							Quar
+                						</label>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option3">
+                							<i class="input-helper"></i>
+                							Qui
+                						</label>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option3">
+                							<i class="input-helper"></i>
+                							Sex
+                						</label>
+                						<label class="checkbox checkbox-inline m-r-20">
+                							<input type="checkbox" value="option3">
+                							<i class="input-helper"></i>
+                							Sab
+                						</label>
+                					</div>
+                					<br/>
+                					<label for="inputTime" class=" control-label">Selecione a frequencia</label>
+                					<br/><br/>
+                					<div>
+                						<label class="radio radio-inline m-r-20">
+                							<input type="radio" name="inlineRadioOptions" value="option1">
+                							<i class="input-helper"></i>
+                							Semanal
+                						</label>
 
-						<label class="radio radio-inline m-r-20">
-							<input type="radio" name="inlineRadioOptions" value="option2">
-							<i class="input-helper"></i>
-							Quinzenal
-						</label>
+                						<label class="radio radio-inline m-r-20">
+                							<input type="radio" name="inlineRadioOptions" value="option2">
+                							<i class="input-helper"></i>
+                							Quinzenal
+                						</label>
 
-						<label class="radio radio-inline m-r-20">
-							<input type="radio" name="inlineRadioOptions" value="option3">
-							<i class="input-helper"></i>
-							Mensal
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="zmdi zmdi-pin-drop"></i></span>
-						<div class="fg-line">
-							<select chosen="{width: '100%'}" disable-search="true" ng-change='vm.getPreco();'  data-placeholder="Selecione uma quadra..." ng-model="vm.quadraSelecionada" class="form-control" ng-options="quadra.nome for quadra in vm.quadras">
-								<option value=""></option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<!-- <div class="col-sm-4">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
-						<div class="date-picker input-group dp-blue" ng-class="{ 'is-opened': opened == true }">
-							<div class="fg-line" ng-class="{ 'fg-toggled': opened == true }">
-								<input ng-click="vm.openDatepicker($event, 'opened')" ng-change='vm.getPreco();'  show-button-bar="false"  type="text" class="form-control" placeholder="Dia" uib-datepicker-popup="dd/MM/yyyy"  show-weeks="false" ng-model="vm.date" is-open="opened" />		
-							</div>
-						</div>
-					</div>
-				</div> -->
-				
-				<div class="col-sm-4">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="zmdi zmdi-time"></i></span>
-						<div class="fg-line">
-							<input type="time" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.date" placeholder="Início">
-						</div>
-					</div>
-				</div>
+                						<label class="radio radio-inline m-r-20">
+                							<input type="radio" name="inlineRadioOptions" value="option3">
+                							<i class="input-helper"></i>
+                							Mensal
+                						</label>
+                					</div>
+                				</div>
+                		</div>
+                		<div class="row">
+                				<div class="col-sm-12">
+                					<div class="input-group">
+                						<span class="input-group-addon"><i class="zmdi zmdi-pin-drop"></i></span>
+                						<div class="fg-line">
+                							<select chosen="{width: '100%'}" disable-search="true" ng-change='vm.getPreco();'  data-placeholder="Selecione uma quadra..." ng-model="vm.quadraSelecionada" class="form-control" ng-options="quadra.nome for quadra in vm.quadras">
+                								<option value=""></option>
+                							</select>
+                						</div>
+                					</div>
+                				</div>
+                		</div>
+                		<br/>
+                		<div class="row">
+                				<!-- <div class="col-sm-4">
+                					<div class="input-group">
+                						<span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                						<div class="date-picker input-group dp-blue" ng-class="{ 'is-opened': opened == true }">
+                							<div class="fg-line" ng-class="{ 'fg-toggled': opened == true }">
+                								<input ng-click="vm.openDatepicker($event, 'opened')" ng-change='vm.getPreco();'  show-button-bar="false"  type="text" class="form-control" placeholder="Dia" uib-datepicker-popup="dd/MM/yyyy"  show-weeks="false" ng-model="vm.date" is-open="opened" />		
+                							</div>
+                						</div>
+                					</div>
+                				</div> -->
+                				
+                				<div class="col-sm-4">
+                					<div class="input-group">
+                						<span class="input-group-addon"><i class="zmdi zmdi-time"></i></span>
+                						<div class="fg-line">
+                							<input type="time" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.date" placeholder="Início">
+                						</div>
+                					</div>
+                				</div>
 
-				<div class="col-sm-4">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="zmdi zmdi-time-interval"></i></span>
-						<div class="fg-line">
-							<input type="number" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.duracao" placeholder="Duração">
-						</div>
-					</div>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="input-group" >
-						<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
-						<div class="fg-line">
-							<input type="text" class="form-control" placeholder="Responsável">
-						</div>
-					</div>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="input-group" >
-						<span class="input-group-addon"><i class="zmdi zmdi-money-box"></i></span>
-						<div class="fg-line">
-							<input type="text" class="form-control" ng-model="vm.funcionamento.precoAvulso" placeholder="Valor">
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
-
-		</div>
-		<div class="modal-footer">
-			<button type="submit" ng-click='vm.salvar();' class="btn btn-primary btn-sm m-t-10">Salvar</button>
-			<button  ng-click='vm.cancel();' class="btn btn-default btn-sm m-t-10">Cancelar</button>
-		</div>
-	</form>
+                				<div class="col-sm-4">
+                					<div class="input-group">
+                						<span class="input-group-addon"><i class="zmdi zmdi-time-interval"></i></span>
+                						<div class="fg-line">
+                							<input type="number" class="form-control" ng-change='vm.getPreco();'  ng-model="vm.duracao" placeholder="Duração">
+                						</div>
+                					</div>
+                				</div>
+                		</div>
+                		<br/>
+                		<div class="row">
+                				<div class="col-sm-12">
+                					<div class="input-group" >
+                						<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                						<div class="fg-line">
+                							<input type="text" class="form-control" placeholder="Responsável">
+                						</div>
+                					</div>
+                				</div>
+                		</div>
+                		<br/>
+                		<div class="row">
+                				<div class="col-sm-12">
+                					<div class="input-group" >
+                						<span class="input-group-addon"><i class="zmdi zmdi-money-box"></i></span>
+                						<div class="fg-line">
+                							<input type="text" class="form-control" ng-model="vm.funcionamento.precoAvulso" placeholder="Valor">
+                						</div>
+                					</div>
+                				</div>
+                		</div>
+                	</div>
+                	<div class="modal-footer">
+                		<button type="submit" ng-click='vm.salvar();' class="btn btn-primary btn-sm m-t-10">Salvar</button>
+                		<button  ng-click='vm.cancel();' class="btn btn-default btn-sm m-t-10">Cancelar</button>
+                	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/ng-template" id="popupNovaReserva.html">
@@ -262,11 +268,11 @@
 				</div>
 
 				<div class="col-sm-6 ppo-reserva-footer">
-					<div ng-if="vm.novaReserva.preco == undefined && vm.horarioLivre" class="no-price">
+					<div ng-if="vm.novaReserva.quadra != undefined && vm.novaReserva.preco == undefined && vm.horarioLivre" class="no-price">
 						<i class="zmdi zmdi-alert-triangle"> Quadra sem preço definido para este horário</i>
 					</div>
 
-					<div ng-if="!vm.horarioLivre" class="no-room">
+					<div ng-if="vm.novaReserva.quadra != undefined && !vm.horarioLivre" class="no-room">
 						<i class="zmdi zmdi-alert-triangle"> Horário ocupado para esta quadra!</i>
 					</div>
 

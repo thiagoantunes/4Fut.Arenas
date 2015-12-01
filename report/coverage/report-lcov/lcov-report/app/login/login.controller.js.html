@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/login/login.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">17.39% <small>(8 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">16.33% <small>(8 / 49)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">6.67% <small>(1 / 15)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">17.39% <small>(8 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">16.33% <small>(8 / 49)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/login/</a> &#187; login.controller.js</div>
@@ -121,7 +121,13 @@
 94
 95
 96
-97</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+97
+98
+99
+100
+101
+102
+103</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -129,6 +135,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -196,8 +207,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -207,6 +216,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -224,7 +236,12 @@
       .module('app.login')
       .controller('LoginCtrl', LoginCtrl);
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, $cookies) {</span>
+<span class="fstat-no" title="function not covered" >    function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, subdomainService) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.login = 1;</span>
+<span class="cstat-no" title="statement not covered" >        $scope.register = 0;</span>
+<span class="cstat-no" title="statement not covered" >        $scope.forgot = 0;</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >        $scope.oauthLogin = <span class="fstat-no" title="function not covered" >function(provider) {</span></span>
 <span class="cstat-no" title="statement not covered" >            $scope.err = null;</span>
 <span class="cstat-no" title="statement not covered" >            Auth.$authWithOAuthPopup(provider, {rememberMe: true , scope: 'email'}).then(redirect, showError);</span>
@@ -289,22 +306,23 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function redirect(user) {</span>
-<span class="cstat-no" title="statement not covered" >            var account = Ref.child('users/' + user.uid);</span>
+<span class="cstat-no" title="statement not covered" >            var arena = Ref.child('arenas/' + subdomainService.arena);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            $cookies.put('userID', angular.isUndefined(user.uid) ? null : user.uid);</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >            account.once('value', <span class="fstat-no" title="function not covered" >function(snapshot) {</span></span>
-<span class="cstat-no" title="statement not covered" >                if (snapshot.hasChild('arena')) {</span>
-<span class="cstat-no" title="statement not covered" >                    $cookies.put('arenaID', angular.isUndefined(snapshot.val().arena) ? null : snapshot.val().arena);</span>
-<span class="cstat-no" title="statement not covered" >                    $location.path('/arenas/reservas');</span>
-<span class="cstat-no" title="statement not covered" >                    $scope.$apply();</span>
+<span class="cstat-no" title="statement not covered" >            arena.once('value', <span class="fstat-no" title="function not covered" >function(snapshot) {</span></span>
+<span class="cstat-no" title="statement not covered" >                if (snapshot.hasChild('staff/' + user.uid)) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (snapshot.val().configurado) {</span>
+<span class="cstat-no" title="statement not covered" >                        $location.path('/admin/reservas');</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.$apply();</span>
+                    }
+                    else {
+<span class="cstat-no" title="statement not covered" >                        $location.path('/admin/setup-arena');</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.$apply();</span>
+                    }
                 }
                 else {
-<span class="cstat-no" title="statement not covered" >                    $location.path('/account');</span>
-<span class="cstat-no" title="statement not covered" >                    $scope.$apply();</span>
+<span class="cstat-no" title="statement not covered" >                    Auth.$unauth();</span>
                 }
             });
-&nbsp;
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function showError(err) {</span>
@@ -318,7 +336,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 05 2015 23:59:34 GMT-0200 (BRST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 24 2015 01:06:25 GMT-0200 (BRST)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

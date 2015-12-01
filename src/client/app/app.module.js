@@ -11,9 +11,9 @@
         'app.arena',
         'app.reservas',
         'app.login',
-        'app.nova-arena',
         'app.setup-arena',
-        'app.sistema-arena'
+        'app.sistema-arena',
+        'app.escolinhas'
     ]);
 
 })();

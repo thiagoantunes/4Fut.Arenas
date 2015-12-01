@@ -11,11 +11,11 @@
             restrict: 'C',
             link: function(scope, element) {
                 if ($('.fg-line')[0]) {
-                    $('body').on('focus', '.form-control', function() {
+                    $('html').on('focus', '.form-control', function() {
                         $(this).closest('.fg-line').addClass('fg-toggled');
                     });
 
-                    $('body').on('blur', '.form-control', function() {
+                    $('html').on('blur', '.form-control', function() {
                         var p = $(this).closest('.form-group');
                         var i = p.find('.form-control').val();
 

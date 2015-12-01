@@ -24,14 +24,7 @@ app.factory('FilteredArray', function($firebaseArray) {
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
         .factory('contatosService', contatosService)
-        .factory('repository', repository)
-        .factory('peladaFactory', peladaFactory)
-        .factory('quadraFactory', quadraFactory)
         .factory('arenaFactory', arenaFactory);
-
-    function cache($cacheFactory) {
-        return $cacheFactory('appCache');
-    }
 
     function quadraService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
         var service = {
@@ -67,6 +60,7 @@ app.factory('FilteredArray', function($firebaseArray) {
               'quadra.color',
               'quadra.tipo',
               'quadra.capacidade',
+              'quadra.coberta',
               'arena.$value',
               {'key':'arena.$value','alias':'fkArena'}
             ).ref();
@@ -160,8 +154,8 @@ app.factory('FilteredArray', function($firebaseArray) {
             return Ref.child('reservas');
         }
 
-        function getFilteredArray(fn) {
-            var ref = getRef().child(subdomainService.arena);
+        function getFilteredArray(fn, start, end) {
+            var ref = getRef().child(subdomainService.arena).orderByChild('start').startAt(start).endAt(end);
             return new FilteredArray(ref, fn);
         }
 
@@ -278,89 +272,6 @@ app.factory('FilteredArray', function($firebaseArray) {
 
             return $firebaseArray(joinedRef);
         }
-    }
-
-    function repository(Ref, $firebaseArray, $firebaseObject, subdomainService) {
-        var service = {
-            getArena: getArena,
-
-            getQuadra: getQuadra,
-            getQuadras: getQuadras,
-
-            getReserva: getReserva,
-            getReservas: getReservas,
-
-            getPreco: getPreco,
-            getPrecos: getPrecos,
-        };
-
-        return service;
-
-        function getArena() {
-            return $firebaseObject(Ref.child('arenas/' + subdomainService.arena));
-        }
-
-        function getQuadra(id) {
-            return $firebaseObject(Ref.child('quadras/' + subdomainService.arena + '/' + id));
-        }
-
-        function getQuadras() {
-            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena));
-        }
-
-        function getReserva(id) {
-            return $firebaseObject(Ref.child('pelada/' + subdomainService.arena + '/' + id));
-        }
-
-        function getReservas() {
-            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena));
-        }
-
-        function getReservasAvulsas() {
-            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(1));
-        }
-
-        function getReservasMensais() {
-            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(2));
-        }
-
-        function getReservasEscola() {
-            return $firebaseArray(Ref.child('pelada/' + subdomainService.arena).orderByChild('tipo').equalTo(3));
-        }
-
-        function getPreco(quadraId, id) {
-            return $firebaseObject(
-                Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id));
-        }
-
-        function getPrecos(quadraId) {
-            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
-        }
-    }
-
-    function peladaFactory($firebaseArray) {
-        return function(arena) {
-            var refAvulsas = new Firebase('https://pelapp.firebaseio.com/reservas/' + arena)
-            .orderByChild('tipo').equalTo(1);
-            var refMensalistas = new Firebase('https://pelapp.firebaseio.com/reservas/' + arena)
-            .orderByChild('tipo').equalTo(2);
-            var refEscolinha = new Firebase('https://pelapp.firebaseio.com/reservas/' + arena)
-            .orderByChild('tipo').equalTo(3);
-
-            return {
-                avulsas: $firebaseArray(refAvulsas),
-                mensalistas: $firebaseArray(refMensalistas),
-                escolinhas: $firebaseArray(refEscolinha)
-            };
-        };
-    }
-
-    function quadraFactory($firebaseArray) {
-        return function(arena) {
-            var ref = new Firebase('https://pelapp.firebaseio.com/quadras/' + arena);
-
-            return $firebaseArray(ref);
-        };
     }
 
     function arenaFactory($firebaseObject) {
