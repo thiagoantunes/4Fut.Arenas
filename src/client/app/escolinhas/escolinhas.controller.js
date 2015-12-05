@@ -6,32 +6,79 @@
         .module('app.reservas')
         .controller('EscolinhasCtrl', EscolinhasCtrl);
 
-    EscolinhasCtrl.$inject = ['$scope' , 'quadraService'];
+    EscolinhasCtrl.$inject = [
+        '$scope' ,
+        '$modal',
+        'quadraService' ,
+        'contatosService',
+        'escolinhaService'
+    ];
 
-    function EscolinhasCtrl($scope, quadraService) {
+    function EscolinhasCtrl($scope, $modal,quadraService, contatosService, escolinhaService) {
         var vm = this;
+        vm.turmas = escolinhaService.getTurmas();
         vm.quadras = quadraService.getQuadras();
+        vm.professores = contatosService.getContatosArenaLight();
+        vm.salvarNovaTurma = salvarNovaTurma;
+        vm.showNovaTurmaModal = showNovaTurmaModal;
+        vm.hideNovaTurmaModal = hideNovaTurmaModal;
+        vm.novaTurmaModal = $modal({
+            scope: $scope,
+            templateUrl: 'novaTurmaModal.html',
+            animation:'am-fade-and-slide-top' ,
+            show: false
+        });
 
         activate();
 
         function activate() {
-            
+
+            initDiasSemana();
         }
 
-        $scope.panels = [
-          {
-            "title": "Collapsible Group Item #1",
-            "body": "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch."
-          },
-          {
-            "title": "Collapsible Group Item #2",
-            "body": "Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee."
-          },
-          {
-            "title": "Collapsible Group Item #3",
-            "body": "Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade."
-          }
-        ];
+        function showNovaTurmaModal() {
+
+            vm.novaTurmaModal.$promise.then(vm.novaTurmaModal.show);
+        }
+
+        function hideNovaTurmaModal() {
+            initDiasSemana();
+            vm.novaTurma = {};
+            vm.novaTurmaModal.$promise.then(vm.novaTurmaModal.hide);
+        }
+
+        function salvarNovaTurma() {
+
+            vm.turma = {
+                quadra: vm.novaTurma.quadra.$id,
+                professor: vm.novaTurma.professor.$id,
+                horaInicio : moment(vm.novaTurma.horaInicio).format('HH:mm'),
+                horaFim : moment(vm.novaTurma.horaFim).format('HH:mm'),
+                dataInicio : vm.novaTurma.dataInicio.getTime(),
+                dataFim : vm.novaTurma.dataFim.getTime(),
+                dow : _.pluck(_.filter(vm.diasSemana, {
+                    'ativo': true
+                }), 'dia')
+            };
+
+            escolinhaService.criarTurma(vm.turmas, vm.turma).then(function() {
+                hideNovaTurmaModal();
+            },function(error) {
+                alert('Failed: ' + error);
+            });
+        }
+
+        function initDiasSemana() {
+            vm.diasSemana = [
+                {dia: 0, ativo: false},
+                {dia: 1, ativo: false},
+                {dia: 2, ativo: false},
+                {dia: 3, ativo: false},
+                {dia: 4, ativo: false},
+                {dia: 5, ativo: false},
+                {dia: 6, ativo: false}
+            ];
+        }
     }
 
 })();

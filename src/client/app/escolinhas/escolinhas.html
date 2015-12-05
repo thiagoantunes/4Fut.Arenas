@@ -6,19 +6,15 @@
 					<h3>Cadastro de Turmas</h3>
 				</div>
 				<div class="col-md-6">
-					<button 
-					type="submit" 
-					data-animation="am-fade-and-slide-top" 
-					data-template-url="novaTurmaModal.html" bs-modal
-					class="btn btn-default pull-right m-t-15"> <i class="zmdi zmdi-plus"></i>
-					Nova Turma
-				</button>
+					<button type="button" ng-click="vm.showNovaTurmaModal();" class="btn btn-default pull-right m-t-15"> <i class="zmdi zmdi-plus"></i>
+						Nova Turma 
+					</button>
 			</div>
 		</div>
 	</div>
 	<div class="card-body card-padding">
 		<div class="panel-group" data-start-collapsed="true" data-allow-multiple="true" role="tablist" aria-multiselectable="true" bs-collapse>
-			<div class="panel panel-default" ng-repeat="panel in panels">
+			<div class="panel panel-default" ng-repeat="turma in vm.turmas">
 				<div class="panel-heading" role="tab">
 					<div class="row">
 						<div class="col-md-11 col-sm-10 p-t-10">
@@ -33,17 +29,18 @@
 							</div>
 						</div>
 						<div class="col-md-1 col-sm-1">
-							<button bs-collapse-toggle class="btn btn-link col-md-12 col-sm-12 p-15"> <i class="zmdi zmdi-chevron-down zmdi-hc-2x"></i></button>
+							<button bs-collapse-toggle class="btn btn-link col-md-12 col-sm-12 p-15"> <i class="zmdi zmdi-chevron-down zmdi-hc-2x"></i></	button>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="panel-collapse" role="tabpanel" bs-collapse-target>
-					<div class="panel-body">
-						{{ panel.body }}
-						<div class="row">
-							<div class="col-md-12">
-								<div class="well well-sm ">
-									<i class="zmdi zmdi-plus-square"></i> Nova Quadra
+					<div class="panel-collapse" role="tabpanel" bs-collapse-target>
+						<div class="panel-body">
+							{{ turma }}
+							<div class="row">
+								<div class="col-md-12">
+									<div class="well well-sm ">
+										<i class="zmdi zmdi-plus-square"></i> Nova Quadra
+									</div>
 								</div>
 							</div>
 						</div>
@@ -52,108 +49,125 @@
 			</div>
 		</div>
 	</div>
-</div>
 </section>
 
 <script type="text/ng-template" id="novaTurmaModal.html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" aria-label="Close" ng-click="$hide(); vm.novaQuadra = {}"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nova Turma</h4>
-                </div>
-                <form class="form-horizontal" name="quadraForm" ng-submit="vm.salvarNovaQuadra(); $hide(); vm.novaQuadra = {}" novalidate>
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="form-group required">
-                                    <label for="inputNome" class="col-sm-2 control-label">Quadra</label>
-                                    <div class="col-sm-9">
-                                        <div class="fg-line">
-                                            <select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder="Selecione uma quadra..." name="quadra" ng-model="vm.novaReserva.quadra" ng-options="quadra.nome for quadra in vm.quadras">
-                                            	<option value=""></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDescricao" class="col-sm-2 control-label">Professor</label>
-                                    <div class="col-sm-9">
-                                        <div class="fg-line">
-                                            <select id="inputParticipantes" chosen="{width: '100%'}" name="resp" required data-placeholder="Selecione o professor..." ng-model="vm.novaReserva.responsavel" ng-options="contato.nome for contato in vm.contatos">
-                                            	<option value=""></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputInicio" class="col-sm-2 control-label">Horário de Início</label>
-                                    <div class="col-sm-3">
-                                        <div class="fg-line">
-                                            <input id="inputInicio" name="inicio" type="text" size="8" ng-model="vm.novaTurma.inicio" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="15" data-arrow-behavior="picker" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <label for="inputFim" class="col-sm-2 control-label">Horário de Término</label>
-                                    <div class="col-sm-3">
-                                        <div class="fg-line">
-                                            <input id="inputFim" name="fim" type="text" size="8" ng-model="vm.novaTurma.fim" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="15" data-arrow-behavior="picker" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDescricao" class="col-sm-2 control-label">Dias na semana</label>
-                                    <div class="col-sm-9">
-                                        <div class="fg-line p-t-15">
-                                            <div>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option1"> 
-                                            		<i class="input-helper"></i>
-                                            		Seg
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option2"> 
-                                            		<i class="input-helper"></i>
-                                            		Ter
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option3">
-                                            		<i class="input-helper"></i>
-                                            		Quar
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option3">
-                                            		<i class="input-helper"></i>
-                                            		Qui
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option3">
-                                            		<i class="input-helper"></i>
-                                            		Sex
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option3">
-                                            		<i class="input-helper"></i>
-                                            		Sab
-                                            	</label>
-                                            	<label class="checkbox checkbox-inline">
-                                            		<input type="checkbox" value="option3">
-                                            		<i class="input-helper"></i>
-                                            		Dom
-                                            	</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>  
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" ng-disabled="quadraForm.$invalid" class="btn btn-primary btn-sm m-t-10">Salvar</button>
-                        <button  type="button" ng-click='$hide(); vm.novaQuadra = {}' class="btn btn-default btn-sm m-t-10">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" aria-label="Close" ng-click="$hide(); vm.novaTurma = {}"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Nova Turma</h4>
+				</div>
+				<form class="form-horizontal" name="turmaForm" ng-submit="vm.salvarNovaTurma(); " novalidate>
+					<div class="modal-body">
+						<div class="card-body">
+							<div class="row">
+								<div class="form-group">
+									<label for="inputNome" class="col-sm-2 control-label">Quadra</label>
+									<div class="col-sm-9">
+										<div class="fg-line">
+											<select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder="Selecione uma quadra..." name="quadra" ng-model="vm.novaTurma.quadra" ng-options="quadra.nome for quadra in vm.quadras">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputDescricao" class="col-sm-2 control-label">Professor</label>
+									<div class="col-sm-9">
+										<div class="fg-line">
+											<select id="inputParticipantes" chosen="{width: '100%'}" name="resp" required data-placeholder="Selecione o professor..." ng-model="vm.novaTurma.professor" ng-options="professor.nome for professor in vm.professores">
+												<option value=""></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputDataInicio" class="col-sm-4 control-label">Data de Início</label>
+									<div class="col-sm-8">
+										<div class="fg-line">
+											<input id="inputDataInicio" disable-valid-styling="true" name="dataFim" type="text" required class="form-control" ng-model="vm.novaTurma.dataInicio" data-max-date="{{vm.novaTurma.dataFim}}" placeholder="Início das aulas" bs-datepicker />
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputDataFim" class="col-sm-5 control-label">Data de Término</label>
+									<div class="col-sm-7">
+										<div class="fg-line">
+											<input id="inputDataFim" disable-valid-styling="true" name="dataInicio" type="text" required class="form-control" ng-model="vm.novaTurma.dataFim" data-min-date="{{vm.novaTurma.dataInicio}}" placeholder="Término das aulas" bs-datepicker />
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputHoraInicio" class="col-sm-4 control-label">Horário de Início</label>
+									<div class="col-sm-8">
+										<div class="fg-line">
+											<input id="inputHoraInicio" disable-valid-styling="true" name="horaInicionicio" type="text" required size="8" ng-model="vm.novaTurma.horaInicio" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="15" data-arrow-behavior="picker" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputHoraFim" class="col-sm-5 control-label">Horário de Término</label>
+									<div class="col-sm-7">
+										<div class="fg-line">
+											<input id="inputHoraFim" disable-valid-styling="true" name="horaFim" type="text" size="8" required ng-model="vm.novaTurma.horaFim" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="15" data-arrow-behavior="picker" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group" >
+									<label for="inputDescricao" class="col-sm-2 control-label">Dias na semana</label>
+									<div class="col-sm-9">
+										<div class="fg-line p-t-15">
+											<div>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[0].ativo'> 
+													<i class="input-helper"></i>
+													Dom
+												</label>
+												<label class="checkbox checkbox-inline">
+												<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[1].ativo'> 
+													<i class="input-helper"></i>
+													Seg
+												</label>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[2].ativo'>
+													<i class="input-helper"></i>
+													Ter
+												</label>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[3].ativo'>
+													<i class="input-helper"></i>
+													Qua
+												</label>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[4].ativo'>
+													<i class="input-helper"></i>
+													Qui
+												</label>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[5].ativo'>
+													<i class="input-helper"></i>
+													Sex
+												</label>
+												<label class="checkbox checkbox-inline">
+													<input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[6].ativo'>
+													<i class="input-helper"></i>
+													Sab
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>  
+						</div>  
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm m-t-10">Salvar</button>
+						<button  type="button" ng-click='$hide(); vm.novaTurma = {}' class="btn btn-default btn-sm m-t-10">Cancelar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </script>

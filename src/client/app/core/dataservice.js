@@ -1,30 +1,31 @@
-var app = angular.module('app.core');
 
-app.factory('FilteredArray', function($firebaseArray) {
-    function FilteredArray(ref, filterFn) {
-        this.filterFn = filterFn;
-        return $firebaseArray.call(this, ref);
-    }
-    FilteredArray.prototype.$$added = function(snap) {
-        var rec = $firebaseArray.prototype.$$added.call(this, snap);
-        if (!this.filterFn || this.filterFn(rec)) {
-            return rec;
-        }
-    };
-    return $firebaseArray.$extend(FilteredArray);
-});
 
 (function() {
     'use strict';
 
     angular
         .module('app.core')
+        .factory('filteredArray', filteredArray)
         .factory('arenaService', arenaService)
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
         .factory('contatosService', contatosService)
-        .factory('arenaFactory', arenaFactory);
+        .factory('escolinhaService', escolinhaService);
+
+    function filteredArray($firebaseArray) {
+        function filteredArray(ref, filterFn) {
+            this.filterFn = filterFn;
+            return $firebaseArray.call(this, ref);
+        }
+        filteredArray.prototype.$$added = function(snap) {
+            var rec = $firebaseArray.prototype.$$added.call(this, snap);
+            if (!this.filterFn || this.filterFn(rec)) {
+                return rec;
+            }
+        };
+        return $firebaseArray.$extend(filteredArray);
+    }
 
     function quadraService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
         var service = {
@@ -133,19 +134,16 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
     }
 
-    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
+    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, filteredArray, $q) {
         var service = {
             getRef: getRef,
 
             getAll : getAll,
             getFilteredArray : getFilteredArray,
             getReserva: getReserva,
-            getByQuadra : getByQuadra,
-            getByType : getByType,
 
-            getAvulsas : getAvulsas,
-            getMensalistas : getMensalistas,
-            getEscolinhas : getEscolinhas
+            verificaHorarioPeriodo: verificaHorarioPeriodo,
+            verificaHorario : verificaHorario
         };
 
         return service;
@@ -156,7 +154,7 @@ app.factory('FilteredArray', function($firebaseArray) {
 
         function getFilteredArray(fn, start, end) {
             var ref = getRef().child(subdomainService.arena).orderByChild('start').startAt(start).endAt(end);
-            return new FilteredArray(ref, fn);
+            return new filteredArray(ref, fn);
         }
 
         function getAll() {
@@ -167,43 +165,33 @@ app.factory('FilteredArray', function($firebaseArray) {
             return $firebaseArray(getRef().child(subdomainService.arena + '/' + id));
         }
 
-        function getByQuadra(quadraId) {
-            var ref = getRef().child(subdomainService.arena).orderByChild('quadra').startAt(quadraId).endAt(quadraId);
-            return $firebaseArray(ref);
+        function verificaHorarioPeriodo(reserva){
+            var deferred = $q.defer();
+
+            var result = true;
+            var ref = getRef().child(subdomainService.arena)
+                .orderByChild('start').startAt(reserva.dataInicio).endAt(reserva.dataFim);
+
+            ref.once('value', function(data) {
+                _.forEach(data.val(), function(data){
+                    var dow = moment(data.start)._d.getDay();
+                    var start = moment(data.start).format('HHmm');
+                    var end = moment(data.end).format('HHmm');
+                    if(_.some(reserva.dow, dow) && ( ( reserva.start <= end <= reserva.end) || (reserva.start <= start <= reserva.end) ){
+                        result = false;
+                    }
+                });
+                deferred.resolve(result); 
+            }); 
+            return deferred.promise;  
         }
 
-        function getByType() {
-            var refAvulsas = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                subdomainService.arena).orderByChild('tipo').equalTo(1);
-            var refMensalistas = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                subdomainService.arena).orderByChild('tipo').equalTo(2);
-            var refEscolinha = new Firebase('https://pelapp.firebaseio.com/reservas/' +
-                subdomainService.arena).orderByChild('tipo').equalTo(3);
+        function verificaHorario(inicio, fim, quadra){
 
-            return {
-                avulsas: $firebaseArray(refAvulsas),
-                mensalistas: $firebaseArray(refMensalistas),
-                escolinhas: $firebaseArray(refEscolinha)
-            };
-        }
-
-        function getAvulsas() {
-            var refAvulsas = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(1);
-            return $firebaseArray(refAvulsas);
-        }
-
-        function getMensalistas() {
-            var refMensalistas = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(2);
-            return $firebaseArray(refMensalistas);
-        }
-
-        function getEscolinhas() {
-            var refEscolinha = getRef().child(subdomainService.arena).orderByChild('tipo').equalTo(3);
-            return $firebaseArray(refEscolinha);
         }
     }
 
-    function contatosService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
+    function contatosService(Ref, $firebaseArray, $firebaseObject, subdomainService, filteredArray) {
         var service = {
             getRef : getRef,
             getContato: getContato,
@@ -229,7 +217,7 @@ app.factory('FilteredArray', function($firebaseArray) {
 
         function searchContatos(fn) {
             var ref = getRef().child(subdomainService.arena);
-            return new FilteredArray(ref, fn);
+            return new filteredArray(ref, fn);
         }
 
         function getContatosArena() {
@@ -274,12 +262,83 @@ app.factory('FilteredArray', function($firebaseArray) {
         }
     }
 
-    function arenaFactory($firebaseObject) {
-        return function(arena) {
-            var ref = new Firebase('https://pelapp.firebaseio.com/arenas/cesar');
-
-            return $firebaseObject(ref);
+    function escolinhaService(Ref, $firebaseArray, $firebaseObject, subdomainService, reservasService, $q) {
+        var service = {
+            getRef : getRef,
+            getTurmas : getTurmas,
+            criarTurma : criarTurma
         };
+
+        return service;
+
+        function getRef() {
+
+            return Ref.child('turmas');
+        }
+
+        function getTurmas() {
+
+            return $firebaseArray(getRef().child(subdomainService.arena));
+        }
+
+        function criarTurma(turmas, novaTurma) {
+
+            var deferred = $q.defer();
+
+            reservasService.verificaHorarioPeriodo(novaTurma).then(function(horarioValido){
+
+                if(horarioValido){
+                    turmas.$add(novaTurma).then(function(ref) {
+                        var turmaID = ref.key();
+                        var reservasTurma = {};
+
+                        _.forEach(novaTurma.dow, function(d) {
+                            var dataReserva = moment(novaTurma.dataInicio).day(d);
+
+                            while (dataReserva <= novaTurma.dataFim) {
+                                var reservaID = reservasService.getRef().child(subdomainService.arena).push().key();
+
+                                var dataF = moment(dataReserva).format('DD/MM/YYYY');
+                                var start = moment(dataF + novaTurma.horaInicio , 'DD/MM/YYYYHHmm')._d.getTime();
+                                var end = moment(dataF + novaTurma.horaFim , 'DD/MM/YYYYHHmm')._d.getTime();
+
+                                var reserva = {
+                                    turma : turmaID,
+                                    tipo : 2,
+                                    quadra: novaTurma.quadra,
+                                    start : start,
+                                    end : end,
+                                    responsavel : novaTurma.professor
+                                };
+
+                                reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
+                                reservasTurma['turmas/' + subdomainService.arena + '/' + turmaID + '/reservas/' +  reservaID] = true;
+
+                                dataReserva = moment(dataReserva).add(7,'days')._d;
+                            }
+                        });
+
+                        Ref.update(reservasTurma, function(error) {
+                            if (error) {
+                                deferred.reject('Erro ao cadastrar reservas');
+                            }
+                            else {
+                                deferred.resolve();
+                            }
+                        });
+                    }, function() {
+                        deferred.reject('Erro ao cadastrar nova turma');
+                    });
+                }
+                else{
+                    deferred.reject('Horário Ocupado!');
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
     }
 
 })();

@@ -6,7 +6,16 @@
         .module('app.reservas')
         .controller('ReservasCtrl', ReservasCtrl);
 
-    ReservasCtrl.$inject = ['$scope', 'quadraService', 'reservasService' , 'contatosService' ,'uiCalendarConfig' , '$popover' ,'blockUI' , '$modal'];
+    ReservasCtrl.$inject = [
+        '$scope',
+        'quadraService',
+        'reservasService' ,
+        'contatosService' ,
+        'uiCalendarConfig' ,
+        '$popover' ,
+        'blockUI' ,
+        '$modal'
+    ];
 
     function ReservasCtrl($scope, quadraService, reservasService, contatosService, uiCalendarConfig ,$popover, blockUI, $modal) {
         var vm = this;
@@ -68,10 +77,16 @@
             });
         }
 
-        function getReservas(start, end) {     
+        function getReservas(start, end) {
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
             vm.reservas = reservasService.getFilteredArray(filterFunc, start , end);
+
             vm.reservas.$loaded(function() {
+
+            });
+
+            vm.reservas.$watch(function(event) {
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
             });
         }
@@ -88,7 +103,7 @@
             getReservas(start, end);
         }
 
-        function viewRender(view, element){
+        function viewRender(view, element) {
 
             getReservas(view.start._d.getTime(), view.end._d.getTime());
         }
@@ -179,7 +194,6 @@
                 end : vm.novaReserva.end.getTime(),
                 responsavel : vm.novaReserva.responsavel.$id
             }).then(function(ref) {
-
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
             });
         }
@@ -200,7 +214,7 @@
             });
         }
 
-        function gotoDate(date){
+        function gotoDate(date) {
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('gotoDate', date);
         }
     }
