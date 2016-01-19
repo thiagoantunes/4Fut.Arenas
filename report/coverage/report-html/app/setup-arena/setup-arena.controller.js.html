@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/setup-arena/setup-arena.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">16% <small>(4 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">19.44% <small>(7 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">16.67% <small>(1 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">16% <small>(4 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">19.44% <small>(7 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/setup-arena/</a> &#187; setup-arena.controller.js</div>
@@ -76,7 +76,24 @@
 49
 50
 51
-52</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -84,12 +101,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,6 +120,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -121,6 +148,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,13 +168,16 @@
         .module('app.setup-arena')
         .controller('SetupArenaCtrl', SetupArenaCtrl);
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, arena) {</span>
+    SetupArenaCtrl.$inject = ['$scope', 'Ref', '$firebaseObject', '$firebaseArray' , 'user' , 'arena', '$modal', '$location'];
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, arena, $modal, $location) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        var arenaID = arena;</span>
 <span class="cstat-no" title="statement not covered" >        var userID = user.uid;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        vm.wellcomeMessage = true;</span>
+<span class="cstat-no" title="statement not covered" >        vm.modal = $modal({templateUrl: 'app/setup-arena/wizard-modal.html', show: true, backdrop: 'static', scope:$scope});</span>
         //vm.usuario = {
         //    nome: user.facebook.displayName,
         //    email: user.facebook.email,
@@ -151,6 +188,13 @@
 <span class="cstat-no" title="statement not covered" >        vm.quadras = $firebaseArray(Ref.child('quadras/' + arenaID));</span>
 <span class="cstat-no" title="statement not covered" >        vm.novaQuadra = {};</span>
 <span class="cstat-no" title="statement not covered" >        vm.addQuadra = addQuadra;</span>
+<span class="cstat-no" title="statement not covered" >        vm.concluirConfiguracao = concluirConfiguracao;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        activate();</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function activate() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.modal.$promise.then(vm.modal.show);</span>
+        }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function addQuadra() {</span>
 <span class="cstat-no" title="statement not covered" >            var quadraID = Ref.child('quadras').push().key();</span>
@@ -175,6 +219,13 @@
 <span class="cstat-no" title="statement not covered" >            vm.novaQuadra = {};</span>
         }
 &nbsp;
+<span class="fstat-no" title="function not covered" >        function concluirConfiguracao() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.arena.configurado = 'true';</span>
+<span class="cstat-no" title="statement not covered" >            vm.arena.$save();</span>
+<span class="cstat-no" title="statement not covered" >            vm.modal.$promise.then(vm.modal.hide);</span>
+<span class="cstat-no" title="statement not covered" >            $location.path('/admin/reservas');</span>
+        }
+&nbsp;
     }
 &nbsp;
 })();
@@ -183,7 +234,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 24 2015 01:06:25 GMT-0200 (BRST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 15 2016 19:22:07 GMT-0200 (BRST)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

@@ -5,16 +5,16 @@
         .module('app.admin')
         .controller('AdminController', AdminController);
 
-    AdminController.$inject = ['logger'];
+    AdminController.$inject = ['$scope', '$location', 'Auth'];
     /* @ngInject */
-    function AdminController(logger) {
+    function AdminController($scope, $location, Auth) {
         var vm = this;
-        vm.title = 'Admin';
+        vm.logout = function() {
+            Auth.$unauth();
+        };
 
-        activate();
-
-        function activate() {
-            logger.info('Activated Admin View');
-        }
+        $scope.isActive = function (viewLocation) {
+            return viewLocation === $location.path();
+        };
     }
 })();

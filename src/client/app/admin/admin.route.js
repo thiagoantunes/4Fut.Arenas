@@ -19,6 +19,8 @@
                     url: '/admin',
                     templateUrl: 'app/admin/admin.html',
                     redirectTo: 'admin.reservas',
+                    controller: 'AdminController',
+                    controllerAs: 'hctrl',
                 }
             }
         ];

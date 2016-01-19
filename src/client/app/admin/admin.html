@@ -1,8 +1,145 @@
-<header id="header"   data-ng-include="'/src/client/app/layout/header.html'" data-ng-controller="HeaderController as hctrl">
-</header>
+<header id="header">
+	<div ng-show-auth="" >
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid  container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header col-md-2">
+					<button type="button" class="navbar-toggle" ng-click="navbarCollapsed = !navbarCollapsed">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#"><img ng-src="images/4fut.png" style="height:45px; margin-top:-15px" alt=""></a>
+				</div>
+				<div class="collapse navbar-collapse" collapse="!navbarCollapsed">
+					<ul class="nav navbar-nav">
+						<li ng-class="{ active: isActive('/admin/dashboard')}">
+							<a href="#/admin/dashboard">DASHBOARD</a>
+						</li>
+						<li ng-class="{ active: isActive('/admin/reservas')}">
+							<a href="#/admin/reservas">RESERVAS</a>
+						</li>
+						<li ng-class="{ active: isActive('/admin/escolinhas')}">
+							<a href="#/admin/escolinhas">ESCOLINHAS</a>
+						</li>
+						<!-- <li class="dropdown">
+							<a bs-dropdown data-placement="bottom-left"  data-trigger="hover" data-container=".myButton" aria-expanded="false" class="tm-settings myButton" href="">
+								FINANCEIRO
+							</a>
+							<ul class="dropdown-menu dm-icon" role="menu">
+								<li>
+									<a href="/admin/arena/arena-profile">
+										<i class="zmdi zmdi-store"></i>
+										Avulsas
+									</a>
+								</li>
+								<li>
+									<a href="">
+										<i class="zmdi zmdi-accounts"></i>
+										Mensalistas
+									</a>
+								</li>
+								<li>
+									<a href="">
+										<i class="zmdi zmdi-laptop-chromebook"></i>
+										Escolinha
+									</a>
+								</li>
+							</ul>
+						</li> -->
+						<li ng-class="{ active: isActive('/admin/contatos')}">
+							<a href="#/admin/contatos">CONTATOS</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right top-menu">
+						<li class="dropdown">
+							<a bs-dropdown data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-notification" href=""> <i class="tmn-counts">9</i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right" role="menu">
+								<div class="listview" id="notifications">
+									<div class="lv-header">
+										Notification
+										<ul class="actions">
+											<li>
+												<a href="" data-ng-click="hctrl.clearNotification($event)">
+													<i class="zmdi zmdi-check-all"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="lv-body">
+										<a class="lv-item" ng-href="" ng-repeat="w in hctrl.messageResult.list">
+											<div class="media">
+												<div class="pull-left">
+													<img class="lv-img-sm" ng-src="img/profile-pics/{{ w.img }}" alt=""></div>
+													<div class="media-body">
+														<div class="lv-title">{{ w.user }}</div>
+														<small class="lv-small">{{ w.text }}</small>
+													</div>
+												</div>
+											</a>
+										</div>
 
-<section id="content" style="margin-top:-120px">
-    <div class="container">
-        <data class="page-view" data-ui-view></data>
-    </div>
-</section>
+										<div class="clearfix"></div>
+
+										<a class="lv-footer" href="">View Previous</a>
+									</div>
+
+								</div>
+							</li>
+							<li class="dropdown">
+								<a bs-dropdown data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-settings" href="">
+								</a>
+								<ul class="dropdown-menu dm-icon pull-right" role="menu">
+									<li>
+										<a href="#/admin/arena/arena-profile">
+											<i class="zmdi zmdi-store"></i>
+											Config. Arena
+										</a>
+									</li>
+									<li>
+										<a href="">
+											<i class="zmdi zmdi-accounts"></i>
+											Usuários do Sistema
+										</a>
+									</li>
+									<li>
+										<a href="">
+											<i class="zmdi zmdi-laptop-chromebook"></i>
+											Config. Sistema
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="dropdown"  style="height:55px" >
+								<a bs-dropdown  data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-profile" href="">
+									<img src="https://scontent-gru1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10525685_920901341304897_6903052953168543422_n.jpg?oh=f911c27973d49852218f0df910ecec8c&oe=56BF0768" alt=""></a>
+									<ul class="dropdown-menu dm-icon pull-right" role="menu">
+										<li>
+											<a href="">
+												<i class="zmdi zmdi-face"></i>
+												Perfil
+											</a>
+										</li>
+										<li>
+											<a data-ng-click="hctrl.logout()"  href="">
+												<i class="zmdi zmdi-power"></i>
+												Sair
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<section id="content" style="margin-top:-120px">
+			<div class="container">
+				<data class="page-view" data-ui-view></data>
+			</div>
+		</section>
+

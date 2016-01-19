@@ -17,7 +17,6 @@
                 state: 'admin.setup-arena',
                 config: {
                     url: '/setup-arena',
-                    templateUrl: 'app/setup-arena/setup-arena.html',
                     controller:'SetupArenaCtrl',
                     controllerAs:'vm'
                 }

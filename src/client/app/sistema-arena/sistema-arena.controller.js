@@ -9,17 +9,14 @@
     /* @ngInject */
     function SistemaArenaCtrl(Auth, Ref, $state, $location) {
         var vm = this;
-        vm.email = '';
-        vm.arena = '';
-        vm.responsavel = '';
-        vm.senha = '';
+        vm.novaArena = {};
         vm.redirectPath = '';
         vm.formSubmit = formSubmit;
 
         function formSubmit() {
             vm.err = null;
 
-            Ref.child('arenas/' + vm.arena).once('value', function(snap) {
+            Ref.child('arenas/' + vm.novaArena.arena).once('value', function(snap) {
                 if (snap.val() === null) {
                     createAccount();
                 }
@@ -30,22 +27,22 @@
         }
 
         function createAccount() {
-            Auth.$createUser({email: vm.email, password: vm.senha})
+            Auth.$createUser({email: vm.novaArena.email, password: vm.novaArena.password})
             .then(authenticate)
               .then(createProfile)
               .then(redirect, showError);
 
             function authenticate() {
-                return Auth.$authWithPassword({email: vm.email, password: vm.senha}, {rememberMe: true});
+                return Auth.$authWithPassword({email: vm.novaArena.email, password: vm.novaArena.password}, {rememberMe: true});
             }
 
             function createProfile(user) {
                 var novoRegistro = {};
-                novoRegistro['arenas/' + vm.arena + '/staff/' + user.uid] = 1;
-                novoRegistro['arenas/' + vm.arena + '/configurado/'] = false;
+                novoRegistro['arenas/' + vm.novaArena.arena + '/staff/' + user.uid] = 1;
+                novoRegistro['arenas/' + vm.novaArena.arena + '/configurado/'] = false;
                 novoRegistro['users/' + user.uid] = {
-                    email: vm.email,
-                    nome: vm.responsavel
+                    email: vm.novaArena.email,
+                    nome: vm.novaArena.responsavel
                 };
 
                 Ref.update(novoRegistro, function(error) {
@@ -56,7 +53,7 @@
             }
 
             function redirect() {
-                vm.redirectPath = $location.protocol() + '://' + vm.arena + '.' + $location.host() + ':' + $location.port();
+                vm.redirectPath = $location.protocol() + '://' + vm.novaArena.arena + '.' + $location.host() + ':' + $location.port();
                 $state.go('sistema-arena.confirmacao-cadastro');
             }
 

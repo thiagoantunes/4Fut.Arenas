@@ -1,0 +1,233 @@
+#landing-page{
+	background-image: url(../images/bg-image-2.jpg);
+	align-items: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	height: 100vh;
+
+	h1, h2, h3, h4, h5, h6{
+		font-family: inherit;
+		font-weight: 100;
+		line-height: 1.1;
+		color: #fff;
+	}
+
+	.sticky-navigation {
+		margin-top: -@navbar-height;
+		min-height: 75px;
+		background: transparent;
+		-webkit-backface-visibility: hidden;
+		border: 0;
+
+		.navbar-header {
+			padding-top: 8px;
+
+			.navbar-brand{
+				margin-top:-15px
+			}
+		}
+		.main-navigation {
+			padding-top: 13px;
+		}
+		.main-navigation .current a {
+			outline: inherit;
+			position: relative;
+		}
+		.navbar-nav > li > a {
+			font-family: 'Raleway', sans-serif;
+			font-size: 13px;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: #fff;
+		}
+	}
+
+	#section1{
+		background: #009587;
+		border-top: 1px solid #00564E;
+
+
+		.vertical-registration-form {
+			background: #F5FAFA;
+			width: 100%;
+			max-width: 390px;
+			margin: auto;
+			box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+
+			h3{
+				color: #666!important;
+				text-align: center;
+				margin-top: 20px;
+				padding-top: 20px;
+				padding-bottom: 15px;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+
+			form{
+				border-top: 1px solid #e4ecec;
+				padding: 10px 20px;
+				background: #fff;
+			}
+			.colored-line {
+				margin-top: 0;
+			}
+
+			.input-box {
+				width: 100%;
+				margin-top: 25px;
+				margin-bottom: 25px;
+				height: 45px;
+				background: #000000;
+				border-radius: 3px;
+				font-size: 16px;
+				color: rgba(255, 255, 255, 0.5);
+				box-shadow: inherit;
+				background-clip: padding-box;
+			}
+			.input-box:focus,
+			.input-box:active {
+				box-shadow: inherit;
+				color: #ffffff;
+			}
+		}
+
+		.features{
+			padding: 30px 40px 30px 40px;
+
+			.features-item{
+
+				.zmdi{
+					border: 2px solid #fff;
+					color: #fff;
+					border-radius: 50%;
+					display: inline-block;
+					font-size: 30px;
+					width: 80px;
+					height: 80px;
+					line-height: 80px;
+					vertical-align: middle;
+					text-align: center;
+					-webkit-transition: all 0.4s;
+					-moz-transition: all 0.4s;
+					transition: all 0.4s;
+					position: relative;
+				}
+
+				p{
+					font-size: 14px;
+					line-height: 21px;
+					color: #fff;
+				}
+
+				&:hover .zmdi{
+					font-size: 24px;
+				}
+
+				&:hover .zmdi:after {
+					content: '';
+					border: 4px solid #fff;
+					position: absolute;
+					color: #fff;
+					width: 95%;
+					height: 96%;
+					left: 3%;
+					right: 0%;
+					top: 2%;
+					border-radius: 50%;
+					-webkit-transition: all 0.4s;
+					-moz-transition: all 0.4s;
+					transition: all 0.4s;
+				}
+			}
+		}
+	}
+
+	#section2{
+		padding: 60px 20px 100px 20px;
+		background: #efefef;
+		box-shadow: inset 0px 6px 10px 0px rgba(0,0,0,0.25);
+		.lightbox-item{
+			height: 300px;
+			position: relative;
+			overflow: hidden;
+
+			img{
+				position: absolute;
+				left: -20%;
+				height: 100%;
+				width: auto !important;
+			}
+		}
+	}
+
+	footer{
+		text-align: center; 
+		padding: 20px 0px 20px 0px;
+
+		.footer-links-list{
+			font-size:16px; 
+			font-weight:bold;
+			padding-top: 20px; 
+
+			li {
+				display: inline-block;
+				margin-bottom: 0;
+				margin-right: 2em;
+				a{
+					color:#888;
+				}
+			}
+		}
+
+		.social-icons{
+			padding: 30px 0px 40px 0px;
+			border-bottom: 1px solid #666;
+
+			li {
+				display: inline-block;
+				margin-bottom: 0;
+				margin-right: 0.75em;
+				padding-top: 0.75em;
+
+				a {
+					font-size: 25px;
+					color: #888;
+				}
+
+				a:hover {
+					text-decoration: none;
+				}
+
+				.zmdi{
+					border: 2px solid #888;
+					color: #888;
+					border-radius: 50%;
+					display: inline-block;
+					font-size: 24px;
+					width: 50px;
+					height: 50px;
+					line-height: 50px;
+					vertical-align: middle;
+					text-align: center;
+					transition: all 0.4s;
+					position: relative;
+				}
+
+				p{
+					font-size: 14px;
+					line-height: 21px;
+					color: #fff;
+				}
+
+				&:hover .zmdi{
+					font-size: 35px;
+					border: 0px ;
+				}
+			}
+
+		}
+	}
+
+}

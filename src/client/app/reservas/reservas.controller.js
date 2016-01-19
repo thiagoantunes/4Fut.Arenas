@@ -27,16 +27,28 @@
         vm.uiConfig = {};
         vm.novaReserva = {};
         vm.reservaSelecionada = {};
+        vm.novaReservaModal = {};
         vm.horarioLivre = false;
+        vm.reservaRadio = 2;
+
         vm.refreshCalendar = refreshCalendar;
         vm.atualizaDisponibilidade = atualizaDisponibilidade;
         vm.salvarReservaAvulsa = salvarReservaAvulsa;
         vm.openPrecosModal = openPrecosModal;
         vm.gotoDate = gotoDate;
+        vm.showReservasModal = showReservasModal;
+        vm.hideModalForm = hideModalForm;
 
         activate();
 
         function activate() {
+            vm.novaReservaModal = $modal({
+                scope: $scope,
+                templateUrl: 'modalPelada.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false
+            });
+
             vm.uiConfig = {
                 calendar:{
                     minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -200,8 +212,7 @@
 
         function openPrecosModal(q) {
             $modal({
-                controllerAs: 'vm',
-                controller: 'PrecosCtrl',
+                scope : $scope,
                 templateUrl: 'app/arena/quadras/precos/precos.html',
                 resolve: {
                     quadra: function() {
@@ -212,6 +223,17 @@
                     }
                 }
             });
+
+        }
+
+        function showReservasModal() {
+
+            vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
+        }
+
+        function hideModalForm() {
+            vm.reservaRadio = 2;
+            vm.novaReservaModal.$promise.then(vm.novaReservaModal.hide);
         }
 
         function gotoDate(date) {

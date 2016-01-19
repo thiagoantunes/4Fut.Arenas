@@ -1,0 +1,96 @@
+<section>
+    <div class="card z-depth-3" >
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Cadastro de Contatos</h3>
+                </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-padding">
+        <div class="pmb-block" style="padding-top:20px">
+            <div class="p-header" ng-if="vm.contatos.length>0">
+                <ul class="p-menu">
+                    <li class="active">
+                        <button 
+                            class="btn btn-default" 
+                            href="" 
+                            ng-click="vm.contatoSelecionado = {}; vm.edicao = false"
+                            data-animation="am-fade-and-slide-top" 
+                            data-template-url="app/contatos/novo-contato.html" 
+                            bs-modal="modal"> 
+                            <i class="zmdi zmdi-accounts-add hidden-xs"></i> Novo Contato
+                        </button>
+                    </li>
+                </ul>
+
+                <ul class="actions p-menu m-t-20 hidden-xs">
+                    <li class="pm-search">
+                        <div class="pms-inner">
+                            <i class="zmdi zmdi-search"></i>
+                            <input type="text" ng-model="buscaContato" placeholder="Buscar...">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">     
+                <div class="col-md-4" ng-repeat="contato in vm.contatos | filter:buscaContato">
+                  <div class="well well-sm" >
+                    <div class="row" >
+                      <div class="col-md-4 col-sm-4 col-xs-4" >
+                        <img ng-src="{{ contato.fotoPerfil | defaultImage }}"
+                             alt=""
+                             class="img-rounded img-responsive" />
+                      </div >
+                      <div class="col-md-8 col-sm-8 col-xs-8" >
+                        <h4 >{{contato.nome }}</h4 >
+                        <p >
+                          <i class="zmdi zmdi-email" ></i >&nbsp;{{ contato.email }}
+                          <br />
+                          <i class="zmdi zmdi-phone" ></i >&nbsp;{{ contato.telefone }}
+                        </p >
+                        <button type="button"
+                                class="btn btn-default btn-sm"
+                                ng-click="vm.contatoSelecionado = contato; vm.edicao = true"
+                                data-animation="am-fade-and-slide-top" 
+                                data-template-url="app/contatos/novo-contato.html" 
+                                bs-modal="modal">
+                            <i class="zmdi zmdi-edit"></i>&nbsp;Editar
+                        </button >
+                        <button type="button"
+                                class="btn btn-default btn-sm"
+                                ng-click="vm.excluirContato(contato)">
+                            <i class="zmdi zmdi-delete"></i>&nbsp;Excluir
+                        </button >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+            </div>
+            <div ng-if="vm.contatos.length==0">
+                <div class="text-center">
+                    <i style="opacity:0.5" class="zmdi zmdi-accounts-add zmdi-hc-5x"></i>
+                    <h4 style="opacity:0.4">Você ainda não cadastrou </br>um contato no sistema</h3>
+                    <button 
+                        class="btn btn-primary btn-sm m-10" 
+                        href="" 
+                        ng-click="vm.contatoSelecionado = {}; vm.edicao = false"
+                        data-animation="am-fade-and-slide-top" 
+                        data-template-url="app/contatos/novo-contato.html" 
+                        bs-modal="modal"> 
+                        <i class="zmdi zmdi-accounts-add hidden-xs"></i> Novo Contato
+                    </button>
+                    </br></br></br></br>
+                </div>
+            </div>
+
+            <!-- <div class="load-more">
+                <a href=""><i class="zmdi zmdi-refresh-alt"></i> Carregar mais...</a>
+            </div> -->
+        </div>
+
+    </div>
+</section>
+

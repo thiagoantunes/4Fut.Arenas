@@ -91,64 +91,40 @@
 
 					<div class="vertical-registration-form">
 						<h3>Cadastre-se</h3>
-						<form class="form-horizontal" name="register" role="form">
+						<div style="color:red; font-size:12px; text-align:center">{{vm.err}}</div>
+						<form class="form-horizontal" novalidate ng-submit="vm.formSubmit();">
 							<div class="card-body" style="padding:7px 15px">
-								<div class="form-group required has-feedback" ng-class="{ 'has-error' : register.arena.$invalid && !register.arena.$pristine , 'has-success' : register.arena.$valid && !register.arena.$pristine }">
-									<div class="col-sm-12">
-										<div class="fg-line">
-											<input id="inputNome" required name="arena" type="text" placeholder="Nome da Arena" ng-model="vm.arena" class="form-control" />
+								<div class="row">
+									<div class="form-group required">
+										<div class="col-sm-12">
+											<input id="inputNome" required name="arena" type="text" placeholder="Nome da Arena" ng-model="vm.novaArena.arena" class="form-control" />
 										</div>
-										<span ng-show="register.arena.$invalid && !register.arena.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
-										<span ng-show="register.arena.$valid && !register.arena.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-										<small ng-show="register.arena.$invalid && !register.arena.$pristine" class="help-block">O nome é obrigatório</small>
 									</div>
-								</div>
-								<div class="form-group required has-feedback" ng-class="{ 'has-error' : register.responsavel.$invalid && !register.responsavel.$pristine , 'has-success' : register.responsavel.$valid && !register.responsavel.$pristine }">
-									<div class="col-sm-12">
-										<div class="fg-line">
-											<input id="inputNome" required name="responsavel" type="text" placeholder="Nome do Responsável" ng-model="vm.responsavel" class="form-control" />
+									<div class="form-group required">
+										<div class="col-sm-12">
+											<input id="inputNome" required name="responsavel" type="text" placeholder="Nome do Responsável" ng-model="vm.novaArena.responsavel" class="form-control" />
 										</div>
-										<span ng-show="register.responsavel.$invalid && !register.responsavel.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
-										<span ng-show="register.responsavel.$valid && !register.responsavel.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-										<small ng-show="register.responsavel.$invalid && !register.responsavel.$pristine" class="help-block">O nome é obrigatório</small>
 									</div>
-								</div>
-								<div class="form-group has-feedback" ng-class="{ 'has-error' : register.email.$invalid && !register.email.$pristine , 'has-success' : register.email.$valid && !register.email.$pristine }">
-									<div class="col-sm-12">
-
-										<div class="fg-line">
-											<input id="inputEmail" name="email" required type="email" placeholder="Email do Responsável" ng-model="vm.email" class="form-control" />
+									<div class="form-group required">
+										<div class="col-sm-12">
+											<input id="inputEmail" name="email" required type="email" placeholder="Email do Responsável" ng-model="vm.novaArena.email" class="form-control" />
 										</div>
-										<span ng-show="register.email.$invalid && !register.email.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
-										<span ng-show="register.email.$valid && !register.email.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-										<small ng-show="register.email.$invalid && !register.email.$pristine" class="help-block">Informe um email válido</small>
 									</div>
-								</div>
-								<div class="form-group required has-feedback" ng-class="{ 'has-error' : register.senha.$invalid && !register.senha.$pristine, 'has-success' : register.senha.$valid && !register.senha.$pristine && vm.confirm == vm.senha }">
-									<div class="col-sm-12">
-										<div class="fg-line">
-											<input id="inputNome" required name="senha" type="password" placeholder="Senha" ng-model="vm.senha" class="form-control" />
+									<div class="form-group required">
+										<div class="col-sm-12">
+											<input id="inputNome" required name="senha" type="password" placeholder="Senha" ng-model="vm.novaArena.password" class="form-control" />
 										</div>
-										<span ng-show="register.senha.$invalid && !register.senha.$pristine " class="zmdi zmdi-close form-control-feedback"></span>
-										<span ng-show="register.senha.$valid && !register.senha.$pristine && vm.confirm == vm.senha" class="zmdi zmdi-check form-control-feedback"></span>
-										<small ng-show="register.senha.$invalid && !register.senha.$pristine" class="help-block">O nome é obrigatório</small>
 									</div>
-								</div>
-								<div class="form-group required has-feedback" ng-class="{ 'has-error' : register.confirm.$invalid && !register.confirm.$pristine, 'has-success' : register.confirm.$valid && !register.senha.$pristine && vm.confirm == vm.senha}">
-									<div class="col-sm-12">
-										<div class="fg-line">
-											<input id="inputNome" required name="confirm" type="password" placeholder="Confirmar Senha" ng-model="vm.confirm" class="form-control" />
+									<div class="form-group required">
+										<div class="col-sm-12">
+											<input id="inputNome" required name="confirm" type="password" placeholder="Confirmar Senha" ng-model="vm.novaArena.confirm" data-password-verify="vm.novaArena.password" class="form-control" />
 										</div>
-										<span ng-show="register.confirm.$invalid && !register.confirm.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
-										<span ng-show="register.confirm.$valid && !register.confirm.$pristine && vm.confirm == vm.senha" class="zmdi zmdi-check form-control-feedback"></span>
-										<small ng-show="register.confirm.$invalid && !register.confirm.$pristine" class="help-block">O nome é obrigatório</small>
 									</div>
-								</div>
-								<h1>{{vm.err}}</h1>
-								<div class="form-group" style="padding:0px 10px 0px 10px;">
-									<div class="row">
-										<div class="col-md-12">
-											<button type="submit" ng-click="vm.formSubmit();"  class="btn btn-lg col-md-12 btn-danger">Experimente Agora</button>
+									<div class="form-group" style="padding:0px 10px 0px 10px;">
+										<div class="row">
+											<div class="col-md-12">
+												<button type="submit" class="btn btn-lg col-md-12 btn-danger">Experimente Agora</button>
+											</div>
 										</div>
 									</div>
 								</div>

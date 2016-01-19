@@ -7,13 +7,13 @@
         'app.widgets',
         'app.admin',
         'app.dashboard',
-        'app.layout',
         'app.arena',
         'app.reservas',
         'app.login',
         'app.setup-arena',
         'app.sistema-arena',
-        'app.escolinhas'
+        'app.escolinhas',
+        'app.contatos'
     ]);
 
 })();

@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/sistema-arena/sistema-arena.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">29.41% <small>(10 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">32.26% <small>(10 / 31)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">29.41% <small>(10 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">32.26% <small>(10 / 31)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/sistema-arena/</a> &#187; sistema-arena.controller.js</div>
@@ -90,10 +90,7 @@
 63
 64
 65
-66
-67
-68
-69</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+66</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -103,9 +100,6 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -172,17 +166,14 @@
     /* @ngInject */
 <span class="fstat-no" title="function not covered" >    function SistemaArenaCtrl(Auth, Ref, $state, $location) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
-<span class="cstat-no" title="statement not covered" >        vm.email = '';</span>
-<span class="cstat-no" title="statement not covered" >        vm.arena = '';</span>
-<span class="cstat-no" title="statement not covered" >        vm.responsavel = '';</span>
-<span class="cstat-no" title="statement not covered" >        vm.senha = '';</span>
+<span class="cstat-no" title="statement not covered" >        vm.novaArena = {};</span>
 <span class="cstat-no" title="statement not covered" >        vm.redirectPath = '';</span>
 <span class="cstat-no" title="statement not covered" >        vm.formSubmit = formSubmit;</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function formSubmit() {</span>
 <span class="cstat-no" title="statement not covered" >            vm.err = null;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            Ref.child('arenas/' + vm.arena).once('value', <span class="fstat-no" title="function not covered" >function(snap) {</span></span>
+<span class="cstat-no" title="statement not covered" >            Ref.child('arenas/' + vm.novaArena.arena).once('value', <span class="fstat-no" title="function not covered" >function(snap) {</span></span>
 <span class="cstat-no" title="statement not covered" >                if (snap.val() === null) {</span>
 <span class="cstat-no" title="statement not covered" >                    createAccount();</span>
                 }
@@ -193,22 +184,22 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function createAccount() {</span>
-<span class="cstat-no" title="statement not covered" >            Auth.$createUser({email: vm.email, password: vm.senha})</span>
+<span class="cstat-no" title="statement not covered" >            Auth.$createUser({email: vm.novaArena.email, password: vm.novaArena.password})</span>
             .then(authenticate)
               .then(createProfile)
               .then(redirect, showError);
 &nbsp;
 <span class="fstat-no" title="function not covered" >            function authenticate() {</span>
-<span class="cstat-no" title="statement not covered" >                return Auth.$authWithPassword({email: vm.email, password: vm.senha}, {rememberMe: true});</span>
+<span class="cstat-no" title="statement not covered" >                return Auth.$authWithPassword({email: vm.novaArena.email, password: vm.novaArena.password}, {rememberMe: true});</span>
             }
 &nbsp;
 <span class="fstat-no" title="function not covered" >            function createProfile(user) {</span>
 <span class="cstat-no" title="statement not covered" >                var novoRegistro = {};</span>
-<span class="cstat-no" title="statement not covered" >                novoRegistro['arenas/' + vm.arena + '/staff/' + user.uid] = 1;</span>
-<span class="cstat-no" title="statement not covered" >                novoRegistro['arenas/' + vm.arena + '/configurado/'] = false;</span>
+<span class="cstat-no" title="statement not covered" >                novoRegistro['arenas/' + vm.novaArena.arena + '/staff/' + user.uid] = 1;</span>
+<span class="cstat-no" title="statement not covered" >                novoRegistro['arenas/' + vm.novaArena.arena + '/configurado/'] = false;</span>
 <span class="cstat-no" title="statement not covered" >                novoRegistro['users/' + user.uid] = {</span>
-                    email: vm.email,
-                    nome: vm.responsavel
+                    email: vm.novaArena.email,
+                    nome: vm.novaArena.responsavel
                 };
 &nbsp;
 <span class="cstat-no" title="statement not covered" >                Ref.update(novoRegistro, <span class="fstat-no" title="function not covered" >function(error) {</span></span>
@@ -219,7 +210,7 @@
             }
 &nbsp;
 <span class="fstat-no" title="function not covered" >            function redirect() {</span>
-<span class="cstat-no" title="statement not covered" >                vm.redirectPath = $location.protocol() + '://' + vm.arena + '.' + $location.host() + ':' + $location.port();</span>
+<span class="cstat-no" title="statement not covered" >                vm.redirectPath = $location.protocol() + '://' + vm.novaArena.arena + '.' + $location.host() + ':' + $location.port();</span>
 <span class="cstat-no" title="statement not covered" >                $state.go('sistema-arena.confirmacao-cadastro');</span>
             }
 &nbsp;
@@ -234,7 +225,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 24 2015 01:06:25 GMT-0200 (BRST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 15 2016 19:22:07 GMT-0200 (BRST)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

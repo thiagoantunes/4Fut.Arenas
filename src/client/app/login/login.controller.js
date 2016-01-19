@@ -5,6 +5,8 @@
       .module('app.login')
       .controller('LoginCtrl', LoginCtrl);
 
+    LoginCtrl.$inject = ['$scope', 'Auth', '$location', '$q' , 'Ref', '$timeout' ,'$firebaseObject' , 'subdomainService'];
+
     function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, subdomainService) {
 
         $scope.login = 1;

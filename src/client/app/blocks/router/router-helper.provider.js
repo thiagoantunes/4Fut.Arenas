@@ -19,8 +19,9 @@
             docTitle: undefined,
             resolveAlways: {}
         };
-
-        $locationProvider.html5Mode(true);
+        $urlRouterProvider.when('', '/');
+        // $urlRouterProvider.otherwise('/404');
+        // $locationProvider.html5Mode(true);
 
         this.configure = function(cfg) {
             angular.extend(config, cfg);
@@ -171,8 +172,12 @@
         var host = $location.host();
 
         if (host.indexOf('.') >= 0) {
-            service.arena = host.split('.')[0];
+            var hostName = host.split('.')[0];
+            if (hostName !== '4fut' && hostName !== 'www') {
+                service.arena = host.split('.')[0];
+            }
         }
+        console.log(service.arena);
         return service;
     }
 

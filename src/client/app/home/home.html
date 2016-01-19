@@ -1,14 +1,34 @@
-<div class="row">
-	<div class="col-md-6 text-center">
-		<h1>Peladeiro</h1>
-	</div>
-	<div class="col-md-6 text-center">
-		<button 
-			type="button" 
-			data-ui-sref="sistema-arena"
-			ng-click='vm.openNovaPeladaModal();' 
-			class="btn btn-lg btn-danger p-10 m-t-20 m-b-20">
-			Cadastre sua arena!
-		</button>
-	</div>
+<div id="landing-page" >
+	<header id="home">
+		<div class="navigation-header">
+			<!-- STICKY NAVIGATION -->
+			<div class="navbar navbar-inverse bs-docs-nav sticky-navigation">
+				
+			</div>
+			<!-- /END STICKY NAVIGATION -->
+		</div>
+		<div class="text-center">
+			<img src="images/logo-dark.png" alt="">
+		</div>
+
+		<div class="text-center m-t-20">
+			<h1>
+				<b>
+					EM BREVE O MELHOR PORTAL DO </br>FUTEBOL AMADOR NO BRASIL
+				</b> 
+			</h1>
+		</div>
+			<div class="col-md-6 text-center">
+				<h4>É dono de arena?</h4>
+			</div>
+			<div class="col-md-6 text-center">
+				<button 
+					type="button" 
+					data-ui-sref="sistema-arena.cadastro"
+					ng-click='vm.openNovaPeladaModal();' 
+					class="btn btn-lg btn-danger p-10 m-t-20 m-b-20">
+					Conheça nosso sistema!
+				</button>
+			</div>
+	</header>
 </div>

@@ -5,13 +5,16 @@
         .module('app.setup-arena')
         .controller('SetupArenaCtrl', SetupArenaCtrl);
 
-    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, arena) {
+    SetupArenaCtrl.$inject = ['$scope', 'Ref', '$firebaseObject', '$firebaseArray' , 'user' , 'arena', '$modal', '$location'];
+
+    function SetupArenaCtrl($scope, Ref, $firebaseObject, $firebaseArray, user, arena, $modal, $location) {
         var vm = this;
 
         var arenaID = arena;
         var userID = user.uid;
 
         vm.wellcomeMessage = true;
+        vm.modal = $modal({templateUrl: 'app/setup-arena/wizard-modal.html', show: true, backdrop: 'static', scope:$scope});
         //vm.usuario = {
         //    nome: user.facebook.displayName,
         //    email: user.facebook.email,
@@ -22,6 +25,13 @@
         vm.quadras = $firebaseArray(Ref.child('quadras/' + arenaID));
         vm.novaQuadra = {};
         vm.addQuadra = addQuadra;
+        vm.concluirConfiguracao = concluirConfiguracao;
+
+        activate();
+
+        function activate() {
+            vm.modal.$promise.then(vm.modal.show);
+        }
 
         function addQuadra() {
             var quadraID = Ref.child('quadras').push().key();
@@ -44,6 +54,13 @@
             });
 
             vm.novaQuadra = {};
+        }
+
+        function concluirConfiguracao() {
+            vm.arena.configurado = 'true';
+            vm.arena.$save();
+            vm.modal.$promise.then(vm.modal.hide);
+            $location.path('/admin/reservas');
         }
 
     }
