@@ -14,19 +14,26 @@
 				</div>
 				<div class="form-group">
 					<label for="inputDescricao" class="col-sm-2 control-label">Responsável</label>
-					<div class="col-sm-9">
+					<div class="col-sm-8">
 						<div class="fg-line">
 							<select id="inputParticipantes" chosen="{width: '100%'}" name="resp" no-results-text="'Nenhum contato cadastrado.'" required data-placeholder="Selecione o responsável..." ng-model="vm.novoMensalista.responsavel" ng-options="contato.nome for contato in vm.contatos">
 								<option value=""></option>
 							</select>
 						</div>
 					</div>
+					<div class="col-md-2">
+						<button type="button" 
+						    class="btn btn-link btn-novo-contato"
+						    ng-click="vm.showNovoContatoModal();">
+						    <i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+						</button>
+					</div>
 				</div>
 				<div class="form-group col-md-5">
 					<label for="inputDataInicio" class=" col-md-offset-2 col-md-2 control-label">Data</label>
 					<div class="col-md-offset-1 col-md-7">
 						<div class="fg-line">
-							<input id="inputDataInicio" disable-valid-styling="true" name="dataFim" type="text" required class="form-control" ng-model="vm.novoMensalista.data" data-max-date="{{vm.novoMensalista.data}}" bs-datepicker />
+							<input id="inputDataInicio" disable-valid-styling="true" name="dataFim" type="text" required class="form-control" ng-model="vm.novoMensalista.data" bs-datepicker />
 						</div>
 					</div>
 				</div>

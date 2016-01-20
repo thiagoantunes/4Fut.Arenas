@@ -11,20 +11,29 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'escolinhaService'
+        'reservasService'
     ];
 
-    function EscolinhasFormCtrl($scope, $modal,quadraService, contatosService, escolinhaService) {
+    function EscolinhasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {
         var vm = this;
-        vm.turmas = escolinhaService.getTurmas();
         vm.quadras = quadraService.getQuadras();
         vm.professores = contatosService.getContatosArenaLight();
         vm.salvarNovaTurma = salvarNovaTurma;
         vm.hideModalForm = hideModalForm;
+        vm.showNovoContatoModal = showNovoContatoModal;
+        vm.salvarContato = salvarContato;
 
         activate();
 
         function activate() {
+            vm.novoContatoModal = $modal({
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
+            });
+
             initDiasSemana();
         }
 
@@ -32,7 +41,7 @@
 
             vm.turma = {
                 quadra: vm.novaTurma.quadra.$id,
-                professor: vm.novaTurma.professor.$id,
+                responsavel: vm.novaTurma.professor.$id,
                 horaInicio : moment(vm.novaTurma.horaInicio).format('HHmm'),
                 horaFim : moment(vm.novaTurma.horaFim).format('HHmm'),
                 dataInicio : vm.novaTurma.dataInicio.getTime(),
@@ -42,7 +51,7 @@
                 }), 'dia')
             };
 
-            escolinhaService.criarTurma(vm.turmas, vm.turma).then(function() {
+            reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(function() {
                 hideModalForm();
             },function(error) {
                 console.log('Failed: ' + error);
@@ -63,6 +72,15 @@
                 {dia: 5, ativo: false},
                 {dia: 6, ativo: false}
             ];
+        }
+
+        function showNovoContatoModal() {
+            vm.contatoSelecionado = {};
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function salvarContato() {
+            contatosService.addNovoContato(vm.contatoSelecionado);
         }
     }
 

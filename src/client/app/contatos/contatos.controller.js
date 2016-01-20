@@ -15,7 +15,7 @@
         vm.excluirContato = excluirContato;
 
         function salvarContato() {
-            if (vm.edicao) {
+            if (vm.contatoSelecionado.$id) {
                 vm.contatos.$save(vm.contatoSelecionado);
             }
             else {

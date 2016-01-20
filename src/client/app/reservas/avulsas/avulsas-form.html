@@ -14,12 +14,19 @@
 				</div>
 				<div class="form-group">
 					<label for="inputDescricao" class="col-sm-2 control-label">Responsável</label>
-					<div class="col-sm-9">
+					<div class="col-sm-8">
 						<div class="fg-line">
 							<select id="inputParticipantes" chosen="{width: '100%'}" name="resp" no-results-text="'Nenhum contato cadastrado.'" required data-placeholder="Selecione o responsável..." ng-model="vm.novaReserva.responsavel" ng-options="contato.nome for contato in vm.contatos">
 								<option value=""></option>
 							</select>
 						</div>
+					</div>
+					<div class="col-md-2">
+						<button type="button" 
+						    class="btn btn-link btn-novo-contato"
+						    ng-click="vm.showNovoContatoModal();">
+						    <i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+						</button>
 					</div>
 				</div>
 				<div class="form-group col-md-5">
@@ -53,6 +60,6 @@
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary btn-sm m-t-10">Salvar</button>
-		<button  type="button" ng-click='$parent.vm.hideModal();' class="btn btn-default btn-sm m-t-10">Cancelar</button>
+		<button  type="button" ng-click='vm.hideModalForm();'  class="btn btn-default btn-sm m-t-10">Cancelar</button>
 	</div>
 </form>

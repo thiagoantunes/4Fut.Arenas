@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/reservas/avulsas/avulsas-form.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">36.36% <small>(8 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">32.26% <small>(10 / 31)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">36.36% <small>(8 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">32.26% <small>(10 / 31)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">app/reservas/avulsas/</a> &#187; avulsas-form.controller.js</div>
@@ -95,7 +95,22 @@
 68
 69
 70
-71</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,6 +133,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,6 +143,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -138,8 +163,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,9 +181,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,46 +201,54 @@
 &nbsp;
     angular
         .module('app.reservas')
-        .controller('AvulsasFormtrl', AvulsasFormtrl);
+        .controller('AvulsasFormCtrl', AvulsasFormCtrl);
 &nbsp;
-    AvulsasFormtrl.$inject = [
+    AvulsasFormCtrl.$inject = [
         '$scope' ,
         '$modal',
         'quadraService' ,
         'contatosService',
-        'escolinhaService'
+        'reservasService'
     ];
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function AvulsasFormtrl($scope, $modal,quadraService, contatosService, escolinhaService) {</span>
+<span class="fstat-no" title="function not covered" >    function AvulsasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
-<span class="cstat-no" title="statement not covered" >        vm.turmas = escolinhaService.getTurmas();</span>
+<span class="cstat-no" title="statement not covered" >        vm.novaReserva = {};</span>
 <span class="cstat-no" title="statement not covered" >        vm.quadras = quadraService.getQuadras();</span>
-<span class="cstat-no" title="statement not covered" >        vm.professores = contatosService.getContatosArenaLight();</span>
-<span class="cstat-no" title="statement not covered" >        vm.salvarNovaTurma = salvarNovaTurma;</span>
+<span class="cstat-no" title="statement not covered" >        vm.contatos = contatosService.getContatosArenaLight();</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarNovaReserva = salvarNovaReserva;</span>
 <span class="cstat-no" title="statement not covered" >        vm.hideModalForm = hideModalForm;</span>
+<span class="cstat-no" title="statement not covered" >        vm.showNovoContatoModal = showNovoContatoModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarContato = salvarContato;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        activate();</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function activate() {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            initDiasSemana();</span>
+<span class="cstat-no" title="statement not covered" >            vm.novoContatoModal = $modal({</span>
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            initForm();</span>
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function salvarNovaTurma() {</span>
+<span class="fstat-no" title="function not covered" >        function salvarNovaReserva() {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.turma = {</span>
-                quadra: vm.novaTurma.quadra.$id,
-                professor: vm.novaTurma.professor.$id,
-                horaInicio : moment(vm.novaTurma.horaInicio).format('HHmm'),
-                horaFim : moment(vm.novaTurma.horaFim).format('HHmm'),
-                dataInicio : vm.novaTurma.dataInicio.getTime(),
-                dataFim : vm.novaTurma.dataFim.getTime(),
-                dow : _.pluck(_.filter(vm.diasSemana, {
-                    'ativo': true
-                }), 'dia')
+<span class="cstat-no" title="statement not covered" >            vm.reserva = {</span>
+                quadra: vm.novaReserva.quadra.$id,
+                responsavel: vm.novaReserva.responsavel.$id,
+                horaInicio : moment(vm.novaReserva.hora).format('HHmm'),
+                horaFim : moment(vm.novaReserva.hora).add(vm.novaReserva.duracao.value, 'h').format('HHmm'),
+                dataInicio : vm.novaReserva.data.getTime(),
+                dataFim : moment(moment(vm.novaReserva.data.getTime()).format('DDMMYYYY')  + '23:59', 'DDMMYYYYHH:mm')._d.getTime() ,
+                dow : [vm.novaReserva.data.getDay()]
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            escolinhaService.criarTurma(vm.turmas, vm.turma).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            reservasService.criarReservaAvulsa(vm.reserva).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
 <span class="cstat-no" title="statement not covered" >                hideModalForm();</span>
             },<span class="fstat-no" title="function not covered" >function(error) {</span>
 <span class="cstat-no" title="statement not covered" >                console.log('Failed: ' + error);</span>
@@ -221,16 +259,23 @@
 <span class="cstat-no" title="statement not covered" >            $scope.$parent.vm.hideModalForm();</span>
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function initDiasSemana() {</span>
-<span class="cstat-no" title="statement not covered" >            vm.diasSemana = [</span>
-                {dia: 0, ativo: false},
-                {dia: 1, ativo: false},
-                {dia: 2, ativo: false},
-                {dia: 3, ativo: false},
-                {dia: 4, ativo: false},
-                {dia: 5, ativo: false},
-                {dia: 6, ativo: false}
+<span class="fstat-no" title="function not covered" >        function initForm() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.duracao = [</span>
+                {value: 1, desc: '01:00'},
+                {value: 1.5, desc: '01:30'},
+                {value: 2, desc: '02:00'}
             ];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.novaReserva.duracao = vm.duracao[0];</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function showNovoContatoModal() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.contatoSelecionado = {};</span>
+<span class="cstat-no" title="statement not covered" >            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function salvarContato() {</span>
+<span class="cstat-no" title="statement not covered" >            contatosService.addNovoContato(vm.contatoSelecionado);</span>
         }
     }
 &nbsp;
@@ -240,7 +285,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 15 2016 19:22:07 GMT-0200 (BRST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 20 2016 17:33:32 GMT-0200 (BRST)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

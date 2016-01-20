@@ -15,52 +15,65 @@
         vm.precoMinimo = 0;
         vm.precoMedio = 0;
         vm.salvarNovoPreco = salvarNovoPreco;
-        vm.uiConfig = {
-            calendar: {
-                minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                businessHours: {
-                    start: '10:00',
-                    end: '24:00',
-                    dow: [0, 1, 2, 3, 4, 5, 6]
-                },
-                height: 'auto',
-                timeFormat: 'H(:mm)',
-                header: false,
-                defaultView: 'agendaWeek',
-                firstHour: 9,
-                allDaySlot: false,
-                timezone: 'local',
-                axisFormat: 'H:mm',
-                columnFormat: {
-                    week: 'dddd'
-                },
-                editable: true,
-                eventOverlap: false,
-                selectable: true,
-                selectOverlap: false,
-                selectHelper: true,
-                eventResize: eventResize,
-                eventDrop: eventDrop,
-                select: eventSelect,
-                eventClick: eventClick,
-                eventRender: eventRender,
-                unselectCancel: '.precoForm',
-            }
-        };
+        vm.uiConfig = {};
 
         activate();
 
         function activate() {
+
+            vm.uiConfig = {
+                calendar: {
+                    minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    businessHours: {
+                        start: '10:00',
+                        end: '24:00',
+                        dow: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    height: 'auto',
+                    timeFormat: 'H(:mm)',
+                    header: false,
+                    defaultView: 'agendaWeek',
+                    firstHour: 9,
+                    allDaySlot: false,
+                    timezone: 'local',
+                    axisFormat: 'H:mm',
+                    columnFormat: {
+                        week: 'dddd'
+                    },
+                    editable: true,
+                    eventOverlap: false,
+                    selectable: true,
+                    selectOverlap: false,
+                    selectHelper: true,
+                    viewRender : viewRender,
+                    eventResize: eventResize,
+                    eventDrop: eventDrop,
+                    select: eventSelect,
+                    eventClick: eventClick,
+                    eventRender: eventRender,
+                    unselectCancel: '.precoForm',
+                }
+            };
+        }
+
+        function getPrecos() {
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
+
             vm.precos = funcionamentoService.getPrecos(quadra.id);
 
-            vm.precos.$loaded(function() {
-
+            vm.precos.$watch(function(event) {
                 vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;
                 vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;
-                vm.eventSources.push(vm.precos);
+
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
             });
+        }
+
+        function viewRender(view, element) {
+            getPrecos();
         }
 
         function eventResize(event, delta, revertFunc) {
@@ -114,6 +127,9 @@
         }
 
         function eventClick(calEvent, jsEvent, view) {
+            var preco = _.find(vm.precos , {'$id' : calEvent.$id});
+            vm.novoPreco = preco;
+
             var left =  jsEvent.pageX - $('.modal-dialog').css('margin-left').replace('px', '') -  ($('.popover').width() / 2) ;
             var top = (jsEvent.pageY - 15);
             $('.popover').attr('style' , 'top: ' +
@@ -165,10 +181,15 @@
             vm.novoPreco.title = 'A:  R$ ' +
             vm.novoPreco.precoAvulso +
             '  |  ' + 'M: R$ ' + vm.novoPreco.precoMensalista;
-            vm.precos.$add(vm.novoPreco).then(function(ref) {
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
-            });
+
+            if (vm.novoPreco.$id) {
+                vm.precos.$save(vm.novoPreco);
+            }
+            else {
+                vm.precos.$add(vm.novoPreco).then(function(ref) {
+                    uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
+                });
+            }
         }
 
     }

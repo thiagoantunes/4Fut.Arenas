@@ -11,21 +11,30 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'mensalistassService'
+        'reservasService'
     ];
 
-    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, mensalistassService) {
+    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {
         var vm = this;
         vm.novoMensalista = {};
-        vm.mensalistas = mensalistassService.getMensalistas();
         vm.quadras = quadraService.getQuadras();
         vm.contatos = contatosService.getContatosArenaLight();
         vm.salvarnovoMensalista = salvarnovoMensalista;
         vm.hideModalForm = hideModalForm;
+        vm.showNovoContatoModal = showNovoContatoModal;
+        vm.salvarContato = salvarContato;
 
         activate();
 
         function activate() {
+            vm.novoContatoModal = $modal({
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
+            });
+
             initForm();
         }
 
@@ -41,7 +50,7 @@
                 dow : [vm.novoMensalista.data.getDay()]
             };
 
-            mensalistassService.criarMensalista(vm.mensalistas, vm.mensalista).then(function() {
+            reservasService.criarReservaRecorrente(vm.mensalista, 'mensalistas').then(function() {
                 hideModalForm();
             },function(error) {
                 console.log('Failed: ' + error);
@@ -79,6 +88,15 @@
 
             vm.novoMensalista.validade = vm.estenderPor[0];
             vm.novoMensalista.duracao = vm.duracao[0];
+        }
+
+        function showNovoContatoModal() {
+            vm.contatoSelecionado = {};
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function salvarContato() {
+            contatosService.addNovoContato(vm.contatoSelecionado);
         }
     }
 

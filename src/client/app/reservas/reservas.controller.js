@@ -38,6 +38,8 @@
         vm.gotoDate = gotoDate;
         vm.showReservasModal = showReservasModal;
         vm.hideModalForm = hideModalForm;
+        vm.showNovoContatoModal = showNovoContatoModal;
+        vm.salvarContato = salvarContato;
 
         activate();
 
@@ -47,6 +49,14 @@
                 templateUrl: 'modalPelada.html',
                 animation:'am-fade-and-slide-top' ,
                 show: false
+            });
+
+            vm.novoContatoModal = $modal({
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
             });
 
             vm.uiConfig = {
@@ -213,6 +223,8 @@
         function openPrecosModal(q) {
             $modal({
                 scope : $scope,
+                controllerAs: 'vm',
+                controller: 'PrecosCtrl',
                 templateUrl: 'app/arena/quadras/precos/precos.html',
                 resolve: {
                     quadra: function() {
@@ -223,12 +235,19 @@
                     }
                 }
             });
-
         }
 
         function showReservasModal() {
-
             vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
+        }
+
+        function showNovoContatoModal() {
+            vm.contatoSelecionado = {};
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function salvarContato() {
+            contatosService.addNovoContato(vm.contatoSelecionado);
         }
 
         function hideModalForm() {
@@ -240,64 +259,5 @@
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('gotoDate', date);
         }
     }
-
-    // function ModalReservaCtrl($scope, $modalInstance, data, quadraFactory, peladaFactory) {
-    //     var vm = this;
-
-    //     vm.quadras = quadraFactory('-K1BcDhprlXkXEo18kbq');
-
-    //     vm.quadras.$loaded(function() {
-    //         vm.reservaRadio = 1;
-    //         vm.title = data.title;
-    //         vm.date = data.date._d;
-    //         vm.duracao =  1;
-    //         vm.quadraSelecionada = vm.quadras[0];
-    //         vm.getPreco();
-    //     });
-
-    //     vm.diasSemana = [
-    //         {dia: 0, ativo:false},
-    //         {dia: 1, ativo:false},
-    //         {dia: 2, ativo:false},
-    //         {dia: 3, ativo:false},
-    //         {dia: 4, ativo:false},
-    //         {dia: 5, ativo:false},
-    //         {dia: 6, ativo:false}
-    //     ];
-
-    //     vm.getPreco = function() {
-    //         vm.funcionamento =  _.find(vm.quadraSelecionada.funcionamento , function(f) {
-    //             return f.start <= moment(vm.date).format('HH:mm') &&
-    //                     f.end >= moment(vm.date).add(vm.duracao,'hours').format('HH:mm') &&
-    //                     _.any(f.dow , function(n) {
-    //                         return n === vm.date.getDay();
-    //                     });
-    //         });
-    //     };
-
-    //     vm.salvar = function () {
-
-    //         peladaFactory('-K1BcDhprlXkXEo18kbq').avulsas.$add({
-    //             tipo: vm.reservaRadio,
-    //             quadra: vm.quadraSelecionada.$id,
-    //             start: moment(vm.date).format('YYYY-MM-DDTHH:mm:ss'),
-    //             end:  moment(vm.date).add(vm.duracao,'hours').format('YYYY-MM-DDTHH:mm:ss'),
-    //             title: vm.quadraSelecionada.nome
-    //         });
-
-    //         $modalInstance.close();
-    //     };
-
-    //     vm.cancel = function () {
-    //         $modalInstance.dismiss('cancel');
-    //     };
-
-    //     vm.openDatepicker = function($event, opened) {
-    //         $event.preventDefault();
-    //         $event.stopPropagation();
-
-    //         $scope[opened] = true;
-    //     };
-    // }
 
 })();

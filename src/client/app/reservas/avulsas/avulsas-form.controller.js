@@ -21,10 +21,20 @@
         vm.contatos = contatosService.getContatosArenaLight();
         vm.salvarNovaReserva = salvarNovaReserva;
         vm.hideModalForm = hideModalForm;
+        vm.showNovoContatoModal = showNovoContatoModal;
+        vm.salvarContato = salvarContato;
 
         activate();
 
         function activate() {
+
+            vm.novoContatoModal = $modal({
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
+            });
 
             initForm();
         }
@@ -60,6 +70,15 @@
             ];
 
             vm.novaReserva.duracao = vm.duracao[0];
+        }
+
+        function showNovoContatoModal() {
+            vm.contatoSelecionado = {};
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function salvarContato() {
+            contatosService.addNovoContato(vm.contatoSelecionado);
         }
     }
 

@@ -72,11 +72,11 @@
             <div ng-if="vm.contatos.length==0">
                 <div class="text-center">
                     <i style="opacity:0.5" class="zmdi zmdi-accounts-add zmdi-hc-5x"></i>
-                    <h4 style="opacity:0.4">Você ainda não cadastrou </br>um contato no sistema</h3>
+                    <h4 style="opacity:0.4">Você ainda não cadastrou </br>um contato no sistema</h4>
                     <button 
                         class="btn btn-primary btn-sm m-10" 
                         href="" 
-                        ng-click="vm.contatoSelecionado = {}; vm.edicao = false"
+                        ng-click="vm.contatoSelecionado = {};"
                         data-animation="am-fade-and-slide-top" 
                         data-template-url="app/contatos/novo-contato.html" 
                         bs-modal="modal"> 

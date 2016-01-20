@@ -8,9 +8,7 @@
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
-        .factory('contatosService', contatosService)
-        .factory('escolinhaService', escolinhaService)
-        .factory('mensalistassService', mensalistassService);
+        .factory('contatosService', contatosService);
 
     FilteredArray.$inject = ['$firebaseArray'];
     quadraService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
@@ -18,8 +16,6 @@
     funcionamentoService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
     reservasService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray' , '$q'];
     contatosService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray'];
-    escolinhaService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService' , 'reservasService' , '$q'];
-    mensalistassService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService' , 'reservasService' , '$q'];
 
     function FilteredArray($firebaseArray) {
         /*jshint -W004 */
@@ -150,11 +146,12 @@
             getAll : getAll,
             getFilteredArray : getFilteredArray,
             getReserva: getReserva,
+            getTurmas : getTurmas,
 
             verificaHorarioPeriodo: verificaHorarioPeriodo,
-            verificaHorario : verificaHorario,
 
-            criarReservaAvulsa : criarReservaAvulsa
+            criarReservaAvulsa : criarReservaAvulsa,
+            criarReservaRecorrente : criarReservaRecorrente
         };
 
         return service;
@@ -176,6 +173,11 @@
             return $firebaseArray(getRef().child(subdomainService.arena + '/' + id));
         }
 
+        function getTurmas() {
+
+            return $firebaseArray(Ref.child('turmas').child(subdomainService.arena));
+        }
+
         function verificaHorarioPeriodo(reserva) {
             var deferred = $q.defer();
 
@@ -191,7 +193,7 @@
                     if (reserva.quadra === data.quadra && _.contains(reserva.dow, dow) &&
                         (
                             reserva.horaInicio === start ||
-                            reserva.horaFim === end || 
+                            reserva.horaFim === end ||
                             (reserva.horaInicio < start && start < reserva.horaFim) ||
                             (reserva.horaInicio > start && end > reserva.horaInicio)
                         )
@@ -205,11 +207,7 @@
             return deferred.promise;
         }
 
-        function verificaHorario(inicio, fim, quadra) {
-
-        }
-
-        function criarReservaAvulsa(novaReserva){
+        function criarReservaAvulsa(novaReserva) {
             var deferred = $q.defer();
 
             verificaHorarioPeriodo(novaReserva).then(function(horarioValido) {
@@ -219,14 +217,74 @@
                     var reserva = {
                         quadra: novaReserva.quadra,
                         responsavel: novaReserva.responsavel,
-                        start : moment(moment(novaReserva.dataInicio).format('DDMMYYYY')  + novaReserva.horaInicio, 'DDMMYYYYHH:mm')._d.getTime() ,
-                        end : moment(moment(novaReserva.dataFim).format('DDMMYYYY')  + novaReserva.horaFim, 'DDMMYYYYHH:mm')._d.getTime(),
+                        start : moment(moment(novaReserva.dataInicio).format('DDMMYYYY') +
+                            novaReserva.horaInicio, 'DDMMYYYYHH:mm')._d.getTime() ,
+                        end : moment(moment(novaReserva.dataFim).format('DDMMYYYY') +
+                            novaReserva.horaFim, 'DDMMYYYYHH:mm')._d.getTime(),
                     };
 
                     list.$add(reserva).then(function(ref) {
                         deferred.resolve();
                     }, function() {
                         deferred.reject('Erro ao cadastrar nova turma');
+                    });
+                }
+                else {
+                    deferred.reject('Horário Ocupado!');
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
+        function criarReservaRecorrente(novaReserva, tipo) {
+            var deferred = $q.defer();
+
+            verificaHorarioPeriodo(novaReserva).then(function(horarioValido) {
+
+                if (horarioValido) {
+                    var list = $firebaseArray(Ref.child(tipo).child(subdomainService.arena));
+                    list.$add(novaReserva).then(function(ref) {
+                        var turmaID = ref.key();
+                        var reservasTurma = {};
+
+                        _.forEach(novaReserva.dow, function(d) {
+                            var dataReserva = moment(novaReserva.dataInicio).day(d);
+
+                            while (dataReserva <= novaReserva.dataFim) {
+                                var reservaID = getRef().child(subdomainService.arena).push().key();
+
+                                var dataF = moment(dataReserva).format('DD/MM/YYYY');
+                                var start = moment(dataF + novaReserva.horaInicio , 'DD/MM/YYYYHHmm')._d.getTime();
+                                var end = moment(dataF + novaReserva.horaFim , 'DD/MM/YYYYHHmm')._d.getTime();
+
+                                var reserva = {
+                                    turma : turmaID,
+                                    tipo : 2,
+                                    quadra: novaReserva.quadra,
+                                    start : start,
+                                    end : end,
+                                    responsavel : novaReserva.responsavel
+                                };
+
+                                reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
+                                reservasTurma[ tipo + '/' + subdomainService.arena + '/' + turmaID + '/reservas/' +  reservaID] = true;
+
+                                dataReserva = moment(dataReserva).add(7,'days')._d;
+                            }
+                        });
+
+                        Ref.update(reservasTurma, function(error) {
+                            if (error) {
+                                deferred.reject('Erro ao cadastrar reservas');
+                            }
+                            else {
+                                deferred.resolve();
+                            }
+                        });
+                    }, function() {
+                        deferred.reject('Erro ao cadastrar nova ' + tipo);
                     });
                 }
                 else {
@@ -246,7 +304,8 @@
             getContatos: getContatos,
             searchContatos: searchContatos,
             getContatosArena: getContatosArena,
-            getContatosArenaLight : getContatosArenaLight
+            getContatosArenaLight : getContatosArenaLight,
+            addNovoContato : addNovoContato
         };
 
         return service;
@@ -308,165 +367,12 @@
 
             return $firebaseArray(joinedRef);
         }
-    }
 
-    function escolinhaService(Ref, $firebaseArray, $firebaseObject, subdomainService, reservasService, $q) {
-        var service = {
-            getRef : getRef,
-            getTurmas : getTurmas,
-            criarTurma : criarTurma
-        };
+        function addNovoContato(novoContato) {
+            novoContato.fkArena = true;
+            getContatosArena().$add(novoContato);
 
-        return service;
-
-        function getRef() {
-
-            return Ref.child('turmas');
         }
-
-        function getTurmas() {
-
-            return $firebaseArray(getRef().child(subdomainService.arena));
-        }
-
-        function criarTurma(turmas, novaTurma) {
-
-            var deferred = $q.defer();
-
-            reservasService.verificaHorarioPeriodo(novaTurma).then(function(horarioValido) {
-
-                if (horarioValido) {
-                    turmas.$add(novaTurma).then(function(ref) {
-                        var turmaID = ref.key();
-                        var reservasTurma = {};
-
-                        _.forEach(novaTurma.dow, function(d) {
-                            var dataReserva = moment(novaTurma.dataInicio).day(d);
-
-                            while (dataReserva <= novaTurma.dataFim) {
-                                var reservaID = reservasService.getRef().child(subdomainService.arena).push().key();
-
-                                var dataF = moment(dataReserva).format('DD/MM/YYYY');
-                                var start = moment(dataF + novaTurma.horaInicio , 'DD/MM/YYYYHHmm')._d.getTime();
-                                var end = moment(dataF + novaTurma.horaFim , 'DD/MM/YYYYHHmm')._d.getTime();
-
-                                var reserva = {
-                                    turma : turmaID,
-                                    tipo : 2,
-                                    quadra: novaTurma.quadra,
-                                    start : start,
-                                    end : end,
-                                    responsavel : novaTurma.professor
-                                };
-
-                                reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
-                                reservasTurma['turmas/' + subdomainService.arena + '/' + turmaID + '/reservas/' +  reservaID] = true;
-
-                                dataReserva = moment(dataReserva).add(7,'days')._d;
-                            }
-                        });
-
-                        Ref.update(reservasTurma, function(error) {
-                            if (error) {
-                                deferred.reject('Erro ao cadastrar reservas');
-                            }
-                            else {
-                                deferred.resolve();
-                            }
-                        });
-                    }, function() {
-                        deferred.reject('Erro ao cadastrar nova turma');
-                    });
-                }
-                else {
-                    deferred.reject('Horário Ocupado!');
-                }
-
-            });
-
-            return deferred.promise;
-        }
-
-    }
-
-    function mensalistassService(Ref, $firebaseArray, $firebaseObject, subdomainService, reservasService, $q) {
-        var service = {
-            getRef : getRef,
-            getMensalistas : getMensalistas,
-            criarMensalista : criarMensalista
-        };
-
-        return service;
-
-        function getRef() {
-
-            return Ref.child('mensalistas');
-        }
-
-        function getMensalistas() {
-
-            return $firebaseArray(getRef().child(subdomainService.arena));
-        }
-
-        function criarMensalista(mensalistas, novoMensalista) {
-
-            var deferred = $q.defer();
-
-            reservasService.verificaHorarioPeriodo(novoMensalista).then(function(horarioValido) {
-
-                if (horarioValido) {
-                    mensalistas.$add(novoMensalista).then(function(ref) {
-                        var mensalistaID = ref.key();
-                        var reservasMensalista = {};
-
-                        _.forEach(novoMensalista.dow, function(d) {
-                            var dataReserva = moment(novoMensalista.dataInicio).day(d);
-
-                            while (dataReserva <= novoMensalista.dataFim) {
-                                var reservaID = reservasService.getRef().child(subdomainService.arena).push().key();
-
-                                var dataF = moment(dataReserva).format('DD/MM/YYYY');
-                                var start = moment(dataF + novoMensalista.horaInicio , 'DD/MM/YYYYHHmm')._d.getTime();
-                                var end = moment(dataF + novoMensalista.horaFim , 'DD/MM/YYYYHHmm')._d.getTime();
-
-                                var reserva = {
-                                    mensalista : mensalistaID,
-                                    tipo : 3,
-                                    quadra: novoMensalista.quadra,
-                                    start : start,
-                                    end : end,
-                                    responsavel : novoMensalista.responsavel
-                                };
-
-                                reservasMensalista['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
-                                reservasMensalista[
-                                    'mensalistas/' + subdomainService.arena + '/' + mensalistaID + '/reservas/' + reservaID] = true;
-
-                                dataReserva = moment(dataReserva).add(7,'days')._d;
-                            }
-                        });
-
-                        Ref.update(reservasMensalista, function(error) {
-                            if (error) {
-                                deferred.reject('Erro ao cadastrar reservas');
-                            }
-                            else {
-                                deferred.resolve();
-                            }
-                        });
-                    }, function() {
-                        deferred.reject('Erro ao cadastrar novo mensalista');
-                    });
-                }
-                else {
-                    deferred.reject('Horário Ocupado!');
-                }
-
-            });
-
-            return deferred.promise;
-        }
-
     }
 
 })();

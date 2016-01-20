@@ -9,12 +9,12 @@
     EscolinhasCtrl.$inject = [
         '$scope' ,
         '$modal',
-        'escolinhaService'
+        'reservasService'
     ];
 
-    function EscolinhasCtrl($scope, $modal, escolinhaService) {
+    function EscolinhasCtrl($scope, $modal, reservasService) {
         var vm = this;
-        vm.turmas = escolinhaService.getTurmas();
+        vm.turmas = reservasService.getTurmas();
         vm.showEscolinhasForm = showEscolinhasForm;
         vm.hideModalForm = hideModalForm;
         vm.novaTurmaModal = $modal({

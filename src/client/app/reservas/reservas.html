@@ -114,10 +114,10 @@
 </script>
 
 <script type="text/ng-template" id="popupNovaReserva.html">
-	<div class="popover novaReserva" ng-class="vm.novaReserva.placement" tabindex="-1">
+	<div class="popover novaReserva reservasForm" ng-class="vm.novaReserva.placement" tabindex="-1">
 		<div class="arrow"></div>
 		<button type="button" class="close m-r-15 m-t-5" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-		<form class="form-horizontal reservasForm" name="reservaForm" ng-submit="submitPelada()">
+		<form class="form-horizontal " name="reservaForm" ng-submit="submitPelada()">
 			<h4 class="popover-title">
 				Reserva Avulsa<br/>
 			</h4>
@@ -148,7 +148,7 @@
 				</div>
 				<br/>
 				<div class="row">
-					<div class="col-sm-offset-1 col-sm-10" ng-class="{ 'has-error' : reservaForm.resp.$invalid && vm.submitted }">
+					<div class="col-sm-offset-1 col-sm-9" ng-class="{ 'has-error' : reservaForm.resp.$invalid && vm.submitted }">
 						<div class="input-group ">
 							<span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
 							<div class="fg-line">
@@ -159,6 +159,11 @@
 						</div>
 						<small ng-show="vm.novaReserva.responsavel == {} && vm.submitted" class="help-block">Selecione um responsável</small>
 					</div>
+                    <button type="button" 
+                        class="btn btn-link btn-novo-contato"
+                        ng-click="vm.showNovoContatoModal();">
+                        <i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+                    </button>
 				</div>
 
 				<div class="col-sm-6 ppo-reserva-footer">
