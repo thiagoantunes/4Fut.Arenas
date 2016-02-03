@@ -82,7 +82,7 @@
             arena.once('value', function(snapshot) {
                 if (snapshot.hasChild('staff/' + user.uid)) {
                     if (snapshot.val().configurado) {
-                        $location.path('/admin/reservas');
+                        $location.path('/admin/agenda');
                         $scope.$apply();
                     }
                     else {

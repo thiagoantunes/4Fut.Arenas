@@ -1,0 +1,76 @@
+<section>
+	<div class="card z-depth-3" >
+		<div class="card-header">
+			<div class="row">
+				<div class="col-md-6">
+				</div>
+			</div>
+		</div>
+		<div class="card-body card-padding" style="min-height:300px">
+			<div ng-if="vm.reservas.length>0">
+				<div class="p-header" >
+					<ul class="p-menu">
+						<li class="active">
+							<button 
+								class="btn btn-default" 
+								href="" 
+								ng-click="vm.showModalForm();"> 
+								<i class="zmdi zmdi-accounts-add hidden-xs"></i> Nova Reserva
+							</button>
+						</li>
+					</ul>
+					<ul class="actions p-menu m-t-20 hidden-xs">
+						<li class="pm-search">
+							<div class="pms-inner">
+								<i class="zmdi zmdi-search"></i>
+								<input type="text" ng-model="buscaReserva" placeholder="Buscar...">
+							</div>
+						</li>
+					</ul>
+				</div>
+				<table class="table">
+					<tr>
+						<th>Quadra</th>
+						<th>Responsável</th>
+						<th>Quando</th>
+					</tr>
+					<tr ng-repeat="reserva in vm.reservas | filter:buscaReserva">
+						<td>
+							{{ reserva.nomeQuadra }}
+						</td>
+						<td>
+							{{ reserva.nomeResponsavel }}
+						</td>
+						<td>
+							{{ reserva.start | date}} às {{ reserva.end | time}}
+						</td>
+					</tr>
+				</table>
+				<div class="load-more">
+					<a href="" ng-click="vm.loadMore()" ng-if="vm.reservas.scroll.hasNext()"><i class="zmdi zmdi-refresh-alt"></i> Carregar mais...</a>
+				</div>
+			</div>
+			<div class="text-center" ng-if="vm.emptyList">
+				<i style="opacity:0.5" class="zmdi zmdi-calendar-alt zmdi-hc-5x"></i>
+				<h4 style="opacity:0.4">Você ainda não cadastrou </br>uma reserva no sistema</h4>
+				<button class="btn btn-primary btn-sm m-10" href="" ng-click="vm.showModalForm();"> 
+					<i class="zmdi zmdi-calendar-alt"></i> Nova Reserva
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="text/ng-template" id="novaReservaModal.html">
+	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" aria-label="Close" ng-click="$hide();"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Nova Reserva</h4>
+				</div>
+				<div data-ng-include="'app/reservas/avulsas/avulsas-form.html'" data-ng-controller="AvulsasFormCtrl as vm"></div>
+			</div>
+		</div>
+	</div>
+</script>

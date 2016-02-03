@@ -1,0 +1,47 @@
+<div  class="modal" id="userProfileModal"  tabindex="-1" role="dialog" aria-hidden="true" ng-controller="UserProfileCtrl as vm">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">{{user.nome}}</h4>
+				<div class="cadini-pic">
+					<a href="" class="pmop-edit" ng-click="vm.showModal();">
+						<img src="{{user.fotoPerfil}}" alt="">
+					</a>
+				</div>
+			</div>
+			<form class="form-horizontal" name="contatoForm" ng-submit="vm.salvarContato(); $hide()" novalidate>
+				<div class="modal-body">
+					<div class="card-body">
+						<div class="row">
+							<div class="form-group">
+								<label for="inputNome" class="col-sm-3 control-label">Nome</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputNome" name="nome" type="text" ng-model="user.nome" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail" class="col-sm-3 control-label">Email</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputEmail" ng-readonly="true"  name="email" type="email" ng-model="user.email" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputCelular" class="col-sm-3 control-label">Telefone</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputCelular" ng-minlength="10" name="telefone" ui-br-phone-number type="text" ng-model="user.telefone" class="form-control" />
+									</div>
+								</div>
+							</div>
+						</div>  
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -4,6 +4,9 @@
     angular
         .module('app.core')
         .factory('FilteredArray', FilteredArray)
+        .factory('ScrollArray', ScrollArray)
+        .factory('PageArray', PageArray)
+        .factory('usersService', usersService)
         .factory('arenaService', arenaService)
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
@@ -11,10 +14,13 @@
         .factory('contatosService', contatosService);
 
     FilteredArray.$inject = ['$firebaseArray'];
+    ScrollArray.$inject = ['$firebaseArray'];
+    PageArray.$inject = ['$firebaseArray'];
     quadraService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
     arenaService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
     funcionamentoService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
-    reservasService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray' , '$q'];
+    reservasService.$inject =
+        ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray' , '$q', 'ScrollArray'];
     contatosService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray'];
 
     function FilteredArray($firebaseArray) {
@@ -30,6 +36,41 @@
             }
         };
         return $firebaseArray.$extend(FilteredArray);
+    }
+
+    function ScrollArray($firebaseArray) {
+        return function(ref, field) {
+            var scrollRef = new Firebase.util.Scroll(ref, field);
+            var list = $firebaseArray(scrollRef);
+            list.scroll = scrollRef.scroll;
+            return list;
+        };
+    }
+
+    function PageArray($firebaseArray) {
+        return function(ref, field) {
+            // create a Paginate reference
+            var pageRef = new Firebase.util.Paginate(ref, field, {maxCacheSize: 250});
+            // generate a synchronized array using the special page ref
+            var list = $firebaseArray(pageRef);
+            // store the "page" scope on the synchronized array for easy access
+            list.page = pageRef.page;
+
+            // when the page count loads, update local scope vars
+            pageRef.page.onPageCount(function(currentPageCount, couldHaveMore) {
+                list.pageCount = currentPageCount;
+                list.couldHaveMore = couldHaveMore;
+            });
+
+            // when the current page is changed, update local scope vars
+            pageRef.page.onPageChange(function(currentPageNumber) {
+                list.currentPageNumber = currentPageNumber;
+            });
+
+            // load the first page
+            pageRef.page.next();
+            return list;
+        };
     }
 
     function quadraService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
@@ -139,7 +180,7 @@
         }
     }
 
-    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray, $q) {
+    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray, $q , ScrollArray) {
         var service = {
             getRef: getRef,
 
@@ -147,6 +188,8 @@
             getFilteredArray : getFilteredArray,
             getReserva: getReserva,
             getTurmas : getTurmas,
+            getMensalistas : getMensalistas,
+            getAvulsar : getAvulsar,
 
             verificaHorarioPeriodo: verificaHorarioPeriodo,
 
@@ -174,8 +217,61 @@
         }
 
         function getTurmas() {
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child('/turmas/' + subdomainService.arena + ''), 'turma'],
+              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'turma.quadra'],
+              [Ref.child('/perfil/'), 'professor', 'turma.responsavel']
+            ).select(
+              'turma.quadra',
+              'turma.dataInicio',
+              'turma.dataFim',
+              'turma.horaInicio',
+              'turma.horaFim',
+              'turma.responsavel',
+              'turma.dow',
+              {'key':'quadra.nome','alias':'nomeQuadra'},
+              {'key':'professor.nome','alias':'nomeProfessor'}
+            ).ref();
 
-            return $firebaseArray(Ref.child('turmas').child(subdomainService.arena));
+            return new ScrollArray(joinedRef, 'dataInicio');
+        }
+
+        function getMensalistas() {
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child('/mensalistas/' + subdomainService.arena + ''), 'mensalista'],
+              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
+              [Ref.child('/perfil/'), 'responsavel', 'mensalista.responsavel']
+            ).select(
+            'mensalista.quadra',
+              'mensalista.dataInicio',
+              'mensalista.dataFim',
+              'mensalista.horaInicio',
+              'mensalista.horaFim',
+              'mensalista.responsavel',
+              'mensalista.dow',
+              {'key':'quadra.nome','alias':'nomeQuadra'},
+              {'key':'responsavel.nome','alias':'nomeResponsavel'}
+            ).ref();
+
+            return new ScrollArray(joinedRef, 'dataInicio');
+        }
+
+        function getAvulsar() {
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child('/reservas/' + subdomainService.arena + ''), 'avulsa'],
+              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'avulsa.quadra'],
+              [Ref.child('/perfil/'), 'responsavel', 'avulsa.responsavel']
+            ).select(
+            'avulsa.quadra',
+              'avulsa.start',
+              'avulsa.end',
+              'avulsa.responsavel',
+              'avulsa.tipo',
+              {'key':'quadra.nome','alias':'nomeQuadra'},
+              {'key':'responsavel.nome','alias':'nomeResponsavel'}
+            ).ref();
+
+            return new ScrollArray(joinedRef, 'start');
         }
 
         function verificaHorarioPeriodo(reserva) {
@@ -311,7 +407,7 @@
         return service;
 
         function getRef() {
-            return Ref.child('contatos');
+            return Ref.child('perfil');
         }
 
         function getContato(id) {
@@ -372,6 +468,23 @@
             novoContato.fkArena = true;
             getContatosArena().$add(novoContato);
 
+        }
+    }
+
+    function usersService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+        var service = {
+            getRef : getRef,
+            getUserProfile: getUserProfile,
+        };
+
+        return service;
+
+        function getRef() {
+            return Ref.child('users');
+        }
+
+        function getUserProfile(id) {
+            return $firebaseObject(getRef().child(id));
         }
     }
 

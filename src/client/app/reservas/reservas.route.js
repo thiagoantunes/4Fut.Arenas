@@ -18,8 +18,7 @@
                 config: {
                     url: '/reservas',
                     templateUrl: 'app/reservas/reservas.html',
-                    controller:'ReservasCtrl',
-                    controllerAs:'vm'
+                    redirectTo: 'admin.reservas.mensalistas',
                 }
             },
         ];

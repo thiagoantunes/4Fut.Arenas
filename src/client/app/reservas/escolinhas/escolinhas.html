@@ -1,0 +1,85 @@
+<section>
+	<div class="card z-depth-3" >
+		<div class="card-header">
+			<div class="row">
+				<div class="col-md-6">
+				</div>
+			</div>
+		</div>
+		<div class="card-body card-padding" style="min-height:300px">
+			<div ng-if="vm.turmas.length>0">
+				<div class="p-header" >
+					<ul class="p-menu">
+						<li class="active">
+							<button 
+								class="btn btn-default" 
+								href="" 
+								ng-click="vm.showEscolinhasForm();"> 
+								<i class="zmdi zmdi-accounts-add hidden-xs"></i> Nova Turma
+							</button>
+						</li>
+					</ul>
+					<ul class="actions p-menu m-t-20 hidden-xs">
+						<li class="pm-search">
+							<div class="pms-inner">
+								<i class="zmdi zmdi-search"></i>
+								<input type="text" ng-model="buscaReserva" placeholder="Buscar...">
+							</div>
+						</li>
+					</ul>
+				</div>
+				<table class="table">
+					<tr>
+						<th>Quadra</th>
+						<th>Professor</th>
+						<th>Quando</th>
+					</tr>
+					<tr ng-repeat="turma in vm.turmas | filter:buscaReserva">
+						<td>
+							{{ turma.nomeQuadra }}
+						</td>
+						<td>
+							{{ turma.nomeProfessor }}
+						</td>
+						<td>
+							<spam ng-repeat="d in turma.dow">
+								<spam ng-if="($index  + 1)== (turma.dow.length) && $index > 0"> e </spam> 
+								<spam ng-if="($index + 1) < turma.dow.length && $index !== 0">, </spam> 
+								{{d | dow}}
+							</spam> 
+							de {{ turma.horaInicio | time}} às {{ turma.horaFim | time}}
+						</td>
+					</tr>
+				</table>
+				<div class="load-more">
+					<a href="" ng-click="vm.loadMore()" ng-if="vm.turmas.scroll.hasNext()"><i class="zmdi zmdi-refresh-alt"></i> Carregar mais...</a>
+				</div>
+			</div>
+			<div class="text-center" ng-if="vm.emptyList">
+				<i style="opacity:0.5" class="zmdi zmdi-calendar-alt zmdi-hc-5x"></i>
+					<h4 style="opacity:0.4">Você ainda não cadastrou </br>uma reserva mensal no sistema</h4>
+					<button 
+					class="btn btn-primary btn-sm m-10" 
+					href="" 
+					ng-click="vm.showModalForm();"> 
+					<i class="zmdi zmdi-calendar-alt"></i> Nova Reserva Mensal
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script type="text/ng-template" id="novaTurmaModal.html">
+	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" aria-label="Close" ng-click="$hide(); vm.novaTurma = {}"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Nova Turma</h4>
+				</div>
+				<div data-ng-include="'app/reservas/escolinhas/escolinhas-form.html'" data-ng-controller="EscolinhasFormCtrl as vm"></div>
+			</div>
+		</div>
+	</div>
+</script>

@@ -26,11 +26,35 @@
         vm.novaQuadra = {};
         vm.addQuadra = addQuadra;
         vm.concluirConfiguracao = concluirConfiguracao;
+        vm.showUploadImageModal = showUploadImageModal;
+        vm.hideUploadImageModal = hideUploadImageModal;
+        vm.saveImage = saveImage;
 
         activate();
 
         function activate() {
             vm.modal.$promise.then(vm.modal.show);
+
+            vm.uploadImageModal = $modal({
+                scope: $scope,
+                container: '#wizardModal',
+                templateUrl: 'app/setup-arena/upload-img.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false
+            });
+        }
+
+        function showUploadImageModal() {
+            vm.uploadImageModal.$promise.then(vm.uploadImageModal.show);
+        }
+
+        function hideUploadImageModal() {
+            vm.uploadImageModal.$promise.then(vm.uploadImageModal.hide);
+        }
+
+        function saveImage(fileName) {
+            vm.usuario.fotoPerfil = 'https://4fut.s3.amazonaws.com/img/' + fileName;
+            hideUploadImageModal();
         }
 
         function addQuadra() {
@@ -60,7 +84,7 @@
             vm.arena.configurado = 'true';
             vm.arena.$save();
             vm.modal.$promise.then(vm.modal.hide);
-            $location.path('/admin/reservas');
+            $location.path('/admin/agenda');
         }
 
     }

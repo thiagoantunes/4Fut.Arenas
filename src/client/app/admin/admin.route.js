@@ -18,7 +18,7 @@
                 config: {
                     url: '/admin',
                     templateUrl: 'app/admin/admin.html',
-                    redirectTo: 'admin.reservas',
+                    redirectTo: 'admin.agenda',
                     controller: 'AdminController',
                     controllerAs: 'hctrl',
                 }

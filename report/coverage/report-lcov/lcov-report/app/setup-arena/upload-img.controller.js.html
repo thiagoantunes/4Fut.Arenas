@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app/setup-arena/upload-img.controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">app/setup-arena/upload-img.controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">23.53% <small>(4 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">14.29% <small>(1 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">23.53% <small>(4 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/setup-arena/</a> &#187; upload-img.controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function() {
+    'use strict';
+&nbsp;
+    angular
+        .module('app.setup-arena')
+        .controller('UploadImgCtrl', UploadImgCtrl);
+&nbsp;
+    UploadImgCtrl.$inject = ['$scope' , 'Upload', 'Auth'];
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function UploadImgCtrl($scope , Upload, Auth) {</span>
+        /*jshint ignore:start*/
+        //jscs:disable maximumLineLength
+<span class="cstat-no" title="statement not covered" >        $scope.policy = 'ewogICJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsKICAgIHsiYnVja2V0IjogIjRmdXQifSwKICAgIFsic3RhcnRzLXdpdGgiLCAiJGtleSIsICJpbWcvIl0sCiAgICB7ImFjbCI6ICJwdWJsaWMtcmVhZCJ9LAogICAgWyJzdGFydHMtd2l0aCIsICIkQ29udGVudC1UeXBlIiwgIiJdLAogICAgWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsIDAsIDUyODgwMDBdCiAgXQp9';</span>
+        //jscs:enable maximumLineLength
+        /*jshint ignore:end*/
+<span class="cstat-no" title="statement not covered" >        $scope.signature = 'ds0gHdmN9AdfQM5klGMHi+5X2dQ=';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.upload = <span class="fstat-no" title="function not covered" >function (dataUrl) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var file = Upload.dataUrltoBlob(dataUrl);</span>
+<span class="cstat-no" title="statement not covered" >            file.name = Math.round(Math.random() * 100) + Auth.$getAuth().uid;</span>
+<span class="cstat-no" title="statement not covered" >            Upload.upload({</span>
+                url: 'https://4fut.s3.amazonaws.com/',
+                method: 'POST',
+                data : {
+                    key: 'img/${filename}',
+                    AWSAccessKeyId: 'AKIAI7H2KNGKAMZK32DQ',
+                    acl: 'public-read',
+                    policy: $scope.policy,
+                    signature: $scope.signature,
+                    'Content-Type': 'image/jpeg',
+                },
+                file: file,
+            }).progress(<span class="fstat-no" title="function not covered" >function (evt) {</span>
+<span class="cstat-no" title="statement not covered" >                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);</span>
+<span class="cstat-no" title="statement not covered" >                console.log('progress: ' + progressPercentage + '% ');</span>
+            }).then(<span class="fstat-no" title="function not covered" >function (data, status, headers, config) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log(data);</span>
+<span class="cstat-no" title="statement not covered" >                console.log(headers);</span>
+<span class="cstat-no" title="statement not covered" >                $scope.$parent.vm.saveImage(file.name);</span>
+            }).then(<span class="fstat-no" title="function not covered" >function (data, status, headers, config) {</span>
+&nbsp;
+            });
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.hide = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.$parent.vm.hideModal();</span>
+        };
+&nbsp;
+    }
+&nbsp;
+})();
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 03 2016 15:43:45 GMT-0200 (BRST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

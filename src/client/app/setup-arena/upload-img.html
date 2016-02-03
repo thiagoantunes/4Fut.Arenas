@@ -1,0 +1,34 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="UploadImgCtrl"> 
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" id="mdlUploadImg">
+      <div class="modal-body">
+        <form name="myForm">  
+                <button class="btn btn-default col-md-12 p-10 m-t-20 m-b-20" ngf-select ng-model="picFile" accept="image/*">
+                    Selecione uma foto</button>
+                <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
+                     class="cropArea">
+                    <img-crop image="picFile  | ngfDataUrl"                 
+                    result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                    </img-crop>
+                </div>
+
+                <br/><br/>
+                <div class="row">
+                  <div class="col-md-6">
+                      <button class="btn btn-primary col-md-12"  ng-click="upload(croppedDataUrl)">Salvar</button> 
+                  </div>
+                  <div class="col-md-6">
+                      <button class="btn btn-danger col-md-12"  ng-click="$hide()">Cancelar</button> 
+                  </div>
+                </div>
+                <br/>
+                <span class="progress" ng-show="progress >= 0">
+                  <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                </span>
+                <span ng-show="result">Upload Successful</span>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+            </form>
+      </div>
+    </div>
+  </div>
+</div>

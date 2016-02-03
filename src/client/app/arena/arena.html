@@ -1,20 +1,10 @@
 <div class="card z-depth-3" id="profile-main" style='min-height:620px'>
-	<div class="pm-overview c-overflow" 
-		style="background:linear-gradient(rgba(0, 0, 0, 0.65), rgba(255, 255, 255, 0)), url({{arena.fotoCapa}}); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+	<div class="pm-overview c-overflow" >
 		
 		<div class="pmo-pic">
 			<div class="p-relative">
-				<a href="">
+				<a href="" ng-click="vm.showUploadImageModal()">
 					<img class="img-responsive" ng-src="{{arena.fotoPerfil}}" alt="">
-				</a>
-
-
-
-				<a href="" class="pmop-edit" data-animation="am-fade-and-scale" data-template-url="modalProfileImage.html" bs-modal>
-					<i class="zmdi zmdi-camera"></i> <span class="hidden-xs">Atualizar Foto de Perfil</span>
-				</a>
-				<a href="" class="pmop-edit" data-animation="am-fade-and-scale" style="top:50px" data-template-url="modalCoverImage.html" bs-modal>
-					<i class="zmdi zmdi-camera"></i> <span class="hidden-xs">Atualizar Foto da Capa</span>
 				</a>
 			</div>
 

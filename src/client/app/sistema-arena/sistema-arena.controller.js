@@ -53,7 +53,14 @@
             }
 
             function redirect() {
-                vm.redirectPath = $location.protocol() + '://' + vm.novaArena.arena + '.' + $location.host() + ':' + $location.port();
+                var nome = vm.novaArena.arena;
+                console.log(nome);
+                if ($location.host() === 'localhost') {
+                    vm.redirectPath = $location.protocol() + '://' + nome + '.' + $location.host() + ':' + $location.port();
+                }
+                else {
+                    vm.redirectPath = $location.protocol() + '://' + nome + '.4fut.com.br';
+                }
                 $state.go('sistema-arena.confirmacao-cadastro');
             }
 

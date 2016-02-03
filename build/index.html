@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+        .ng-hide { display: none!important; }
+    </style>
+    <title ng-bind="title">4Futarenas</title>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="styles/lib-17a9b6ed43.css">
+
+    <link rel="stylesheet" href="styles/app-5ee52fa836.css">
+</head>
+<body>
+    
+    <data ui-view></data>
+
+    <script src="js/lib-309ed6aa1c.js"></script>
+
+    <script src="js/app-82b2bdca93.js"></script>
+</body>
+</html>

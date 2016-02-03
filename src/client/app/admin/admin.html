@@ -17,11 +17,11 @@
 						<li ng-class="{ active: isActive('/admin/dashboard')}">
 							<a href="#/admin/dashboard">DASHBOARD</a>
 						</li>
-						<li ng-class="{ active: isActive('/admin/reservas')}">
-							<a href="#/admin/reservas">AGENDA</a>
+						<li ng-class="{ active: isActive('/admin/agenda')}">
+							<a href="#/admin/agenda">AGENDA</a>
 						</li>
-						<li ng-class="{ active: isActive('/admin/escolinhas')}">
-							<a href="#/admin/escolinhas">RESERVAS</a>
+						<li ng-class="{ active: isActive('/admin/reservas/mensalistas') || isActive('/admin/reservas/escolinhas') || isActive('/admin/reservas/avulsas')}">
+							<a href="#/admin/reservas">RESERVAS</a>
 						</li>
 						<!-- <li class="dropdown">
 							<a bs-dropdown data-placement="bottom-left"  data-trigger="hover" data-container=".myButton" aria-expanded="false" class="tm-settings myButton" href="">
@@ -114,10 +114,14 @@
 							</li>
 							<li class="dropdown"  style="height:55px" >
 								<a bs-dropdown  data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-profile" href="">
-									<img src="https://scontent-gru1-1.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10525685_920901341304897_6903052953168543422_n.jpg?oh=f911c27973d49852218f0df910ecec8c&oe=56BF0768" alt=""></a>
+									<img src="{{loggedUser.fotoPerfil}}" alt=""></a>
 									<ul class="dropdown-menu dm-icon pull-right" role="menu">
 										<li>
-											<a href="">
+											<a  href="" 
+												data-container= 'body'
+												data-animation="am-fade-and-slide-top" 
+                            					data-template-url="app/setup-arena/user-profile-modal.html" 
+                            					bs-modal="modal">
 												<i class="zmdi zmdi-face"></i>
 												Perfil
 											</a>

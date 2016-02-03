@@ -5,6 +5,8 @@
         'app.core',
         'app.widgets',
         'mgo-angular-wizard',
-        'ui.utils.masks'
+        'ui.utils.masks',
+        'ngFileUpload',
+        'ngImgCrop'
       ]);
 })();
