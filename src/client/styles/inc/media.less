@@ -35,6 +35,30 @@
 	}
 }
 
+.lightgallery {	
+	.lightgallery-item {
+		
+		& > img {
+			width: 100%;
+			border-radius: 2px;
+		}
+
+		.hover-pop(rgba(0,0,0,0.1));
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	
+	[data-src] {
+		.clearfix();
+	}
+	
+	.lightgallery-item:not(.p-item) {
+		position: relative;
+	}
+}
+
 /*
  * Carousel
  */

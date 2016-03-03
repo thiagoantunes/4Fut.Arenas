@@ -4,9 +4,9 @@
     angular
     .module('app.arena')
     .controller('PrecosCtrl', PrecosCtrl);
-    PrecosCtrl.$inject = ['$scope', 'quadra' , 'funcionamentoService', 'uiCalendarConfig'  , '$popover' , 'blockUI'];
+    PrecosCtrl.$inject = ['$scope', 'quadra' , 'funcionamentoService', 'uiCalendarConfig'  , '$popover' , 'blockUI', '$window'];
     /* @ngInject */
-    function PrecosCtrl($scope, quadra, funcionamentoService, uiCalendarConfig, $popover , blockUI) {
+    function PrecosCtrl($scope, quadra, funcionamentoService, uiCalendarConfig, $popover , blockUI, $window) {
         var vm = this;
 
         vm.precos = [];
@@ -23,18 +23,19 @@
 
             vm.uiConfig = {
                 calendar: {
-                    minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    businessHours: {
-                        start: '10:00',
-                        end: '24:00',
-                        dow: [0, 1, 2, 3, 4, 5, 6]
-                    },
-                    height: 'auto',
+                    lang:'pt-br',
+                    // minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // businessHours: {
+                    //     start: '10:00',
+                    //     end: '24:00',
+                    //     dow: [0, 1, 2, 3, 4, 5, 6]
+                    // },
+                    height: $window.innerHeight - 160,
                     timeFormat: 'H(:mm)',
                     header: false,
                     defaultView: 'agendaWeek',
-                    firstHour: 9,
+                    scrollTime :  '09:00:00',
                     allDaySlot: false,
                     timezone: 'local',
                     axisFormat: 'H:mm',
@@ -101,32 +102,40 @@
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            var element = $(jsEvent.target).closest('.fc-event');
-            var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
+            if (end._d.getDay() != start._d.getDay()) {
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
+            }
+            else{
+                var element = $(jsEvent.target).closest('.fc-event');
+                var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
 
-            var popover = $popover(element, {
-                placement: placement,
-                title:'',
-                templateUrl: 'app/arena/quadras/precos/novo-preco.html',
-                container: '#mdlPreco',
-                autoClose: 1,
-                scope: $scope
-            });
+                if (element.length > 0) {
+                    var popover = $popover(element, {
+                        placement: placement,
+                        title:'',
+                        templateUrl: 'app/arena/quadras/precos/novo-preco.html',
+                        container: '#mdlPreco',
+                        autoClose: 1,
+                        scope: $scope
+                    });
 
-            vm.novoPreco = {
-                start : moment(start._d).format('HH:mm'),
-                end : moment(end._d).format('HH:mm'),
-                dow: start._d.getDay().toString(),
-                precoAvulso : '',
-                precoMensalista : ''
-            };
-            vm.dataLabel = moment(start).format('ddd') + ' de ' +
-            moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm');
+                    vm.novoPreco = {
+                        start : moment(start._d).format('HH:mm'),
+                        end : moment(end._d).format('HH:mm'),
+                        dow: start._d.getDay().toString(),
+                        precoAvulso : '',
+                        precoMensalista : ''
+                    };
+                    vm.dataLabel = moment(start).format('ddd') + ' de ' +
+                    moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm');
 
-            popover.$promise.then(popover.show);
+                    popover.$promise.then(popover.show);
+                }
+            }
         }
 
         function eventClick(calEvent, jsEvent, view) {
+            console.log($window.pageYOffset);
             var preco = _.find(vm.precos , {'$id' : calEvent.$id});
             vm.novoPreco = preco;
 

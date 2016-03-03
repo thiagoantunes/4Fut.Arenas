@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/reservas/mensalistas/mensalistas-form.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">29.41% <small>(10 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">28.57% <small>(10 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">29.41% <small>(10 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">28.57% <small>(10 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">app/reservas/mensalistas/</a> &#187; mensalistas-form.controller.js</div>
@@ -128,7 +128,11 @@
 101
 102
 103
-104</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+104
+105
+106
+107
+108</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,20 +148,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,6 +185,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -244,10 +252,11 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'reservasService'
+        'reservasService',
+        'logger'
     ];
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {</span>
+<span class="fstat-no" title="function not covered" >    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
 <span class="cstat-no" title="statement not covered" >        vm.novoMensalista = {};</span>
 <span class="cstat-no" title="statement not covered" >        vm.quadras = quadraService.getQuadras();</span>
@@ -280,13 +289,16 @@
                 horaFim : moment(vm.novoMensalista.hora).add(vm.novoMensalista.duracao.value, 'h').format('HHmm'),
                 dataInicio : vm.novoMensalista.data.getTime(),
                 dataFim : moment(vm.novoMensalista.data.getTime()).add(vm.novoMensalista.validade.value , 'M')._d.getTime(),
-                dow : [vm.novoMensalista.data.getDay()]
+                dow : [vm.novoMensalista.data.getDay()],
+                title: vm.novoMensalista.responsavel.nome,
+                tipo : 2
             };
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            reservasService.criarReservaRecorrente(vm.mensalista, 'mensalistas').then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                logger.success('Reserva criada com sucesso!');</span>
 <span class="cstat-no" title="statement not covered" >                hideModalForm();</span>
             },<span class="fstat-no" title="function not covered" >function(error) {</span>
-<span class="cstat-no" title="statement not covered" >                console.log('Failed: ' + error);</span>
+<span class="cstat-no" title="statement not covered" >                logger.error('Erro ao criar uma reserva mensalista', error , 'Ops!');</span>
             });
         }
 &nbsp;
@@ -339,7 +351,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 03 2016 15:43:45 GMT-0200 (BRST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 02 2016 12:00:44 GMT-0300 (BRT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

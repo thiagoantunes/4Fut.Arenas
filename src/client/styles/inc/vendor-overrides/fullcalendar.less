@@ -10,6 +10,11 @@
 	right: 12px;
 }
 
+.fc-time-grid .fc-slats .fc-minor td{
+    border-top-width: 1px;
+    border-top-color: #efefef;
+}
+
 .fc {
 	background-color: #fff;
 	box-shadow: 0 1px 1px rgba(0,0,0,.15);
@@ -19,8 +24,15 @@
 		border-color: @table-border-color;
 	}
 
+    td {
+        border-width: 0px;
+        border-top: 1px solid #eee;
+        height: 25px !important;
+        text-transform: capitalize;
+    }
+
 	th {
-	    font-weight: 400;
+	    font-weight: 500;
 
 	}
 
@@ -29,6 +41,33 @@
 			border-left-width: 0;
 		}
 	}
+
+    button{
+        background: white;
+        height: 2.4em;
+        padding: 0 .6em;
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+
+    .fc-widget-header{
+        border:none;
+    }
+}
+
+.fc-view-container{
+    .fc-agendaWeek-view, .fc-agendaDay-view{
+        table{
+            thead{
+                tr{
+                    td{
+
+                        box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+        }
+    }
 }
 
 #calendar-widget {
@@ -117,21 +156,48 @@
     }
 }
 
+.fc-state-default.fc-corner-right{
+    border-top-right-radius: 0px; 
+    border-bottom-right-radius: 0px; 
+}
+
+.fc-state-default.fc-corner-left {
+    border-top-left-radius: 0px; 
+    border-bottom-left-radius: 0px; 
+}
+
+.fc-state-down, .fc-state-active {
+    background-color: #eee !important;
+    box-shadow:0 1px 0px rgba(0, 0, 0, 0.16), 0 2px 1px rgba(0, 0, 0, 0.12);
+}
+
+.fc-state-default {
+    border-width: 0px;
+    box-shadow:0 1px 0px rgba(0, 0, 0, 0.16), 0 2px 1px rgba(0, 0, 0, 0.12);
+}
+
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0px;
+}
+
 .fc-today {
     color: @m-amber;
 }
 
 .fc-toolbar {
     margin-bottom: 0;
-    padding: 20px 7px 19px;
+    padding: 20px 10px 19px;
     position: relative;
 
     h2 {
 		margin-top: 7px;
-		font-size: 20px;
-		font-weight: 400;
-		text-transform: uppercase;
-        color: #fff;
+        font-size: 18px;
+        font-weight: 200;
+        -webkit-font-smoothing: antialiased;
+        font-family: roboto;
+        text-transform: capitalize;
+        color: #666;
     }
 
     .ui-button  {
@@ -177,6 +243,7 @@
 		}
     }
 }
+
 .fc-event {
 	padding: 0;
     font-size: 11px;
@@ -193,6 +260,10 @@
 		background: rgba(0, 0, 0, 0.2);
 		padding: 2px 6px;
 		margin: 0 0 0 -1px;
+        width: 100%;
+        font-size: 1.0em;
+        font-weight: bold;
+        font-family: roboto;
     }
 }
 

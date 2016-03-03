@@ -6,6 +6,7 @@
         'app.widgets',
         'blockUI',
         'ngMap',
+        'ngFileUpload',
         'ngImgCrop'
      ]);
 })();

@@ -136,6 +136,7 @@
 
             getArena : getArena,
             getQuadras : getQuadras,
+            getAlbum : getAlbum,
 
             isValidArenaName: isValidArenaName
         };
@@ -158,6 +159,10 @@
             return getRef().child(arenaName).once('value', function(snap) {
                 return snap.val() === null;
             });
+        }
+
+        function getAlbum() {
+            return $firebaseArray(getRef().child(subdomainService.arena + '/album'));
         }
     }
 
@@ -183,6 +188,10 @@
     function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray, $q , ScrollArray) {
         var service = {
             getRef: getRef,
+
+            refTurmas : refTurmas,
+            refMensalistas : refMensalistas,
+            refAvulsas : refAvulsas,
 
             getAll : getAll,
             getFilteredArray : getFilteredArray,
@@ -216,6 +225,18 @@
             return $firebaseArray(getRef().child(subdomainService.arena + '/' + id));
         }
 
+        function refTurmas() {
+            return Ref.child('turmas/' + subdomainService.arena);
+        }
+
+        function refMensalistas() {
+            return Ref.child('mensalistas/' + subdomainService.arena);
+        }
+
+        function refAvulsas() {
+            return Ref.child('reservas/' + subdomainService.arena);
+        }
+
         function getTurmas() {
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/turmas/' + subdomainService.arena + ''), 'turma'],
@@ -242,7 +263,7 @@
               [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
               [Ref.child('/perfil/'), 'responsavel', 'mensalista.responsavel']
             ).select(
-            'mensalista.quadra',
+              'mensalista.quadra',
               'mensalista.dataInicio',
               'mensalista.dataFim',
               'mensalista.horaInicio',
@@ -311,12 +332,14 @@
                 if (horarioValido) {
                     var list = $firebaseArray(getRef().child(subdomainService.arena));
                     var reserva = {
+                        tipo : 1,
                         quadra: novaReserva.quadra,
                         responsavel: novaReserva.responsavel,
                         start : moment(moment(novaReserva.dataInicio).format('DDMMYYYY') +
                             novaReserva.horaInicio, 'DDMMYYYYHH:mm')._d.getTime() ,
                         end : moment(moment(novaReserva.dataFim).format('DDMMYYYY') +
                             novaReserva.horaFim, 'DDMMYYYYHH:mm')._d.getTime(),
+                        title : novaReserva.title
                     };
 
                     list.$add(reserva).then(function(ref) {
@@ -357,11 +380,12 @@
 
                                 var reserva = {
                                     turma : turmaID,
-                                    tipo : 2,
+                                    tipo : novaReserva.tipo,
                                     quadra: novaReserva.quadra,
                                     start : start,
                                     end : end,
-                                    responsavel : novaReserva.responsavel
+                                    responsavel : novaReserva.responsavel,
+                                    title : novaReserva.title
                                 };
 
                                 reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
@@ -396,6 +420,7 @@
     function contatosService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
         var service = {
             getRef : getRef,
+            refContatosArena : refContatosArena,
             getContato: getContato,
             getContatos: getContatos,
             searchContatos: searchContatos,
@@ -423,7 +448,7 @@
             return new FilteredArray(ref, fn);
         }
 
-        function getContatosArena() {
+        function refContatosArena() {
             var norm = new Firebase.util.NormalizedCollection(
               [Ref.child('/perfil/'), 'perfil'],
               [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
@@ -432,6 +457,8 @@
               'perfil.telefone',
               'perfil.email',
               'perfil.fotoPerfil',
+              'perfil.dataNascimento',
+              'perfil.cpf',
               'arena.$value',
               {'key':'arena.$value','alias':'fkArena'}
             );
@@ -440,9 +467,12 @@
                 function(data, key, priority) { return data.fkArena === true; }
             );
 
-            var joinedRef = norm.ref();
+            return norm.ref();  
+        }
 
-            return $firebaseArray(joinedRef);
+        function getContatosArena() {
+            var ref = refContatosArena();
+            return $firebaseArray(ref);
         }
 
         function getContatosArenaLight() {

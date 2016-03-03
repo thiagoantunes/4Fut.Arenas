@@ -19,7 +19,6 @@
         vm.showModalForm = showModalForm;
         vm.hideModalForm = hideModalForm;
         vm.loadMore = loadMore;
-        vm.emptyList = false;
         vm.novaTurmaModal = $modal({
             scope: $scope,
             templateUrl: 'novoMensalistaModal.html',
@@ -30,16 +29,22 @@
         activate();
 
         function activate() {
-            loadMore();
+            cfpLoadingBar.start();
+            reservasService.refMensalistas().once('value', function(snapshot) {
+                if (!snapshot.exists()) {
+                    cfpLoadingBar.complete();
+                    vm.emptyList = true;
+                }
+                else {
+                    loadMore();
+                }
+            });
         }
 
         function loadMore() {
-            cfpLoadingBar.start();
             vm.mensalistas.scroll.next(10);
             vm.mensalistas.$watch(function(event) {
-                if (vm.mensalistas.length === 0) {
-                    vm.emptyList = true;
-                }
+                vm.emptyList = (vm.mensalistas.length === 0);
                 cfpLoadingBar.complete();
             });
         }

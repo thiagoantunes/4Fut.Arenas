@@ -30,13 +30,13 @@
                     <li class="pm-search">
                         <div class="pms-inner">
                             <i class="zmdi zmdi-search"></i>
-                            <input type="text" ng-model="buscaContato" placeholder="Buscar...">
+                            <input type="text" ng-model="vm.buscaContato" placeholder="Buscar...">
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="row">     
-                <div class="col-md-4" ng-repeat="contato in vm.contatos | filter:buscaContato">
+                <div class="col-md-4" ng-repeat="contato in vm.contatos | filter:vm.buscaContato | orderBy:'nome'">
                   <div class="well well-sm" >
                     <div class="row" >
                       <div class="col-md-4 col-sm-4 col-xs-4" >
@@ -69,7 +69,7 @@
                   </div >
                 </div >
             </div>
-            <div ng-if="vm.contatos.length==0">
+            <div ng-if="vm.emptyList">
                 <div class="text-center">
                     <i style="opacity:0.5" class="zmdi zmdi-accounts-add zmdi-hc-5x"></i>
                     <h4 style="opacity:0.4">Você ainda não cadastrou </br>um contato no sistema</h4>

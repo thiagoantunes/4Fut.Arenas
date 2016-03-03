@@ -17,7 +17,7 @@
 
         $scope.upload = function (dataUrl) {
             var file = Upload.dataUrltoBlob(dataUrl);
-            file.name = Math.round(Math.random() * 100) +'_' + Auth.$getAuth().uid;
+            file.name = Math.round(Math.random() * 100) + '_' + Auth.$getAuth().uid;
             Upload.upload({
                 url: 'https://4fut.s3.amazonaws.com/',
                 method: 'POST',

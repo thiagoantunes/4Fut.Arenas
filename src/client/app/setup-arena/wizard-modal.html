@@ -46,7 +46,6 @@
 				                                    <input id="inputNome" required name="nome" type="text" ng-model="vm.usuario.nome" class="form-control" />
 				                                <span ng-show="userForm.nome.$invalid && !userForm.nome.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="userForm.nome.$valid && !userForm.nome.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="userForm.nome.$invalid && !userForm.nome.$pristine" class="help-block">O nome é obrigatório</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine , 'has-success' : userForm.email.$valid && !userForm.email.$pristine }">
@@ -55,7 +54,6 @@
 				                                <input id="inputEmail" ng-readonly="true" required name="email" type="email" ng-model="vm.usuario.email" class="form-control" />
 				                                <span ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="userForm.email.$valid && !userForm.email.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um email válido</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.cpf.$invalid && !userForm.cpf.$pristine , 'has-success' : userForm.cpf.$valid && !userForm.cpf.$pristine }">
@@ -64,7 +62,6 @@
 				                                <input id="inputCpf" required name="cpf" ui-br-cpf-mask type="text" ng-model="vm.usuario.cpf" class="form-control" />
 				                                <span ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="userForm.cpf.$valid && !userForm.cpf.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="userForm.cpf.$invalid && !userForm.cpf.$pristine" class="help-block">Informe um CPF válido</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group required has-feedback" ng-class="{ 'has-error' : userForm.telefone.$invalid && !userForm.telefone.$pristine , 'has-success' : userForm.telefone.$valid && !userForm.telefone.$pristine }">
@@ -73,7 +70,6 @@
 				                                <input id="inputCelular" required name="telefone" ui-br-phone-number type="text" ng-model="vm.usuario.telefone" class="form-control" />
 				                                <span ng-show="userForm.telefone.$invalid && !userForm.telefone.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="userForm.telefone.$valid && !userForm.telefone.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="userForm.telefone.$invalid && !userForm.telefone.$pristine" class="help-block">O telefone é obrigatório</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group">
@@ -107,7 +103,6 @@
 				                                </div>
 				                                <span ng-show="arenaForm.nome.$invalid && !arenaForm.nome.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="arenaForm.nome.$valid && !arenaForm.nome.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="arenaForm.nome.$invalid && !arenaForm.nome.$pristine" class="help-block">O nome é obrigatório</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group required has-feedback" ng-class="{ 'has-error' : arenaForm.cnpj.$invalid && !arenaForm.cnpj.$pristine , 'has-success' : arenaForm.cnpj.$valid && !arenaForm.cnpj.$pristine }">
@@ -118,7 +113,6 @@
 				                                </div>
 				                                <span ng-show="arenaForm.cnpj.$invalid && !arenaForm.cnpj.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="arenaForm.cnpj.$valid && !arenaForm.cnpj.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="arenaForm.cnpj.$invalid && !arenaForm.cnpj.$pristine" class="help-block">Informe um CNPJ válido</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group">
@@ -139,7 +133,6 @@
 				                                </div>
 				                                <span ng-show="arenaForm.email.$invalid && !arenaForm.email.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="arenaForm.email.$valid && !arenaForm.email.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="arenaForm.email.$invalid && !arenaForm.email.$pristine" class="help-block">Informe um email válido</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group" ng-class="{ 'has-error' : arenaForm.telefone.$invalid && !arenaForm.telefone.$pristine , 'has-success' : arenaForm.telefone.$valid && !arenaForm.telefone.$pristine }">
@@ -150,7 +143,6 @@
 				                                </div>
 				                                <span ng-show="arenaForm.telefone.$invalid && !arenaForm.telefone.$pristine" class="zmdi zmdi-close form-control-feedback"></span>
 				                                <span ng-show="arenaForm.telefone.$valid && !arenaForm.telefone.$pristine" class="zmdi zmdi-check form-control-feedback"></span>
-				                                <small ng-show="arenaForm.telefone.$invalid && !arenaForm.telefone.$pristine" class="help-block">Informe um telefone válido</small>
 				                            </div>
 				                        </div>
 				                        <div class="form-group">

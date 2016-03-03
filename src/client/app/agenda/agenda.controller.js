@@ -1,4 +1,5 @@
 /*global $:false */
+/*jshint quotmark: false */
 (function() {
     'use strict';
 
@@ -15,9 +16,11 @@
         '$popover' ,
         'blockUI' ,
         '$modal',
-        'cfpLoadingBar'
+        'cfpLoadingBar',
+        '$window',
+        'logger'
     ];
-
+    /*jshint maxparams: 20 */
     function ReservasCtrl(
         $scope,
         quadraService,
@@ -27,7 +30,9 @@
         $popover,
         blockUI,
         $modal,
-        cfpLoadingBar) {
+        cfpLoadingBar,
+        $window,
+        logger) {
 
         var vm = this;
         vm.quadras = quadraService.getQuadras();
@@ -72,14 +77,15 @@
 
             vm.uiConfig = {
                 calendar:{
-                    minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    height: 'auto',
+                    lang:'pt-br',
+                    // minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    height: $window.innerHeight - 160,
                     timeFormat: 'H(:mm)',
                     timezone:'local',
                     header:{left:'month agendaWeek agendaDay',center: 'title'},
                     defaultView:'agendaWeek',
-                    firstHour: 9,
+                    scrollTime :  '09:00:00',
                     allDaySlot: false,
                     defaultEventMinutes: 60,
                     axisFormat: 'H:mm',  //,'h(:mm)tt',
@@ -143,31 +149,43 @@
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            var element = $(jsEvent.target).closest('.fc-event');
-            var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
+            if (end._d.getDay() != start._d.getDay()) {
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+            }
+            else {
+                var element = $(jsEvent.target).closest('.fc-event');
+                var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
 
-            var popover = $popover(element, {
-                placement: placement,
-                title:'',
-                templateUrl: 'popupNovaReserva.html',
-                container: '#reservas',
-                autoClose: 1,
-                scope: $scope
-            });
-            vm.novaReserva = {
-                responsavel : {},
-                dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
-                    moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
-                start : start._d,
-                end : end._d,
-                placement : placement
-            };
+                if (element.length > 0) {
+                    var popover = $popover(element, {
+                       placement: placement,
+                       title:'',
+                       templateUrl: 'popupNovaReserva.html',
+                       container: '#reservas',
+                       autoClose: 1,
+                       scope: $scope
+                   });
+                    vm.novaReserva = {
+                       responsavel : {},
+                       dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
+                           moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
+                       start : start._d,
+                       end : end._d,
+                       placement : placement
+                   };
 
-            //atualizaDisponibilidade();
-            popover.$promise.then(popover.show);
+                    //atualizaDisponibilidade();
+                    popover.$promise.then(popover.show);
+                }
+            }
         }
 
         function eventRender(event, element) {
+            if (!event.tipo) {
+                event.tipo = 1;
+            }
+            element.find('.fc-time').prepend('<img src=\'images/icons/tipo-' + event.tipo +
+                '.png\' width=\'15\' height=\'15\' style=\'margin-right: 5px; margin-top: -4px;\'>');
             element.attr('class' , element.attr('class') +  ' ' +
                 _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
             $popover(element, {
@@ -226,9 +244,13 @@
                 quadra: vm.novaReserva.quadra.$id,
                 start : vm.novaReserva.start.getTime(),
                 end : vm.novaReserva.end.getTime(),
-                responsavel : vm.novaReserva.responsavel.$id
+                responsavel : vm.novaReserva.responsavel.$id,
+                title: vm.novaReserva.responsavel.nome
             }).then(function(ref) {
+                logger.success('Reserva criada com sucesso!');
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+            }, function(error) {
+                logger.error(error, vm.reserva, 'Ops!');
             });
         }
 

@@ -11,10 +11,11 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'reservasService'
+        'reservasService',
+        'logger'
     ];
 
-    function AvulsasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {
+    function AvulsasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {
         var vm = this;
         vm.novaReserva = {};
         vm.quadras = quadraService.getQuadras();
@@ -48,13 +49,15 @@
                 horaFim : moment(vm.novaReserva.hora).add(vm.novaReserva.duracao.value, 'h').format('HHmm'),
                 dataInicio : vm.novaReserva.data.getTime(),
                 dataFim : moment(moment(vm.novaReserva.data.getTime()).format('DDMMYYYY')  + '23:59', 'DDMMYYYYHH:mm')._d.getTime() ,
-                dow : [vm.novaReserva.data.getDay()]
+                dow : [vm.novaReserva.data.getDay()],
+                title: vm.novaReserva.responsavel.nome
             };
 
             reservasService.criarReservaAvulsa(vm.reserva).then(function() {
+                logger.success('Reserva criada com sucesso!');
                 hideModalForm();
             },function(error) {
-                console.log('Failed: ' + error);
+                logger.error(error, vm.reserva, 'Ops!');
             });
         }
 

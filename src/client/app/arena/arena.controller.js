@@ -15,7 +15,7 @@
 
         activate();
 
-        function activate(){
+        function activate() {
             arenaService.getArena().$bindTo($scope, 'arena');
             $scope.address = 'current';
 

@@ -7,7 +7,7 @@
                     Selecione uma foto</button>
                 <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
                      class="cropArea">
-                    <img-crop image="picFile  | ngfDataUrl"                 
+                    <img-crop image="picFile  | ngfDataUrl"   result-image-size="300"              
                     result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
                     </img-crop>
                 </div>

@@ -5,20 +5,45 @@
     
     .pm-overview {
         overflow-y: auto;
-        width: 100%;
-        background-color: rgb(51, 51, 51);
-        text-align: center;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
+        
+        @media (min-width: 1200px) {
+            width: 300px;
+        }
+        
+        @media (min-width: @screen-sm-min) and (max-width: 1200px) {
+            width: 250px;
+        }
+        
+        @media (min-width: @screen-sm-min) {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #f8f8f8;
+            border-right: 1px solid #eee;
+        }
+        
+        @media (max-width: @screen-xs-max) {
+            width: 100%;
+            background: #333;
+            text-align: center;
+        }
+
     }
     
     .pm-body {
-        padding-left: 0; 
+        @media (min-width: 1200px) {
+            padding-left: 300px;
+        }
+        
+        @media (min-width: @screen-sm-min) and (max-width: 1200px) {
+            padding-left: 250px;
+        }
+        
+        @media (max-width: @screen-xs-max) {
+            padding-left: 0; 
+        }
+
     }
     
     .pmo-pic {
@@ -26,20 +51,31 @@
         margin: 20px;
         
         img { 
-            background-color: #2E2F31;
-            width: 150px;
-            display: inline-block;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            .z-depth(2);
+            @media(min-width: @screen-sm-min) {
+                width: 100%;
+                border-radius: 2px 2px 0 0;
+            }
+            
+            @media(max-width: @screen-xs-max) {
+                width: 180px;
+                display: inline-block;
+                height: 180px;
+                border-radius: 50%;
+                border: 4px solid #fff;
+                .z-depth(2);
+            }
         }
         
         .pmo-stat {
             border-radius: 0 0 2px 2px;
             color: #fff;
             text-align: center;
-            padding: 15px 5px 0;
+            padding: 30px 5px 0;
+            
+            @media(min-width: @screen-sm-min) {
+                 background: @m-amber;
+                 padding-bottom: 15px;
+            }
         }
         
         .pmop-edit {
@@ -62,8 +98,15 @@
                 vertical-align: middle;
                 margin-top: -3px;
             }
-            .opacity(0);
-
+            
+            @media (min-width: @screen-sm-min) {
+                width: 100%;
+                .opacity(0);
+                
+                i {
+                    margin-right: 4px;
+                }
+            }
         }
         
         &:hover {
@@ -470,7 +513,7 @@
         
         i {
             vertical-align: top;
-            font-size: 25px;
+            font-size: 20px;
             line-height: 100%;
             position: absolute;
             left: 9px;
@@ -500,7 +543,6 @@
         }
     }
 }
-
 
 
 

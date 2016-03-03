@@ -30,16 +30,23 @@
         activate();
 
         function activate() {
-            loadMore();
+            cfpLoadingBar.start();
+            reservasService.refAvulsas().once('value', function(snapshot) {
+                if (!snapshot.exists()) {
+                    cfpLoadingBar.complete();
+                    vm.emptyList = true;
+                }
+                else {
+                    loadMore();
+                }
+            });
         }
 
         function loadMore() {
             cfpLoadingBar.start();
             vm.reservas.scroll.next(10);
             vm.reservas.$watch(function(event) {
-                if (vm.reservas.length === 0) {
-                    vm.emptyList = true;
-                }
+                vm.emptyList = (vm.reservas.length === 0);
                 cfpLoadingBar.complete();
             });
         }

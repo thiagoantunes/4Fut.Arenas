@@ -1,4 +1,4 @@
-<div class="card z-depth-3" id="profile-main" style='min-height:620px'>
+<div class="card z-depth-3" id="profile-main" style='min-height:560px'>
 	<div class="pm-overview c-overflow" >
 		
 		<div class="pmo-pic">
@@ -11,61 +11,30 @@
 
 			<div class="pmo-stat">
 				<h3 class="m-0 c-white">{{ arena.nome }}</h2>
+				</div>
 			</div>
-		</div>
 
-	</div>
-	<div class="pm-body clearfix">
-		<ul class="tab-nav tn-justified">
-			<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.arena-profile">Perfil</a></li>
-			<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.quadras">Quadras</a></li>	
-			<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.fotos">Fotos</a></li>
-			<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.fotos">Horário de Func.</a></li>	
-		</ul>
-		<data ui-view></data>
+			<div class="pmo-block pmo-contact hidden-xs">
+				<h2>Contact</h2>
+
+				<ul>
+					<li><i class="zmdi zmdi-phone"></i> {{ arena.celular }}</li>
+					<li><i class="zmdi zmdi-email"></i> {{ arena.email }}</li>
+					<li><i class="zmdi zmdi-facebook"></i> {{ arena.facebook }}</li>
+					<li><i class="zmdi zmdi-globe-alt"></i> {{ arena.site }}</li>
+					<li><i class="zmdi zmdi-pin"></i>{{arena.endereco}}</li>
+				</ul>
+			</div>
+
+		</div>
+		<div class="pm-body clearfix">
+			<ul class="tab-nav tn-justified">
+				<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.arena-profile">Perfil</a></li>
+				<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.quadras">Quadras</a></li>	
+				<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.album">Fotos</a></li>
+				<li class="btn-wave" data-ui-sref-active="active"><a data-ui-sref="admin.arena.fotos">Horário de Func.</a></li>	
+			</ul>
+			<data ui-view></data>
+		</div>
 	</div>
 </div>
-
-<script type="text/ng-template" id="modalProfileImage.html">
-	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content" id="mdlPreco">
-	      <div class="modal-header">
-	        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Preços</h4>
-	      </div>
-	      <div class="modal-body">{{address}}
-	        <div>Select an image file: <input type="file" custom-on-change="uploadImage"  id="fileInput" /></div>
-	          <div class="cropArea">
-	            <img-crop image="myImage" result-image-size="150" result-image="myCroppedImage"></img-crop>
-	          </div>
-	          <div>Cropped Image:</div>
-	          <div><img ng-src="{{myCroppedImage}}" /></div>
-	          <button  type="button" ng-click="arena.fotoPerfil = myCroppedImage" class="btn btn-default ">Cancelar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</script>
-
-<script type="text/ng-template" id="modalCoverImage.html">
-	<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content" id="mdlPreco">
-	      <div class="modal-header">
-	        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Preços</h4>
-	      </div>
-	      <div class="modal-body">{{address}}
-	        <div>Select an image file: <input type="file" custom-on-change="uploadImage"  id="fileInput" /></div>
-	          <div class="cropArea">
-	            <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
-	          </div>
-	          <div>Cropped Image:</div>
-	          <div><img ng-src="{{myCroppedImage}}" /></div>
-	          <button  type="button" ng-click="arena.fotoCapa = myCroppedImage" class="btn btn-default ">Cancelar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</script>

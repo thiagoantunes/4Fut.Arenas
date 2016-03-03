@@ -29,16 +29,23 @@
         activate();
 
         function activate() {
-            loadMore();
+            cfpLoadingBar.start();
+            reservasService.refTurmas().once('value', function(snapshot) {
+                if (!snapshot.exists()) {
+                    cfpLoadingBar.complete();
+                    vm.emptyList = true;
+                }
+                else {
+                    loadMore();
+                }
+            });
         }
 
         function loadMore() {
             cfpLoadingBar.start();
             vm.turmas.scroll.next(10);
             vm.turmas.$watch(function(event) {
-                if (vm.turmas.length === 0) {
-                    vm.emptyList = true;
-                }
+                vm.emptyList = (vm.turmas.length === 0);
                 cfpLoadingBar.complete();
             });
         }

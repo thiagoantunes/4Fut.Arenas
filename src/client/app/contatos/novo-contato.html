@@ -18,6 +18,22 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label for="inputCpf" class="col-sm-3 control-label">CPF</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputCpf" name="cpf" ui-br-cpf-mask type="text" ng-model="vm.contatoSelecionado.cpf" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputNascimento" class="col-sm-3 control-label">Data de Nascimento</label>
+								<div class="col-sm-8">
+									<div class="fg-line">
+										<input id="inputNascimento" disable-valid-styling="true" data-date-format="dd/MM/yyyy" name="dataNascimento" type="text" class="form-control" ng-model="vm.contatoSelecionado.dataNascimento"  bs-datepicker />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
                                 <label for="inputEmail" class="col-sm-3 control-label">Email</label>
                                 <div class="col-sm-8">
                                     <div class="fg-line">

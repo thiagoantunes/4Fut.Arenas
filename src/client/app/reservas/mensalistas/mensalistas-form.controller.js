@@ -11,10 +11,11 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'reservasService'
+        'reservasService',
+        'logger'
     ];
 
-    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {
+    function MensalistasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {
         var vm = this;
         vm.novoMensalista = {};
         vm.quadras = quadraService.getQuadras();
@@ -47,13 +48,16 @@
                 horaFim : moment(vm.novoMensalista.hora).add(vm.novoMensalista.duracao.value, 'h').format('HHmm'),
                 dataInicio : vm.novoMensalista.data.getTime(),
                 dataFim : moment(vm.novoMensalista.data.getTime()).add(vm.novoMensalista.validade.value , 'M')._d.getTime(),
-                dow : [vm.novoMensalista.data.getDay()]
+                dow : [vm.novoMensalista.data.getDay()],
+                title: vm.novoMensalista.responsavel.nome,
+                tipo : 2
             };
 
             reservasService.criarReservaRecorrente(vm.mensalista, 'mensalistas').then(function() {
+                logger.success('Reserva criada com sucesso!');
                 hideModalForm();
             },function(error) {
-                console.log('Failed: ' + error);
+                logger.error('Erro ao criar uma reserva mensalista', error , 'Ops!');
             });
         }
 

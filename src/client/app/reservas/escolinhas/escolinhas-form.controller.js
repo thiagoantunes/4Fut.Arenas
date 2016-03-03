@@ -48,7 +48,9 @@
                 dataFim : vm.novaTurma.dataFim.getTime(),
                 dow : _.pluck(_.filter(vm.diasSemana, {
                     'ativo': true
-                }), 'dia')
+                }), 'dia'),
+                title: vm.novaTurma.professor.nome,
+                tipo : 3
             };
 
             reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(function() {
