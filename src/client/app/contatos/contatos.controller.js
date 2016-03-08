@@ -35,7 +35,7 @@
 
         function salvarContato() {
             if (vm.contatoSelecionado.$id) {
-                if(vm.contatoSelecionado.dataNascimento){
+                if (vm.contatoSelecionado.dataNascimento) {
                     vm.contatoSelecionado.dataNascimento = vm.contatoSelecionado.dataNascimento.getTime();
                 }
                 vm.contatos.$save(vm.contatoSelecionado);
@@ -43,7 +43,7 @@
             }
             else {
                 vm.contatoSelecionado.fkArena = true;
-                if(vm.contatoSelecionado.dataNascimento){
+                if (vm.contatoSelecionado.dataNascimento) {
                     vm.contatoSelecionado.dataNascimento = vm.contatoSelecionado.dataNascimento.getTime();
                 }
                 vm.contatos.$add(vm.contatoSelecionado);

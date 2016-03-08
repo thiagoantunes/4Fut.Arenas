@@ -102,10 +102,10 @@
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            if (end._d.getDay() != start._d.getDay()) {
+            if (end._d.getDay() !== start._d.getDay()) {
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
             }
-            else{
+            else {
                 var element = $(jsEvent.target).closest('.fc-event');
                 var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
 

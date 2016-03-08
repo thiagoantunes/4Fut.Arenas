@@ -467,7 +467,7 @@
                 function(data, key, priority) { return data.fkArena === true; }
             );
 
-            return norm.ref();  
+            return norm.ref();
         }
 
         function getContatosArena() {

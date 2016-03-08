@@ -28,7 +28,10 @@
         activate();
 
         function activate() {
-
+            if ($scope.$parent.vm.edicaoEventoAvulso) {
+                vm.novaReserva = $scope.$parent.vm.reservaAvulsaSelecionada;
+                vm.novaReserva.responsavel = _.find(vm.contatos, {'$id' : $scope.$parent.vm.reservaAvulsaSelecionada.responsavel});
+            }
             vm.novoContatoModal = $modal({
                 scope: $scope,
                 templateUrl: 'app/contatos/novo-contato.html',

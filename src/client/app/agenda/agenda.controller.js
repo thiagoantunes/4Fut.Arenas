@@ -21,6 +21,7 @@
         'logger'
     ];
     /*jshint maxparams: 20 */
+    // jshint maxstatements:50
     function ReservasCtrl(
         $scope,
         quadraService,
@@ -56,6 +57,7 @@
         vm.hideModalForm = hideModalForm;
         vm.showNovoContatoModal = showNovoContatoModal;
         vm.salvarContato = salvarContato;
+        vm.excluirReserva = excluirReserva;
 
         activate();
 
@@ -80,7 +82,7 @@
                     lang:'pt-br',
                     // minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     // maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    height: $window.innerHeight - 160,
+                    height: $window.innerHeight - 120,
                     timeFormat: 'H(:mm)',
                     timezone:'local',
                     header:{left:'month agendaWeek agendaDay',center: 'title'},
@@ -94,8 +96,8 @@
                     selectable: true,
                     selectHelper: true,
                     unselectCancel: '.reservasForm',
-                    //eventResize: eventResize,
-                    //  eventDrop: eventDrop,
+                    eventResize: eventResize,
+                    eventDrop: eventDrop,
                     select: eventSelect,
                     eventClick: eventClick,
                     eventRender: eventRender,
@@ -149,7 +151,7 @@
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            if (end._d.getDay() != start._d.getDay()) {
+            if (end._d.getDay() !== start._d.getDay()) {
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
             }
             else {
@@ -180,7 +182,52 @@
             }
         }
 
-        function eventRender(event, element) {
+        function eventResize(event, delta, revertFunc) {
+            if (conflitoHorário(event)) {
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+                logger.error('Conflito de horários!');
+            }
+            else {
+                cfpLoadingBar.start();
+                var reserva = _.find(vm.reservas, {
+                    $id: event.$id
+                });
+                reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();
+                vm.reservas.$save(reserva).then(function(ref) {
+                    cfpLoadingBar.complete();
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+                    logger.success('Reserva editada com sucesso!');
+                });
+            }
+        }
+
+        function eventDrop(event, delta, revertFunc) {
+            if (conflitoHorário(event)) {
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+                logger.error('Conflito de horários!');
+            }
+            else {
+                cfpLoadingBar.start();
+                var reserva = _.find(vm.reservas, {
+                    $id: event.$id
+                });
+                reserva.start = moment(reserva.start).add(delta._milliseconds, 'milliseconds')._d.getTime();
+                reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();
+                reserva.start = moment(reserva.start).add(delta._days, 'days')._d.getTime();
+                reserva.end = moment(reserva.end).add(delta._days, 'days')._d.getTime();
+                vm.reservas.$save(reserva).then(function(ref) {
+                    cfpLoadingBar.complete();
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
+                    logger.success('Reserva editada com sucesso!');
+                });
+            }
+        }
+
+        function eventRender(event, element,view) {
             if (!event.tipo) {
                 event.tipo = 1;
             }
@@ -188,30 +235,46 @@
                 '.png\' width=\'15\' height=\'15\' style=\'margin-right: 5px; margin-top: -4px;\'>');
             element.attr('class' , element.attr('class') +  ' ' +
                 _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
-            $popover(element, {
-                placement: 'bottom',
-                title:'',
-                templateUrl: 'popupReserva.html',
-                container: '#reservas',
-                autoClose: 1,
-                scope: $scope
-            });
         }
 
-        function eventClick(calEvent) {
-            var reserva = _.find(vm.reservas , {'$id' : calEvent.$id});
-            var responsavel = _.result(_.find(vm.contatos , {'$id' : reserva.responsavel}), 'nome');
-            var color = _.result(_.find(vm.quadras , {'$id' : reserva.quadra}), 'color');
+        function eventClick(calEvent, jsEvent) {
 
-            vm.reservaSelecionada = {
-                responsavel: responsavel,
-                quando: moment(reserva.start).format('ddd, DD [de] MMMM') + ', ' +
-                    moment(reserva.start).format('HH:mm') + ' às ' +
-                    moment(reserva.end).format('HH:mm'),
-                quadra: reserva.quadra,
-                color: color,
-                varlor: 'R$ 150,00'
+            var color = _.result(_.find(vm.quadras , {'$id' : calEvent.quadra}), 'color');
+
+            vm.novaReserva = {
+                id: calEvent.$id,
+                quadra: _.find(vm.quadras, {$id : calEvent.quadra}),
+                responsavel : _.find(vm.contatos, {$id : calEvent.responsavel}),
+                dataLabel : moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
+                    moment(calEvent.start).format('HH:mm') + ' às ' +
+                    moment(calEvent.end).format('HH:mm'),
+                start : moment(calEvent.start)._d,
+                end : moment(calEvent.end)._d
             };
+
+            atualizaDisponibilidade();
+
+            var element = $(jsEvent.target).closest('.fc-event');
+            var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
+
+            var prevPopover = document.getElementsByClassName('popover');
+            if (prevPopover) {
+                _.forEach(prevPopover, function(p) {
+                    if (p !== undefined) {
+                        p.parentNode.removeChild(p);
+                    }
+                });
+            }
+
+            var popover = $popover(element, {
+                placement: placement,
+                title:'',
+                templateUrl: 'popupNovaReserva.html',
+                container: '#reservas',
+                autoClose: 1,
+                scope: $scope,
+            });
+            popover.$promise.then(popover.show);
         }
 
         function dayClick(date, jsEvent, view) {
@@ -228,30 +291,53 @@
             vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f) {
                 return f.start <= moment(vm.novaReserva.start).format('HH:mm') &&
                         f.end >= moment(vm.novaReserva.end).format('HH:mm') &&
-                        _.any(f.dow , function(n) {
-                            return n === vm.novaReserva.start.getDay();
-                        });
+                        f.dow === vm.novaReserva.start.getDay();
             });
 
             vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), function(f) {
-                return (vm.novaReserva.start >= moment(f.end) || vm.novaReserva.end <= moment(f.start));
+                return ((vm.novaReserva.start >= moment(f.end) || vm.novaReserva.end <= moment(f.start)) ||
+                vm.novaReserva.id === f.$id);
+            });
+        }
+
+        function conflitoHorário(reserva) {
+            return !_.every(_.filter(vm.reservas, 'quadra', reserva.quadra), function(f) {
+                return ((reserva.start >= moment(f.end) || reserva.end <= moment(f.start)) ||
+                reserva.$id === f.$id);
             });
         }
 
         function salvarReservaAvulsa() {
-            vm.reservas.$add({
-                tipo : 1,
-                quadra: vm.novaReserva.quadra.$id,
-                start : vm.novaReserva.start.getTime(),
-                end : vm.novaReserva.end.getTime(),
-                responsavel : vm.novaReserva.responsavel.$id,
-                title: vm.novaReserva.responsavel.nome
-            }).then(function(ref) {
-                logger.success('Reserva criada com sucesso!');
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
-            }, function(error) {
-                logger.error(error, vm.reserva, 'Ops!');
-            });
+            if (vm.novaReserva.id) {
+                var reservaSelecionada = _.find(vm.reservas, {$id : vm.novaReserva.id});
+                reservaSelecionada.responsavel = vm.novaReserva.responsavel.$id;
+                reservaSelecionada.quadra = vm.novaReserva.quadra.$id;
+                vm.reservas.$save(reservaSelecionada).then(function(ref) {
+                    logger.success('Reserva editada com sucesso!');
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+                }, function(error) {
+                    logger.error(error, vm.reserva, 'Ops!');
+                });
+            }
+            else {
+                vm.reservas.$add({
+                    tipo : 1,
+                    quadra: vm.novaReserva.quadra.$id,
+                    start : vm.novaReserva.start.getTime(),
+                    end : vm.novaReserva.end.getTime(),
+                    responsavel : vm.novaReserva.responsavel.$id,
+                    title: vm.novaReserva.responsavel.nome
+                }).then(function(ref) {
+                    logger.success('Reserva criada com sucesso!');
+                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+                }, function(error) {
+                    logger.error(error, vm.reserva, 'Ops!');
+                });
+            }
+        }
+
+        function excluirReserva(id) {
+            vm.reservas.$remove(_.find(vm.reservas, {$id: id}));
         }
 
         function openPrecosModal(q) {
