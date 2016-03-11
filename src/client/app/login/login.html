@@ -1,15 +1,33 @@
 <section id="login-page">
   <form>
-    <h1>Acesse o portal do administrador.</h1>
-    <input required name="email" placeholder="E-mail" type="email" ng-model="email">
-    <input required name="pass" placeholder="Senha" type="password" ng-model="pass">
-    <button class="btn btn-primary" ng-click="passwordLogin(email, pass)">Entrar</button>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="">
-        <i class="input-helper"></i>
-        Manter Conectado
-      </label>
+    <div ng-hide="forgotPassword">
+      <h1>Acesse o portal do administrador.</h1>
+      <input required name="email" placeholder="E-mail" type="email" ng-model="email">
+      <input required name="pass" placeholder="Senha" type="password" ng-model="pass">
+      <button class="btn btn-primary" ng-click="passwordLogin(email, pass)">Entrar</button>
+      <!-- <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">
+          <i class="input-helper"></i>
+          Manter Conectado
+        </label>
+      </div> -->
+      <br/><br/>
+      <div class="row">
+        <div class="col-md-12">
+          <a  style="margin: 40px 25px; padding: 10px 0; font-weight: bold;" ng-click="forgotPassword = true" href="">Esqueci minha senha</a>
+        </div>
+      </div>
+    </div>
+    <div ng-show="forgotPassword">
+      <h1 style="height: 75px">
+        <button class="btn btn-default btn-icon waves-effect waves-circle" ng-click="forgotPassword = false">
+          <i class="zmdi zmdi-arrow-left zmdi-hc-5x"></i>
+        </button> 
+        Esqueci minha senha
+      </h1>
+      <input required name="recoverEmail" placeholder="E-mail" type="email" ng-model="emailForgotPassword">
+      <button class="btn btn-primary" ng-click="recoverPassword(emailForgotPassword)">Recuperar Senha</button>
     </div>
   </form>
 </section>

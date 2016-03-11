@@ -1,0 +1,12 @@
+<div class="pmb-block clearfix">
+    <div class="p-header">
+         <div class="btn-group btn-group-justified" ng-model="vm.reservaRadio" bs-radio-group>
+            <label ng-repeat="quadra in vm.quadras" ng-click="vm.selecionaQuadra(quadra.$id);" class="btn {{quadra.color}}"><input type="radio" value="{{quadra.$id}}">{{quadra.nome}}</label>
+        </div>
+        <br/><br/>
+    </div>
+    <button style="z-index: 10" class="btn btn-float btn-danger m-btn" data-template-url="app/arena/precos/modal-novo-preco.html" bs-modal="modal"><i class="zmdi zmdi-plus"></i></button>
+    <div id="configFunc" ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources" style="margin:0px"  calendar="myCalendar" >
+    </div>
+</div>
+<div class="clearfix"></div>

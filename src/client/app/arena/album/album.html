@@ -1,7 +1,7 @@
 <div class="pmb-block clearfix photos">
     <div class="p-header">
         <ul class="p-menu">
-            <button 
+            <!-- <button 
                 ng-if="vm.album.length > 0"
                 class="btn btn-default" 
                 href="" 
@@ -10,10 +10,10 @@
                 accept="image/*" > 
                 <i class="zmdi zmdi-image"></i> Adicionar Imagens
             </button>
-            <br><br>
+            <br><br> -->
         </ul>
     </div>
-
+    <button class="btn btn-float btn-danger m-btn" ng-if="vm.album.length > 0" ngf-select="uploadFiles($files, $invalidFiles)" multiple accept="image/*" ><i class="zmdi zmdi-plus"></i></button>
     <div class="lightgallery row">
         <div lightgallery ng-repeat="foto in vm.album" data-src="{{trustSrc(foto.img)}}" class="col-md-3 col-sm-4 col-xs-6 pmo-pic" style="margin:0px">
             <div class="lightgallery-item p-item">

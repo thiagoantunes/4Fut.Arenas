@@ -5,9 +5,29 @@
       .module('app.login')
       .controller('LoginCtrl', LoginCtrl);
 
-    LoginCtrl.$inject = ['$scope', 'Auth', '$location', '$q' , 'Ref', '$timeout' ,'$firebaseObject' , 'subdomainService'];
+    LoginCtrl.$inject = [
+        '$scope',
+        'Auth',
+        '$location',
+        '$q' ,
+        'Ref',
+        '$timeout' ,
+        '$firebaseObject' ,
+        'subdomainService',
+        'logger',
+        'cfpLoadingBar'];
 
-    function LoginCtrl($scope, Auth, $location, $q, Ref, $timeout, $firebaseObject, subdomainService) {
+    function LoginCtrl(
+        $scope,
+        Auth,
+        $location,
+        $q,
+        Ref,
+        $timeout,
+        $firebaseObject,
+        subdomainService,
+        logger,
+        cfpLoadingBar) {
 
         $scope.login = 1;
         $scope.register = 0;
@@ -25,9 +45,30 @@
 
         $scope.passwordLogin = function(email, pass) {
             $scope.err = null;
+            cfpLoadingBar.start();
             Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(
               redirect, showError
             );
+        };
+
+        $scope.recoverPassword = function(email) {
+            cfpLoadingBar.start();
+            Ref.resetPassword({
+                email: email
+            }, function(error) {
+                cfpLoadingBar.complete();
+                if (error) {
+                    switch (error.code) {
+                        case 'INVALID_USER':
+                            logger.error('Não existe um usuário cadastrado com esse email.');
+                            break;
+                        default:
+                            logger.error('Erro ao redefinir a senha:', error);
+                    }
+                } else {
+                    logger.success('Email de recuperação de senha enviado com sucesso!');
+                }
+            });
         };
 
         $scope.createAccount = function(email, pass, confirm) {
@@ -80,6 +121,7 @@
             var arena = Ref.child('arenas/' + subdomainService.arena);
 
             arena.once('value', function(snapshot) {
+                cfpLoadingBar.complete();
                 if (snapshot.hasChild('staff/' + user.uid)) {
                     if (snapshot.val().configurado) {
                         $location.path('/admin/agenda');
@@ -91,13 +133,15 @@
                     }
                 }
                 else {
+                    logger.error('Usuário não cadastrado na arena ' + subdomainService.arena);
                     Auth.$unauth();
                 }
             });
         }
 
         function showError(err) {
-            $scope.err = err;
+            cfpLoadingBar.complete();
+            logger.error(err);
         }
     }
 

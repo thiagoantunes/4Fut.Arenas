@@ -41,8 +41,8 @@
            <div class="quadra-tag pull-left p-relative" ng-click="qdr.ativa = !qdr.ativa ; vm.refreshCalendar();">
               <span data-ng-class="{ '{{qdr.quadra.color}}': qdr.ativa , 'bgm-gray' :!qdr.ativa }"></span>
           </div>
-          <div class="pull-right p-relative"  data-title="Editar preços da quadra" bs-tooltip ng-click="vm.openPrecosModal(qdr.quadra)">
-              <i class="zmdi zmdi-edit"></i>
+          <div class="pull-right p-relative"  data-title="Visualizar preços da quadra" bs-tooltip ng-click="vm.openPrecosModal(qdr.quadra)">
+              <i class="zmdi zmdi-eye"></i>
           </div>
           <div class="media-body">
               <div class="qdr-title" ng-class="{ 'quadra-inativa': !qdr.ativa }">{{qdr.quadra.nome}}

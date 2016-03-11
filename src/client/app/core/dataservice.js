@@ -81,7 +81,9 @@
             getQuadra: getQuadra,
             getQuadras: getQuadras,
             getQuadrasArena : getQuadrasArena,
-            getQuadrasLight : getQuadrasLight
+            getQuadrasLight : getQuadrasLight,
+
+            remove : remove
         };
 
         return service;
@@ -126,6 +128,23 @@
             ).ref();
 
             return $firebaseArray(joinedRef);
+        }
+
+        function remove(id) {
+            var joinedRef = new Firebase.util.NormalizedCollection(
+              [Ref.child('/quadras/' + subdomainService.arena + '/' + id), 'quadra'],
+              [Ref.child('/arenas/' + subdomainService.arena + '/quadras/' + id), 'arena']
+            ).select(
+              'quadra.nome',
+              'quadra.color',
+              'quadra.tipo',
+              'quadra.capacidade',
+              'quadra.coberta',
+              'arena.$value',
+              {'key':'arena.$value','alias':'fkArena'}
+            ).ref();
+
+            joinedRef.remove();
         }
     }
 

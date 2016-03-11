@@ -15,20 +15,20 @@
                         <b>Capacidade</b> <br/> {{ q.capacidade }}
                     </div>
                     <div class="col-md-4">
-                        <b>Coberta</b> <br/> {{ q.coberta }}
+                        <b>Coberta</b> <br/>  <spam ng-if="q.coberta">Sim</spam> <spam ng-if="!q.coberta">Não</spam>
                     </div>
                 </div>
                 <br/>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="pull-right">
-                            <button type="button" class="btn btn-default btn-sm " ng-click="vm.openPrecosModal(q)">
+                            <a type="button" class="btn btn-default btn-sm " href="#/admin/arena/precos/{{q.$id}}">
                                   <i class="zmdi zmdi-money"></i>&nbsp;Preços
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-default btn-sm" ng-click="vm.novaQuadra = q; vm.edicao = true;" data-animation="am-fade-and-slide-top" data-template-url="novaQuadraModal.html" bs-modal="modal">
                                   <i class="zmdi zmdi-edit"></i>&nbsp;Editar
                             </button>
-                            <button type="button" class="btn btn-default btn-sm " ng-click="vm.quadras.$remove(q)">
+                            <button type="button" class="btn btn-default btn-sm " confirmed-click='vm.excluirQuadra(q);' ng-confirm-click="Ao excluir uma quadra todos os dados relacionados a ela serão excluídos. Deseja continuar? ">
                                   <i class="zmdi zmdi-delete"></i>&nbsp;Excluir
                             </button>   
                         </div>
@@ -36,13 +36,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" style="min-width:330px">
-            <div class="well well-sm card-new-reg" data-animation="am-fade-and-slide-top" ng-click="vm.novaQuadra = {}; vm.edicao = false;" data-template-url="novaQuadraModal.html" bs-modal="modal">
-                    <i class="zmdi zmdi-plus-square"></i> Nova Quadra
-            </div>
-        </div>
     </div>
 </div>
+<button class="btn btn-float btn-danger m-btn" ng-click="vm.novaQuadra = {}; vm.edicao = false;" data-template-url="novaQuadraModal.html" bs-modal="modal"><i class="zmdi zmdi-plus"></i></button>
 
 <script type="text/ng-template" id="novaQuadraModal.html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -68,7 +64,7 @@
                                     <label for="inputDescricao" class="col-sm-3 control-label">Capacidade</label>
                                     <div class="col-sm-8">
                                         <div class="fg-line">
-                                            <input id="inputDescricao" min="0" name="capacidade" type="number" placeholder="Até quantos jogadores de cada lado?" ng-model="vm.novaQuadra.capacidade" class="form-control" />
+                                            <input id="inputDescricao" min="0" name="capacidade" type="number" placeholder="Quantidade total de jogadores" ng-model="vm.novaQuadra.capacidade" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +82,7 @@
                                     <div class="col-sm-8">
 
                                         <div class="fg-line">
-                                            <select chosen="{width: '100%'}" ng-model="vm.novaQuadra.tipo"  disable-search="true" class="form-control" >
+                                            <select chosen="{width: '100%'}" ng-model="vm.novaQuadra.tipo"  data-placeholder="Selecione o tipo de piso." disable-search="true" class="form-control" >
                                                 <option value="Sintético">Sintético</option>
                                                 <option value="Grama">Grama</option>
                                                 <option value="Areia">Areia</option>

@@ -15,6 +15,7 @@
         vm.originalRow = {};
         vm.openPrecosModal = openPrecosModal;
         vm.salvarNovaQuadra = salvarNovaQuadra;
+        vm.excluirQuadra = excluirQuadra;
         vm.cores = [
             'bgm-teal',
             'bgm-red',
@@ -63,6 +64,10 @@
                     }
                 }
             });
+        }
+
+        function excluirQuadra(q) {
+            quadraService.remove(q.$id);
         }
     }
 

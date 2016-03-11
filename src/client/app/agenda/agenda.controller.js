@@ -156,7 +156,7 @@
             }
             else {
                 var element = $(jsEvent.target).closest('.fc-event');
-                var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
+                var placement = (jsEvent.clientY < 350) ? 'bottom' : 'top';
 
                 if (element.length > 0) {
                     var popover = $popover(element, {
@@ -291,7 +291,7 @@
             vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f) {
                 return f.start <= moment(vm.novaReserva.start).format('HH:mm') &&
                         f.end >= moment(vm.novaReserva.end).format('HH:mm') &&
-                        f.dow === vm.novaReserva.start.getDay();
+                        f.dow === ('' + vm.novaReserva.start.getDay());
             });
 
             vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), function(f) {
@@ -344,13 +344,14 @@
             $modal({
                 scope : $scope,
                 controllerAs: 'vm',
-                controller: 'PrecosCtrl',
-                templateUrl: 'app/arena/quadras/precos/precos.html',
+                controller: 'PrecosReadOnlyCtrl',
+                templateUrl: 'app/arena/precos/precos-readonly.html',
                 resolve: {
                     quadra: function() {
                         return {
                             id: q.$id,
-                            color: q.color
+                            color: q.color,
+                            nome : q.nome
                         };
                     }
                 }

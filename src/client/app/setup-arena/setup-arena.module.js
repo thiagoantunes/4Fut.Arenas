@@ -7,6 +7,7 @@
         'mgo-angular-wizard',
         'ui.utils.masks',
         'ngFileUpload',
-        'ngImgCrop'
+        'ngImgCrop',
+        'ngMap',
       ]);
 })();
