@@ -47,6 +47,8 @@
         vm.novaReservaModal = {};
         vm.horarioLivre = false;
         vm.reservaRadio = 2;
+        vm.popover = {};
+        vm.popoverPosition = null;
 
         vm.refreshCalendar = refreshCalendar;
         vm.atualizaDisponibilidade = atualizaDisponibilidade;
@@ -54,14 +56,26 @@
         vm.openPrecosModal = openPrecosModal;
         vm.gotoDate = gotoDate;
         vm.showReservasModal = showReservasModal;
+        vm.hidePagamentoReservaModal = hidePagamentoReservaModal;
+        vm.showPagamentoReservaModal = showPagamentoReservaModal;
         vm.hideModalForm = hideModalForm;
         vm.showNovoContatoModal = showNovoContatoModal;
+        vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.salvarContato = salvarContato;
         vm.excluirReserva = excluirReserva;
 
         activate();
 
         function activate() {
+            
+            initModals();
+
+            initCalendar();       
+
+            loadQuadras();
+        }
+
+        function initModals(){
             vm.novaReservaModal = $modal({
                 scope: $scope,
                 templateUrl: 'modalPelada.html',
@@ -74,9 +88,21 @@
                 templateUrl: 'app/contatos/novo-contato.html',
                 animation:'am-fade-and-slide-top' ,
                 show: false,
-                container: 'body'
+                container: 'body',
+                backdrop : 'static'
             });
 
+            vm.pagamentoReservaModal = $modal({
+                scope: $scope,
+                templateUrl: 'modalPagamentoReserva.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body',
+                backdrop : 'static'
+            });
+        }
+
+        function initCalendar(){
             vm.uiConfig = {
                 calendar:{
                     lang:'pt-br',
@@ -105,30 +131,33 @@
                     gotoDate : gotoDate
                 }
             };
-
-            vm.quadras.$loaded(loadQuadras);
         }
 
         function loadQuadras() {
-            _.forEach(vm.quadras, function(q) {
-                vm.selecaoQuadras.push({
-                    quadra: q,
-                    ativa: true
+
+            vm.quadras.$loaded(function(){
+                _.forEach(vm.quadras, function(q) {
+                    vm.selecaoQuadras.push({
+                        quadra: q,
+                        ativa: true
+                    });
                 });
             });
         }
 
         function getReservas(start, end) {
+            cfpLoadingBar.start();
+
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
             vm.reservas = reservasService.getFilteredArray(filterFunc, start , end);
 
-            cfpLoadingBar.start();
             vm.reservas.$loaded(function() {
                 cfpLoadingBar.complete();
             });
 
             vm.reservas.$watch(function(event) {
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEvents');
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource',$('.Source').val());
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
             });
         }
@@ -146,7 +175,6 @@
         }
 
         function viewRender(view, element) {
-
             getReservas(view.start._d.getTime(), view.end._d.getTime());
         }
 
@@ -159,7 +187,7 @@
                 var placement = (jsEvent.clientY < 350) ? 'bottom' : 'top';
 
                 if (element.length > 0) {
-                    var popover = $popover(element, {
+                    vm.popover = $popover(element, {
                        placement: placement,
                        title:'',
                        templateUrl: 'popupNovaReserva.html',
@@ -177,7 +205,7 @@
                    };
 
                     //atualizaDisponibilidade();
-                    popover.$promise.then(popover.show);
+                    vm.popover.$promise.then(vm.popover.show);
                 }
             }
         }
@@ -266,7 +294,7 @@
                 });
             }
 
-            var popover = $popover(element, {
+            vm.popover = $popover(element, {
                 placement: placement,
                 title:'',
                 templateUrl: 'popupNovaReserva.html',
@@ -274,7 +302,7 @@
                 autoClose: 1,
                 scope: $scope,
             });
-            popover.$promise.then(popover.show);
+            vm.popover.$promise.then(vm.popover.show);
         }
 
         function dayClick(date, jsEvent, view) {
@@ -312,6 +340,7 @@
                 var reservaSelecionada = _.find(vm.reservas, {$id : vm.novaReserva.id});
                 reservaSelecionada.responsavel = vm.novaReserva.responsavel.$id;
                 reservaSelecionada.quadra = vm.novaReserva.quadra.$id;
+                //reservaSelecionada.saldoDevedor = vm.novaReserva.preco.precoAvulso;
                 vm.reservas.$save(reservaSelecionada).then(function(ref) {
                     logger.success('Reserva editada com sucesso!');
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
@@ -326,10 +355,12 @@
                     start : vm.novaReserva.start.getTime(),
                     end : vm.novaReserva.end.getTime(),
                     responsavel : vm.novaReserva.responsavel.$id,
-                    title: vm.novaReserva.responsavel.nome
+                    title: vm.novaReserva.responsavel.nome,
+                    saldoDevedor : vm.novaReserva.preco.precoAvulso
                 }).then(function(ref) {
                     logger.success('Reserva criada com sucesso!');
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+                    
                 }, function(error) {
                     logger.error(error, vm.reserva, 'Ops!');
                 });
@@ -362,9 +393,29 @@
             vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
         }
 
+        function showPagamentoReservaModal(){
+            vm.popoverPosition = $('.popover').attr('style');
+            vm.pagamentoReservaModal.$promise.then(vm.pagamentoReservaModal.show);
+        }
+
+        function hidePagamentoReservaModal() {
+            vm.pagamentoReservaModal.$promise.then(vm.pagamentoReservaModal.hide);
+            vm.popover.hide();
+            vm.popover.show();
+            $('.popover').attr('style', vm.popoverPosition);
+        }
+
         function showNovoContatoModal() {
+            vm.popoverPosition = $('.popover').attr('style');
             vm.contatoSelecionado = {};
             vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function hideNovoContatoModal(){
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.hide);
+            vm.popover.hide();
+            vm.popover.show();
+            $('.popover').attr('style', vm.popoverPosition);
         }
 
         function salvarContato() {

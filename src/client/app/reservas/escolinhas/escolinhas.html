@@ -8,7 +8,7 @@
 		</div>
 		<div class="card-body card-padding" style="min-height:300px">
 			<div ng-if="vm.turmas.length>0">
-				<div class="p-header" >
+				<!-- <div class="p-header" >
 					<ul class="p-menu">
 						<li class="active">
 							<button 
@@ -27,14 +27,14 @@
 							</div>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<table class="table">
 					<tr>
 						<th>Quadra</th>
 						<th>Professor</th>
 						<th>Quando</th>
 					</tr>
-					<tr ng-repeat="turma in vm.turmas | filter:buscaReserva">
+					<tr ng-repeat="turma in vm.turmas | filter:buscaReserva" ng-if="turma.nomeQuadra !== undefined">
 						<td>
 							{{ turma.nomeQuadra }}
 						</td>
@@ -48,6 +48,14 @@
 								{{d | dow}}
 							</spam> 
 							de {{ turma.horaInicio | time}} às {{ turma.horaFim | time}}
+						</td>
+						<td>
+							<button type="button" class="btn-link btn-default" ng-click="vm.editTurma(turma);" bs-tooltip="'Editar'">
+								<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
+							</button>
+							<button type="button" class="btn-link btn-default" confirmed-click='vm.excluirReserva(turma);' ng-confirm-click bs-tooltip="'Excluir'">
+								<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+							</button>
 						</td>
 					</tr>
 				</table>
@@ -67,6 +75,7 @@
 			</div>
 		</div>
 	</div>
+	<button class="btn btn-float btn-danger m-btn" ng-click="vm.showEscolinhasForm();"><i class="zmdi zmdi-plus"></i></button>
 </section>
 
 

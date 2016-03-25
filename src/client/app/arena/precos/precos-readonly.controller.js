@@ -9,7 +9,7 @@
     function PrecosReadOnlyCtrl($scope, quadra, funcionamentoService, uiCalendarConfig,  $window) {
         var vm = this;
         vm.quadra = quadra;
-        vm.precos = [];
+        vm.precosReadOnly = [];
         vm.eventSources = [[]];
         vm.precoMaximo = 0;
         vm.precoMinimo = 0;
@@ -54,17 +54,17 @@
         }
 
         function getPrecos() {
-            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);
 
-            vm.precos = funcionamentoService.getPrecos(vm.quadra.id);
+            vm.precosReadOnly = funcionamentoService.getPrecos(vm.quadra.id);
 
-            vm.precos.$watch(function(event) {
-                vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;
-                vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;
+            vm.precosReadOnly.$watch(function(event) {
+                vm.precoMaximo = _.max(vm.precosReadOnly, 'precoAvulso').precoAvulso;
+                vm.precoMinino = _.min(vm.precosReadOnly, 'precoAvulso').precoAvulso;
                 vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;
 
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precos);
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precos);
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);
+                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precosReadOnly);
             });
         }
 

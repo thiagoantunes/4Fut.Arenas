@@ -18,7 +18,7 @@
             config:{
                 url: '/precos/{id}',
                 templateUrl: 'app/arena/precos/precos.html',
-                controller:'PrecosCtrl2',
+                controller:'PrecosCtrl',
                 controllerAs:'vm',
                 resolve: {
                     idQuadra: ['$stateParams', function ($stateParams) {

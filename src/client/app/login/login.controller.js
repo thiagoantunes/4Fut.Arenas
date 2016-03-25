@@ -141,7 +141,9 @@
 
         function showError(err) {
             cfpLoadingBar.complete();
-            logger.error(err);
+            if (err.code === 'INVALID_PASSWORD') {
+                logger.error('Senha incorreta');
+            }
         }
     }
 

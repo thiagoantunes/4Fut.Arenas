@@ -63,6 +63,10 @@
 </div>
 </div>
 
+<div style="background-color: white">
+  <pre>{{vm.reservas | json}}</pre>
+</div>
+
 
 <script type="text/ng-template" id="novaTurmaModal.html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -113,14 +117,15 @@
     </div>
 </script>
 
-<script type="text/ng-template" id="modalReservaAvulsa.html">
+<script type="text/ng-template" id="modalPagamentoReserva.html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                	<h3 class="modal-title">Editar Reserva Avulsa</h3>
+                <button type="button" class="close" aria-label="Close" ng-click="vm.hidePagamentoReservaModal();"><span aria-hidden="true">&times;</span></button>
+                	<h3 class="modal-title">Pagamentos</h3>
                 </div>
-                <div data-ng-include="'app/reservas/avulsas/avulsas-form.html'" data-ng-controller="AvulsasFormCtrl as vm"></div>
+                Teste
             </div
         </div>
     </div>
@@ -172,11 +177,11 @@
 						</div>
 						<small ng-show="vm.novaReserva.responsavel == {} && vm.submitted" class="help-block">Selecione um responsável</small>
 					</div>
-                    <button type="button" 
-                        class="btn btn-link btn-novo-contato"
-                        ng-click="vm.showNovoContatoModal();">
-                        <i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-                    </button>
+          <button type="button" 
+              class="btn btn-link btn-novo-contato"
+              ng-click="vm.showNovoContatoModal();">
+              <i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+          </button>
 				</div>
 
 				<div class="col-sm-6 ppo-reserva-footer">
@@ -188,13 +193,28 @@
 						<i class="zmdi zmdi-alert-triangle"> Horário ocupado para esta quadra!</i>
 					</div>
 
-					<div ng-if="vm.horarioLivre && vm.novaReserva.preco != undefined">
-						R$ {{vm.novaReserva.preco.precoAvulso}}
+					<div ng-if="vm.horarioLivre && vm.novaReserva.preco != undefined" style="margin-top: -10px ">
+            <div class="row" ng-if='vm.novaReserva.id'><div  class="col-md-6" style="font-size: 0.6em;">
+                Pago
+              </div>
+              <div class="col-md-6" style="font-size: 0.6em; color: #F34235">
+                A pagar:
+              </div>
+            </div>
+            <div class="row">
+              <div ng-if='vm.novaReserva.id' class="col-md-6">
+                R$ {{vm.novaReserva.preco.precoAvulso}}
+              </div>
+              <div class="col-md-6" style="color: #F34235">
+                R$ {{vm.novaReserva.preco.precoAvulso}} 
+              </div>
+            </div>
 					</div>
 				</div>
 				<div class="col-sm-6 text-right p-15">
-					<button type="submit" ng-if='vm.novaReserva.id' confirmed-click='vm.excluirReserva(vm.novaReserva.id); $hide();' ng-confirm-click class="btn btn-danger btn-sm m-t-10">Excluir</button>
-					<button type="submit" ng-click='vm.submitted = true; vm.salvarReservaAvulsa(); $hide()' ng-disabled="!vm.horarioLivre" class="btn btn-primary btn-sm m-t-10">Salvar</button>
+          <button type="button" ng-if='vm.novaReserva.id' ng-click="vm.showPagamentoReservaModal();" class="btn btn-default btn-xs m-t-10">Pagar</button>
+					<button type="button" ng-if='vm.novaReserva.id' confirmed-click='vm.excluirReserva(vm.novaReserva.id); $hide();' ng-confirm-click class="btn btn-danger btn-xs m-t-10">Excluir</button>
+					<button type="submit" ng-click='vm.submitted = true; vm.salvarReservaAvulsa(); $hide()' ng-disabled="!vm.horarioLivre" class="btn btn-primary btn-xs m-t-10">Salvar</button>
 				</div>
 			</div>
 		</form>

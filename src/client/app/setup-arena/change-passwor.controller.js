@@ -5,12 +5,20 @@
         .module('app.setup-arena')
         .controller('ChangePasswordCtrl', ChangePasswordCtrl);
 
-    ChangePasswordCtrl.$inject = ['$scope' , '$modal' , 'Ref', 'logger', 'cfpLoadingBar'];
+    ChangePasswordCtrl.$inject = ['$scope' , '$modal' , 'Ref', 'logger', 'cfpLoadingBar', 'Auth', '$firebaseObject'];
 
-    function ChangePasswordCtrl($scope, $modal, Ref, logger, cfpLoadingBar) {
+    function ChangePasswordCtrl($scope, $modal, Ref, logger, cfpLoadingBar, Auth, $firebaseObject) {
         var vm = this;
         vm.changePassword = changePassword;
         var modal = $modal({template: 'app/setup-arena/user-profile-modal.html', show: false});
+
+        activate();
+
+        function activate() {
+            $firebaseObject(Ref.child('users/' + Auth.$getAuth().uid)).$loaded().then(function(ref) {
+                $scope.email = ref.email;
+            });
+        }
 
         function changePassword(email, oldPassword, newPassword) {
             cfpLoadingBar.start();

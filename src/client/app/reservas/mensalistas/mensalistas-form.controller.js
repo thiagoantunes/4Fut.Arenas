@@ -57,7 +57,7 @@
                 logger.success('Reserva criada com sucesso!');
                 hideModalForm();
             },function(error) {
-                logger.error('Erro ao criar uma reserva mensalista', error , 'Ops!');
+                logger.error('Erro ao criar uma reserva mensalista: ' + error, error , 'Ops!');
             });
         }
 

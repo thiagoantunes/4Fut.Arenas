@@ -13,6 +13,7 @@
                     errorMessages['email'] = 'Informe um email válido';
                     errorMessages['brPhoneNumber'] = 'Informe um telefone válido';
                     errorMessages['min'] = 'Informe número positivo.';
+                    errorMessages['date'] = 'Por favor, informe uma data válida';
                 });
             }
         ]);

@@ -19,6 +19,7 @@
         vm.showEscolinhasForm = showEscolinhasForm;
         vm.hideModalForm = hideModalForm;
         vm.loadMore = loadMore;
+        vm.editTurma = editTurma;
         vm.novaTurmaModal = $modal({
             scope: $scope,
             templateUrl: 'novaTurmaModal.html',
@@ -33,7 +34,7 @@
             reservasService.refTurmas().once('value', function(snapshot) {
                 if (!snapshot.exists()) {
                     cfpLoadingBar.complete();
-                    vm.emptyList = true;
+                    vm.emptyList = (vm.turmas.length === 0);
                 }
                 else {
                     loadMore();
@@ -48,6 +49,11 @@
                 vm.emptyList = (vm.turmas.length === 0);
                 cfpLoadingBar.complete();
             });
+        }
+
+        function editTurma(escolinha) {
+            vm.turmaSelecionada = escolinha;
+            vm.novaTurmaModal.$promise.then(vm.novaTurmaModal.show);
         }
 
         function showEscolinhasForm() {

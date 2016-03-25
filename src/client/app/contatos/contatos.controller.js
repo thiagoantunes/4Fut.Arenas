@@ -11,6 +11,7 @@
         var vm = this;
         vm.contatos = contatosService.getContatosArena();
         vm.salvarContato = salvarContato;
+        vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.excluirContato = excluirContato;
 
         activate();
@@ -54,6 +55,10 @@
         function excluirContato(contato) {
             contato.fkArena = false;
             vm.contatos.$save(contato);
+        }
+
+        function hideNovoContatoModal() {
+            $scope.$parent.vm.hideNovoContatoModal();
         }
     }
 

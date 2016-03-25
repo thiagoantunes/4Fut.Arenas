@@ -8,7 +8,7 @@
 		</div>
 		<div class="card-body card-padding" style="min-height:300px">
 			<div ng-if="vm.reservas.length>0">
-				<div class="p-header" >
+				<!-- <div class="p-header" >
 					<ul class="p-menu">
 						<li class="active">
 							<button 
@@ -27,14 +27,14 @@
 							</div>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<table class="table">
 					<tr>
 						<th>Quadra</th>
 						<th>Responsável</th>
 						<th>Quando</th>
 					</tr>
-					<tr ng-repeat="reserva in vm.reservas | filter:buscaReserva">
+					<tr ng-repeat="reserva in vm.reservas | filter:buscaReserva" ng-if="reserva.nomeQuadra !== undefined">
 						<td>
 							{{ reserva.nomeQuadra }}
 						</td>
@@ -59,6 +59,7 @@
 			</div>
 		</div>
 	</div>
+	<button class="btn btn-float btn-danger m-btn" ng-click="vm.showModalForm();"><i class="zmdi zmdi-plus"></i></button>
 </section>
 
 <script type="text/ng-template" id="novaReservaModal.html">

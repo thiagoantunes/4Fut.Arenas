@@ -5,9 +5,107 @@
         <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Preços</h4>
       </div>
-      <div class="modal-body">
-        Teste
-      </div>
+      <form class="form-horizontal" name="contatoForm" ng-submit="vm.salvarNovoPrecoModal();" novalidate>
+        
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="inputNome" class="col-sm-2 control-label">Quadra</label>
+            <div class="col-sm-9">
+              <div class="fg-line">
+                <select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder="Selecione uma quadra..." name="quadra" ng-model="vm.quadraSelecionada" ng-change="vm.selecionaQuadra(vm.quadraSelecionada.$id);" ng-options="quadra.nome for quadra in vm.quadras">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputHoraInicio" class="col-md-4 control-label">Início</label>
+            <div class="col-md-8">
+              <div class="fg-line">
+                <input id="inputHoraInicio" disable-valid-styling="true" name="horaInicio" type="text" required size="8" ng-model="vm.novoPrecoModal.inicio" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="30" data-arrow-behavior="picker" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputHoraFim" class="col-md-4 control-label">Fim</label>
+            <div class="col-md-8">
+              <div class="fg-line">
+                <input id="inputHoraFim" disable-valid-styling="true" name="horaFim" type="text" required size="8" ng-model="vm.novoPrecoModal.fim" bs-timepicker data-time-format="HH:mm" data-length="1" data-minute-step="30" data-arrow-behavior="picker" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" >
+            <label for="inputDescricao" class="col-sm-2 control-label">Dias na semana</label>
+            <div class="col-sm-10">
+              <div class="fg-line p-t-15">
+                <div>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[0].ativo'> 
+                    <i class="input-helper"></i>
+                    Dom
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[1].ativo'> 
+                    <i class="input-helper"></i>
+                    Seg
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[2].ativo'>
+                    <i class="input-helper"></i>
+                    Ter
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[3].ativo'>
+                    <i class="input-helper"></i>
+                    Qua
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[4].ativo'>
+                    <i class="input-helper"></i>
+                    Qui
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[5].ativo'>
+                    <i class="input-helper"></i>
+                    Sex
+                  </label>
+                  <label class="checkbox checkbox-inline">
+                    <input type="checkbox" disable-valid-styling="true" ng-model='vm.diasSemana[6].ativo'>
+                    <i class="input-helper"></i>
+                    Sab
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputHoraFim" class="col-sm-2 control-label">Preço Reserva Avulsa</label>
+            <div class="col-sm-9">
+              <div class="fg-line">
+                <input type="text" name="mensal" required class="form-control" ui-money-mask ng-model="vm.novoPrecoModal.precoAvulso">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputHoraFim" class="col-sm-2 control-label">Preço Mensalista</label>
+            <div class="col-sm-9">
+              <div class="fg-line">
+                <input type="text" name="mensal" required class="form-control" ui-money-mask ng-model="vm.novoPrecoModal.precoMensalista" >
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-sm ">Salvar</button>
+          <button  type="button" ng-click="$hide()" class="btn btn-default btn-sm">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

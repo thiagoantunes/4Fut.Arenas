@@ -1,0 +1,33 @@
+<div class="popover" tabindex="-1">
+  <div class="arrow"></div>
+  <button type="button" class="close m-r-15 m-t-5" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="popover-title">
+      {{vm.dataLabel}}<br/>
+    </h4>
+    <form class="form-horizontal precoForm" name="precoForm" ng-submit="vm.salvarNovoPreco(); $hide();" novalidate>
+      <div class="popover-content" >
+        <div class="form-group">
+          <label for="inputNascimento" class="col-sm-3 control-label"><i class="zmdi zmdi-timer zmdi-hc-lg"></i></label>
+          <div class="col-sm-8">
+            <div class="fg-line">
+              <input type="text" name="avulso" required class="form-control" ui-money-mask ng-model="vm.novoPreco.precoAvulso" placeholder="  Preço Avulso">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputNascimento" class="col-sm-3 control-label"><i class="zmdi zmdi-calendar zmdi-hc-lg"></i></label>
+          <div class="col-sm-8">
+            <div class="fg-line">
+              <input type="text" name="mensal" required class="form-control" ui-money-mask ng-model="vm.novoPreco.precoMensalista"  placeholder="Preço Mensal">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-sm m-t-10 col-sm-12">Salvar Novo Preç<o>  </o></button>
+            <button type="button" ng-if="vm.novoPreco.$id" confirmed-click='vm.precos.$remove(vm.novoPreco); $hide();' ng-confirm-click   class="btn btn-danger btn-sm m-t-10 col-sm-12">Excluir Preço</button>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>

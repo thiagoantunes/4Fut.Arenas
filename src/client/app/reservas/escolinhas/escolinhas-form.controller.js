@@ -11,10 +11,11 @@
         '$modal',
         'quadraService' ,
         'contatosService',
-        'reservasService'
+        'reservasService',
+        'logger'
     ];
 
-    function EscolinhasFormCtrl($scope, $modal,quadraService, contatosService, reservasService) {
+    function EscolinhasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {
         var vm = this;
         vm.quadras = quadraService.getQuadras();
         vm.professores = contatosService.getContatosArenaLight();
@@ -35,11 +36,38 @@
             });
 
             initDiasSemana();
+
+            initReservaSelecionada();
+        }
+
+        function initReservaSelecionada() {
+            vm.quadras.$loaded().then(function(results) {
+                vm.professores.$loaded().then(function(data) {
+                    var turmaSelecionada = $scope.$parent.vm.turmaSelecionada;
+                    if (turmaSelecionada) {
+                        vm.novaTurma = {
+                            $id : turmaSelecionada.$id,
+                            quadra : _.find(vm.quadras, {$id : turmaSelecionada.quadra}),
+                            professor : _.find(vm.professores , {$id : turmaSelecionada.responsavel}),
+                            dataInicio : turmaSelecionada.dataInicio,
+                            dataFim : turmaSelecionada.dataFim,
+                            dow : turmaSelecionada.dow,
+                            horaInicio : moment(turmaSelecionada.horaInicio , 'HHmm'),
+                            horaFim : moment(turmaSelecionada.horaFim , 'HHmm')
+                        };
+
+                        _.forEach(turmaSelecionada.dow, function(d) {
+                            _.find(vm.diasSemana, {'dia' : d}).ativo = true;
+                        });
+                    }
+                });
+            });
         }
 
         function salvarNovaTurma() {
 
             vm.turma = {
+                $id : vm.novaTurma.$id,
                 quadra: vm.novaTurma.quadra.$id,
                 responsavel: vm.novaTurma.professor.$id,
                 horaInicio : moment(vm.novaTurma.horaInicio).format('HHmm'),
@@ -53,11 +81,22 @@
                 tipo : 3
             };
 
-            reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(function() {
-                hideModalForm();
-            },function(error) {
-                console.log('Failed: ' + error);
-            });
+            if (vm.turma.$id) {
+                reservasService.editaReservaRecorrente(vm.turma, 'turmas').then(function() {
+                    logger.success('Reserva editada com sucesso!');
+                    hideModalForm();
+                }, function(error) {
+                    logger.error('Erro ao editar turma: ' + error, error , 'Ops!');
+                });
+            }
+            else {
+                reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(function() {
+                    logger.success('Reserva criada com sucesso!');
+                    hideModalForm();
+                },function(error) {
+                    logger.error('Erro ao criar turma: ' + error, error , 'Ops!');
+                });
+            }
         }
 
         function hideModalForm() {

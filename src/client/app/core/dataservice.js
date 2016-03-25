@@ -18,7 +18,7 @@
     PageArray.$inject = ['$firebaseArray'];
     quadraService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
     arenaService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
-    funcionamentoService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService'];
+    funcionamentoService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', '$q'];
     reservasService.$inject =
         ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray' , '$q', 'ScrollArray'];
     contatosService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray'];
@@ -185,10 +185,12 @@
         }
     }
 
-    function funcionamentoService(Ref,$firebaseArray, $firebaseObject, subdomainService) {
+    function funcionamentoService(Ref,$firebaseArray, $firebaseObject, subdomainService, $q) {
         var service = {
             getPreco: getPreco,
             getPrecos: getPrecos,
+
+            salvarNovoPreco : salvarNovoPreco
         };
 
         return service;
@@ -201,6 +203,54 @@
 
         function getPrecos(quadraId) {
             return $firebaseArray(Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
+        }
+
+        function salvarNovoPreco(novoPrecoModal, dow, precos) {
+            var deferred = $q.defer();
+
+            var novoPreco = {
+                title : 'A:  R$ ' +
+                novoPrecoModal.precoAvulso +
+                '  |  ' + 'M: R$ ' + novoPrecoModal.precoMensalista,
+                start : moment(novoPrecoModal.inicio).format('HH:mm'),
+                end : moment(novoPrecoModal.fim).format('HH:mm'),
+                //dow: start._d.getDay().toString(),
+                precoMensalista : novoPrecoModal.precoMensalista,
+                precoAvulso : novoPrecoModal.precoAvulso
+            };
+
+            if (dow.length > 0) {
+                if (novoPrecoModal.inicio < novoPrecoModal.fim) {
+                    if (isValidPrice(precos, novoPreco, dow)) {
+                        _.forEach(dow, function(d) {
+                            novoPreco.dow = '' + d;
+                            precos.$add(novoPreco).then(function(ref) {
+                                deferred.resolve();
+                            });
+                        });
+                    }
+                    else {
+                        deferred.reject('Conflito de horários!');
+                    }
+                }
+                else {
+                    deferred.reject('Selecione um horário de término maior que o horário de início');
+                }
+            }
+            else {
+                deferred.reject('Selecione pelo menos um dia da semana.');
+            }
+
+            return deferred.promise;
+        }
+
+        function isValidPrice(precos, eventData, dow) {
+            return _.every(dow, function(d) {
+                return _.every(precos, function(f) {
+                    return f.dow !== ('' + d) ||
+                    (eventData.start >= f.end || eventData.end <= f.start);
+                });
+            });
         }
     }
 
@@ -455,11 +505,11 @@
         }
 
         function getContato(id) {
-            return $firebaseObject(getRef().child(subdomainService.arena + '/' + id));
+            return $firebaseObject(getRef().child(id));
         }
 
         function getContatos() {
-            return $firebaseArray(getRef().child(subdomainService.arena));
+            return $firebaseArray(getRef());
         }
 
         function searchContatos(fn) {
