@@ -63,11 +63,6 @@
 </div>
 </div>
 
-<div style="background-color: white">
-  <pre>{{vm.reservas | json}}</pre>
-</div>
-
-
 <script type="text/ng-template" id="novaTurmaModal.html">
     <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -118,15 +113,88 @@
 </script>
 
 <script type="text/ng-template" id="modalPagamentoReserva.html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal" tabindex="-1" keep-opened="vm.popover" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" ng-click="vm.hidePagamentoReservaModal();"><span aria-hidden="true">&times;</span></button>
-                	<h3 class="modal-title">Pagamentos</h3>
-                </div>
-                Teste
-            </div
+            <div class="modal-content" >
+              <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="vm.hidePagamentoReservaModal();">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-6 text-center">
+                      <h5 class="c-teal">
+                        <b>Pago:</b>
+                      </h5>
+                      <h3 class="c-teal">
+                        {{vm.novaReserva.saldoQuitado | currency:"R$":2}} 
+                      </h3> 
+                    </div>
+                    <div class="col-md-6 text-center">
+                      <h5 class="c-red">
+                        <b>A Pagar:</b>
+                      </h5>
+                      <h3 class="c-red">
+                        {{vm.novaReserva.saldoDevedor | currency:"R$":2}} 
+                      </h3> 
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form class="form-inline" ng-submit="vm.salvarNovoPagamento();" novalidate>
+                        <h5>Novo Pagamento</h5>
+                        <div class="row">
+                          <div class="form-group col-md-4" >
+                            <label for="inputValorPagamento">Valor</label>
+                            <input type="text" class="form-control" required ui-money-mask ng-model="vm.novoPagamento.valor"  id="inputValorPagamento" >
+                          </div>
+                          <div class="form-group col-md-4" >
+                            <label for="inputFormaPagamento">Forma de Pgto.</label>
+                            <select id="inputFormaPagamento" class="form-control"   disable-search="true" name="Fora de Pagamento" required data-placeholder="Selecione a forma de pagamento..." ng-model="vm.novoPagamento.formaPagamento" ng-options="forma.desc for forma in vm.formaPagamento" value="{{forma.value}}">
+                            </select>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputDataPagamento">Data do Pgto.</label>
+                            <input id="inputDataPagamento"  autoclose="true" disable-valid-styling="true" name="Data do Pagamento" type="text" required class="form-control" ng-model="vm.novoPagamento.data" bs-datepicker />
+                          </div>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-sm btn-primary col-md-12 ">Confirmar Pagamento</button>
+                      </form>
+                    </div>
+                  </div>
+                  <br/>
+                  <hr/>
+                  <button type="submit" bs-tooltip="'Lista de Pagamentos'" ng-click="vm.showPagamentos = !vm.showPagamentos" class="btn btn-link btn-default col-md-12 ">
+                    <i ng-if="!vm.showPagamentos" class="zmdi zmdi-caret-down zmdi-hc-2x"></i>
+                    <i ng-if="vm.showPagamentos" class="zmdi zmdi-caret-up zmdi-hc-2x"></i>
+                  </button>
+                  <div class="row" >
+                    <div class="col-md-12" ng-if="vm.showPagamentos" ng-show="vm.pagamentos.length > 0">
+                      <h5>Pagamentos</h5>
+                      <div class="row">
+                        <div class="col-md-4"><b>Valor</b></div>
+                        <div class="col-md-4"><b>Forma de Pgto</b></div>
+                        <div class="col-md-4"><b>Data</b></div>
+                      </div>
+                      <hr/>
+                      <div class="row" ng-repeat="pg in vm.pagamentos">
+                        <div class="col-md-4">{{pg.valor | currency:"R$":2}}</div>
+                        <div class="col-md-4">{{vm.getFormaPagamentoDesc(pg.formaPagamento);}} </div>
+                        <div class="col-md-4">{{pg.data | date}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" ng-if="vm.showPagamentos" ng-hide="vm.pagamentos.length > 0">
+                      <div class="text-center">
+                        <i style="opacity:0.5" class="zmdi zmdi-money-off zmdi-hc-5x"></i>
+                        <h4 style="opacity:0.4">Nenhum pagamento realizado </br>para esta reserva</h4>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
         </div>
     </div>
 </script>
@@ -135,7 +203,7 @@
 	<div class="popover novaReserva reservasForm" ng-class="vm.novaReserva.placement" tabindex="-1">
 		<div class="arrow"></div>
 		<button type="button" class="close m-r-15 m-t-5" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-		<form class="form-horizontal " name="reservaForm" ng-submit="submitPelada()">
+		<form class="form-horizontal" name="reservaForm" ng-submit="submitPelada()">
 			<h4 class="popover-title">
 				Reserva Avulsa<br/>
 			</h4>
@@ -185,7 +253,7 @@
 				</div>
 
 				<div class="col-sm-6 ppo-reserva-footer">
-					<div ng-if="vm.novaReserva.quadra != undefined && vm.novaReserva.preco == undefined && vm.horarioLivre" class="no-price">
+					<div ng-if="vm.novaReserva.quadra != undefined && vm.novaReserva.preco == undefined && vm.horarioLivre && !vm.novaReserva.id" class="no-price">
 						<i class="zmdi zmdi-alert-triangle"> Quadra sem preço definido para este horário</i>
 					</div>
 
@@ -193,7 +261,7 @@
 						<i class="zmdi zmdi-alert-triangle"> Horário ocupado para esta quadra!</i>
 					</div>
 
-					<div ng-if="vm.horarioLivre && vm.novaReserva.preco != undefined" style="margin-top: -10px ">
+					<div ng-if="vm.novaReserva.id" style="margin-top: -10px ">
             <div class="row" ng-if='vm.novaReserva.id'><div  class="col-md-6" style="font-size: 0.6em;">
                 Pago
               </div>
@@ -203,13 +271,18 @@
             </div>
             <div class="row">
               <div ng-if='vm.novaReserva.id' class="col-md-6">
-                R$ {{vm.novaReserva.preco.precoAvulso}}
+                {{vm.novaReserva.saldoQuitado | currency:"R$":2}}
               </div>
               <div class="col-md-6" style="color: #F34235">
-                R$ {{vm.novaReserva.preco.precoAvulso}} 
+                {{vm.novaReserva.saldoDevedor | currency:"R$":2}} 
               </div>
             </div>
 					</div>
+
+          <div ng-if="vm.horarioLivre && vm.novaReserva.preco != undefined && !vm.novaReserva.id">
+            R$ {{vm.novaReserva.preco.precoAvulso}}
+          </div>
+
 				</div>
 				<div class="col-sm-6 text-right p-15">
           <button type="button" ng-if='vm.novaReserva.id' ng-click="vm.showPagamentoReservaModal();" class="btn btn-default btn-xs m-t-10">Pagar</button>

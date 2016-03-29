@@ -5,9 +5,9 @@
     .module('app.contatos')
     .controller('ContatosCtrl', ContatosCtrl);
 
-    ContatosCtrl.$inject = ['contatosService', 'logger', 'cfpLoadingBar'];
+    ContatosCtrl.$inject = ['$scope', 'contatosService', 'logger', 'cfpLoadingBar'];
 
-    function ContatosCtrl(contatosService, logger, cfpLoadingBar) {
+    function ContatosCtrl($scope , contatosService, logger, cfpLoadingBar) {
         var vm = this;
         vm.contatos = contatosService.getContatosArena();
         vm.salvarContato = salvarContato;

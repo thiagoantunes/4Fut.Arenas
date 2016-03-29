@@ -11,7 +11,8 @@
         .factory('quadraService' , quadraService)
         .factory('funcionamentoService' , funcionamentoService)
         .factory('reservasService', reservasService)
-        .factory('contatosService', contatosService);
+        .factory('contatosService', contatosService)
+        .factory('financeiroService', financeiroService);
 
     FilteredArray.$inject = ['$firebaseArray'];
     ScrollArray.$inject = ['$firebaseArray'];
@@ -22,6 +23,7 @@
     reservasService.$inject =
         ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray' , '$q', 'ScrollArray'];
     contatosService.$inject = ['Ref' , '$firebaseArray' , '$firebaseObject' , 'subdomainService', 'FilteredArray'];
+    financeiroService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService'];
 
     function FilteredArray($firebaseArray) {
         /*jshint -W004 */
@@ -584,6 +586,23 @@
 
         function getUserProfile(id) {
             return $firebaseObject(getRef().child(id));
+        }
+    }
+
+    function financeiroService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+        var service = {
+            getRef : getRef,
+            getPagamentosReserva: getPagamentosReserva,
+        };
+
+        return service;
+
+        function getRef() {
+            return Ref.child('pagamentos');
+        }
+
+        function getPagamentosReserva(reservaId) {
+            return $firebaseArray(getRef().child(subdomainService.arena + '/' + reservaId));
         }
     }
 

@@ -12,6 +12,7 @@
         'quadraService',
         'reservasService' ,
         'contatosService' ,
+        'financeiroService',
         'uiCalendarConfig' ,
         '$popover' ,
         'blockUI' ,
@@ -21,12 +22,13 @@
         'logger'
     ];
     /*jshint maxparams: 20 */
-    // jshint maxstatements:50
+    // jshint maxstatements:70
     function ReservasCtrl(
         $scope,
         quadraService,
         reservasService,
         contatosService,
+        financeiroService,
         uiCalendarConfig ,
         $popover,
         blockUI,
@@ -49,6 +51,13 @@
         vm.reservaRadio = 2;
         vm.popover = {};
         vm.popoverPosition = null;
+        vm.formaPagamento = [
+            {value: 1, desc: 'Dinheiro'},
+            {value: 2, desc: 'Cartão  de Crédito'},
+            {value: 3, desc: 'Cartão  de Débito'},
+            {value: 3, desc: 'Boleto Bancário'},
+            {value: 3, desc: 'Cheque'}
+        ];
 
         vm.refreshCalendar = refreshCalendar;
         vm.atualizaDisponibilidade = atualizaDisponibilidade;
@@ -63,19 +72,21 @@
         vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.salvarContato = salvarContato;
         vm.excluirReserva = excluirReserva;
+        vm.salvarNovoPagamento = salvarNovoPagamento;
+        vm.getFormaPagamentoDesc = getFormaPagamentoDesc;
 
         activate();
 
         function activate() {
-            
+
             initModals();
 
-            initCalendar();       
+            initCalendar();
 
             loadQuadras();
         }
 
-        function initModals(){
+        function initModals() {
             vm.novaReservaModal = $modal({
                 scope: $scope,
                 templateUrl: 'modalPelada.html',
@@ -102,7 +113,7 @@
             });
         }
 
-        function initCalendar(){
+        function initCalendar() {
             vm.uiConfig = {
                 calendar:{
                     lang:'pt-br',
@@ -135,7 +146,7 @@
 
         function loadQuadras() {
 
-            vm.quadras.$loaded(function(){
+            vm.quadras.$loaded(function() {
                 _.forEach(vm.quadras, function(q) {
                     vm.selecaoQuadras.push({
                         quadra: q,
@@ -277,7 +288,9 @@
                     moment(calEvent.start).format('HH:mm') + ' às ' +
                     moment(calEvent.end).format('HH:mm'),
                 start : moment(calEvent.start)._d,
-                end : moment(calEvent.end)._d
+                end : moment(calEvent.end)._d,
+                saldoDevedor : calEvent.saldoDevedor,
+                saldoQuitado : calEvent.saldoQuitado
             };
 
             atualizaDisponibilidade();
@@ -356,11 +369,12 @@
                     end : vm.novaReserva.end.getTime(),
                     responsavel : vm.novaReserva.responsavel.$id,
                     title: vm.novaReserva.responsavel.nome,
-                    saldoDevedor : vm.novaReserva.preco.precoAvulso
+                    saldoDevedor : vm.novaReserva.preco.precoAvulso,
+                    saldoQuitado : 0
                 }).then(function(ref) {
                     logger.success('Reserva criada com sucesso!');
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
-                    
+
                 }, function(error) {
                     logger.error(error, vm.reserva, 'Ops!');
                 });
@@ -393,9 +407,23 @@
             vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
         }
 
-        function showPagamentoReservaModal(){
+        function showPagamentoReservaModal() {
+            vm.novoPagamento = {
+                data: new Date(),
+                valor: vm.novaReserva.saldoDevedor,
+                formaPagamento : vm.formaPagamento[0]
+            };
+
+            financeiroService.getPagamentosReserva(vm.novaReserva.id).$loaded().then(function(data) {
+                vm.pagamentos = data;
+            });
+
             vm.popoverPosition = $('.popover').attr('style');
             vm.pagamentoReservaModal.$promise.then(vm.pagamentoReservaModal.show);
+        }
+
+        function getFormaPagamentoDesc(value) {
+            return _.find(vm.formaPagamento, {'value' : value}).desc;
         }
 
         function hidePagamentoReservaModal() {
@@ -411,7 +439,7 @@
             vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
         }
 
-        function hideNovoContatoModal(){
+        function hideNovoContatoModal() {
             vm.novoContatoModal.$promise.then(vm.novoContatoModal.hide);
             vm.popover.hide();
             vm.popover.show();
@@ -429,6 +457,47 @@
 
         function gotoDate(date) {
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('gotoDate', date);
+        }
+
+        function salvarNovoPagamento() {
+            vm.novoPagamento.formaPagamento = vm.novoPagamento.formaPagamento.value;
+            vm.novoPagamento.data = vm.novoPagamento.data.getTime();
+            vm.pagamentos.$add(vm.novoPagamento).then(function() {
+                var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
+                if (reserva) {
+                    if (reserva.saldoQuitado) {
+                        reserva.saldoQuitado += vm.novoPagamento.valor;
+                    }
+                    else {
+                        reserva.saldoQuitado = vm.novoPagamento.valor;
+                    }
+
+                    if (reserva.saldoDevedor && ((reserva.saldoDevedor - vm.novoPagamento.valor) >= 0)) {
+                        reserva.saldoDevedor -= vm.novoPagamento.valor;
+                    }
+                    else {
+                        reserva.saldoDevedor = 0;
+                    }
+
+                    vm.novaReserva.saldoDevedor = reserva.saldoDevedor;
+                    vm.novaReserva.saldoQuitado = reserva.saldoQuitado;
+
+                    vm.reservas.$save(reserva).then(function() {
+                        logger.success('Pagamento realizado com sucesso');
+                        vm.novoPagamento = {
+                            valor : vm.novaReserva.saldoDevedor,
+                            formaPagamento : vm.formaPagamento[0],
+                            data: new Date()
+                        };
+                    },
+                    function(err) {
+                        logger.error('Erro ao realizar pagamento. ' + err);
+                    });
+                }
+            },
+            function(err) {
+                logger.error('Erro ao realizar pagamento. ' + err);
+            });
         }
     }
 
