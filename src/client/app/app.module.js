@@ -13,7 +13,8 @@
         'app.setup-arena',
         'app.sistema-arena',
         'app.agenda',
-        'app.contatos'
+        'app.contatos',
+        'app.escolinhas'
     ]);
 
 })();

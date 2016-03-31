@@ -53,15 +53,29 @@
                 dataInicio : vm.novaReserva.data.getTime(),
                 dataFim : moment(moment(vm.novaReserva.data.getTime()).format('DDMMYYYY')  + '23:59', 'DDMMYYYYHH:mm')._d.getTime() ,
                 dow : [vm.novaReserva.data.getDay()],
-                title: vm.novaReserva.responsavel.nome
+                title: vm.novaReserva.responsavel.nome,
+                tipo: vm.novaReserva.tipoReserva
             };
 
-            reservasService.criarReservaAvulsa(vm.reserva).then(function() {
-                logger.success('Reserva criada com sucesso!');
-                hideModalForm();
-            },function(error) {
-                logger.error(error, vm.reserva, 'Ops!');
-            });
+            if (vm.reserva.tipo === 1) {
+                reservasService.criarReservaAvulsa(vm.reserva).then(function() {
+                    logger.success('Reserva criada com sucesso!');
+                    hideModalForm();
+                },function(error) {
+                    logger.error(error, vm.reserva, 'Ops!');
+                });
+            }
+            else {
+                vm.reserva.dataFim = moment(vm.novaReserva.data.getTime()).add(vm.novaReserva.validade.value , 'M')._d.getTime();
+
+                reservasService.criarReservaRecorrente(vm.reserva, 'mensalistas').then(function() {
+                    logger.success('Reserva criada com sucesso!');
+                    hideModalForm();
+                },function(error) {
+                    logger.error('Erro ao criar uma reserva mensalista: ' + error, error , 'Ops!');
+                });
+            }
+
         }
 
         function hideModalForm() {
@@ -75,7 +89,17 @@
                 {value: 2, desc: '02:00'}
             ];
 
+            vm.estenderPor = [
+                {value: 1, desc: 'Um Mês'},
+                {value: 2, desc: 'Dois Meses'},
+                {value: 3, desc: 'Três Meses'},
+                {value: 6, desc: 'Seis Meses'},
+                {value: 12, desc: 'Um Ano'},
+            ];
+
             vm.novaReserva.duracao = vm.duracao[0];
+
+            vm.novaReserva.tipoReserva = 1;
         }
 
         function showNovoContatoModal() {

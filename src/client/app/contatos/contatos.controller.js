@@ -5,18 +5,29 @@
     .module('app.contatos')
     .controller('ContatosCtrl', ContatosCtrl);
 
-    ContatosCtrl.$inject = ['$scope', 'contatosService', 'logger', 'cfpLoadingBar'];
+    ContatosCtrl.$inject = ['$scope', 'contatosService', 'logger', 'cfpLoadingBar', '$modal'];
 
-    function ContatosCtrl($scope , contatosService, logger, cfpLoadingBar) {
+    function ContatosCtrl($scope , contatosService, logger, cfpLoadingBar, $modal) {
         var vm = this;
         vm.contatos = contatosService.getContatosArena();
         vm.salvarContato = salvarContato;
         vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.excluirContato = excluirContato;
+        vm.showEditContatoModal = showEditContatoModal;
+        vm.showNovoContatoModal = showNovoContatoModal;
 
         activate();
 
         function activate() {
+            vm.novoContatoModal = $modal({
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body',
+                backdrop : 'static'
+            });
+
             cfpLoadingBar.start();
             vm.contatos.$loaded()
             .then(function(data) {
@@ -41,6 +52,7 @@
                 }
                 vm.contatos.$save(vm.contatoSelecionado);
                 logger.success('Contato editado com sucesso!');
+                hideNovoContatoModal();
             }
             else {
                 vm.contatoSelecionado.fkArena = true;
@@ -49,6 +61,7 @@
                 }
                 vm.contatos.$add(vm.contatoSelecionado);
                 logger.success('Contato criado com sucesso!');
+                hideNovoContatoModal();
             }
         }
 
@@ -57,8 +70,18 @@
             vm.contatos.$save(contato);
         }
 
+        function showNovoContatoModal() {
+            vm.contatoSelecionado = {};
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
+        function showEditContatoModal(contato) {
+            vm.contatoSelecionado = contato;
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
+        }
+
         function hideNovoContatoModal() {
-            $scope.$parent.vm.hideNovoContatoModal();
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.hide);
         }
     }
 

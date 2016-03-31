@@ -74,6 +74,8 @@
         vm.excluirReserva = excluirReserva;
         vm.salvarNovoPagamento = salvarNovoPagamento;
         vm.getFormaPagamentoDesc = getFormaPagamentoDesc;
+        vm.showEditarReservaModal = showEditarReservaModal;
+        vm.hideEditarReservaModal = hideEditarReservaModal;
 
         activate();
 
@@ -89,7 +91,14 @@
         function initModals() {
             vm.novaReservaModal = $modal({
                 scope: $scope,
-                templateUrl: 'modalPelada.html',
+                templateUrl: 'modalNovaReserva.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false
+            });
+
+            vm.editarReservaModal = $modal({
+                scope: $scope,
+                templateUrl: 'modalEditarReserva.html',
                 animation:'am-fade-and-slide-top' ,
                 show: false
             });
@@ -215,7 +224,11 @@
                        placement : placement
                    };
 
-                    //atualizaDisponibilidade();
+                    if (vm.quadras.length == 1) {
+                        vm.novaReserva.quadra = vm.quadras[0];
+                        atualizaDisponibilidade();
+                    }
+
                     vm.popover.$promise.then(vm.popover.show);
                 }
             }
@@ -306,11 +319,11 @@
                     }
                 });
             }
-
+            $('.popover').remove();
             vm.popover = $popover(element, {
                 placement: placement,
                 title:'',
-                templateUrl: 'popupNovaReserva.html',
+                templateUrl: 'popupReserva.html',
                 container: '#reservas',
                 autoClose: 1,
                 scope: $scope,
@@ -349,36 +362,24 @@
         }
 
         function salvarReservaAvulsa() {
-            if (vm.novaReserva.id) {
-                var reservaSelecionada = _.find(vm.reservas, {$id : vm.novaReserva.id});
-                reservaSelecionada.responsavel = vm.novaReserva.responsavel.$id;
-                reservaSelecionada.quadra = vm.novaReserva.quadra.$id;
-                //reservaSelecionada.saldoDevedor = vm.novaReserva.preco.precoAvulso;
-                vm.reservas.$save(reservaSelecionada).then(function(ref) {
-                    logger.success('Reserva editada com sucesso!');
-                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
-                }, function(error) {
-                    logger.error(error, vm.reserva, 'Ops!');
-                });
-            }
-            else {
-                vm.reservas.$add({
-                    tipo : 1,
-                    quadra: vm.novaReserva.quadra.$id,
-                    start : vm.novaReserva.start.getTime(),
-                    end : vm.novaReserva.end.getTime(),
-                    responsavel : vm.novaReserva.responsavel.$id,
-                    title: vm.novaReserva.responsavel.nome,
-                    saldoDevedor : vm.novaReserva.preco.precoAvulso,
-                    saldoQuitado : 0
-                }).then(function(ref) {
-                    logger.success('Reserva criada com sucesso!');
-                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+            var reserva = {
+                tipo : 1,
+                quadra: vm.novaReserva.quadra.$id,
+                start : vm.novaReserva.start.getTime(),
+                end : vm.novaReserva.end.getTime(),
+                responsavel : (vm.novaReserva.responsavel && vm.novaReserva.responsavel.$id) ? vm.novaReserva.responsavel.$id : null,
+                title: (vm.novaReserva.responsavel && vm.novaReserva.responsavel.nome) ? vm.novaReserva.responsavel.nome : null,
+                saldoDevedor : vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0,
+                saldoQuitado : 0
+            };
 
-                }, function(error) {
-                    logger.error(error, vm.reserva, 'Ops!');
-                });
-            }
+            vm.reservas.$add(reserva).then(function(ref) {
+                logger.success('Reserva criada com sucesso!');
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
+                vm.popover.hide();
+            }, function(error) {
+                logger.error(error, vm.reserva, 'Ops!');
+            });
         }
 
         function excluirReserva(id) {
@@ -405,6 +406,14 @@
 
         function showReservasModal() {
             vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
+        }
+
+        function showEditarReservaModal(){
+            vm.editarReservaModal.$promise.then(vm.editarReservaModal.show);
+        }
+
+        function hideEditarReservaModal(){
+            vm.editarReservaModal.$promise.then(vm.editarReservaModal.hide);
         }
 
         function showPagamentoReservaModal() {
@@ -448,6 +457,7 @@
 
         function salvarContato() {
             contatosService.addNovoContato(vm.contatoSelecionado);
+            hideNovoContatoModal();
         }
 
         function hideModalForm() {

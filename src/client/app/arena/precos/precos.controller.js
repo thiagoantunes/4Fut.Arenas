@@ -276,7 +276,7 @@
                 uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
                 logger.success('Preço criado com sucesso.');
                 hideNovoPrecoModal();
-                vm.novoPrecoModal = {};
+                vm.novoPreco = {};
             },
             function(err) {
                 logger.error(err);

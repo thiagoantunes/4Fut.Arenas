@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app/escolinhas/escolinhas-form.controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">app/escolinhas/escolinhas-form.controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">25% <small>(11 / 44)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">6.25% <small>(1 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">25% <small>(11 / 44)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/escolinhas/</a> &#187; escolinhas-form.controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global $:false */
+(function() {
+    'use strict';
+&nbsp;
+    angular
+        .module('app.reservas')
+        .controller('EscolinhasFormCtrl', EscolinhasFormCtrl);
+&nbsp;
+    EscolinhasFormCtrl.$inject = [
+        '$scope' ,
+        '$modal',
+        'quadraService' ,
+        'contatosService',
+        'reservasService',
+        'logger'
+    ];
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function EscolinhasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {</span>
+<span class="cstat-no" title="statement not covered" >        var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >        vm.quadras = quadraService.getQuadras();</span>
+<span class="cstat-no" title="statement not covered" >        vm.professores = contatosService.getContatosArenaLight();</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarNovaTurma = salvarNovaTurma;</span>
+<span class="cstat-no" title="statement not covered" >        vm.hideModalForm = hideModalForm;</span>
+<span class="cstat-no" title="statement not covered" >        vm.showNovoContatoModal = showNovoContatoModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.salvarContato = salvarContato;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        activate();</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function activate() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.novoContatoModal = $modal({</span>
+                scope: $scope,
+                templateUrl: 'app/contatos/novo-contato.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false,
+                container: 'body'
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            initDiasSemana();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            initReservaSelecionada();</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function initReservaSelecionada() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.quadras.$loaded().then(<span class="fstat-no" title="function not covered" >function(results) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.professores.$loaded().then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var turmaSelecionada = $scope.$parent.vm.turmaSelecionada;</span>
+<span class="cstat-no" title="statement not covered" >                    if (turmaSelecionada) {</span>
+<span class="cstat-no" title="statement not covered" >                        vm.novaTurma = {</span>
+                            $id : turmaSelecionada.$id,
+                            quadra : _.find(vm.quadras, {$id : turmaSelecionada.quadra}),
+                            professor : _.find(vm.professores , {$id : turmaSelecionada.responsavel}),
+                            dataInicio : turmaSelecionada.dataInicio,
+                            dataFim : turmaSelecionada.dataFim,
+                            dow : turmaSelecionada.dow,
+                            horaInicio : moment(turmaSelecionada.horaInicio , 'HHmm'),
+                            horaFim : moment(turmaSelecionada.horaFim , 'HHmm')
+                        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        _.forEach(turmaSelecionada.dow, <span class="fstat-no" title="function not covered" >function(d) {</span></span>
+<span class="cstat-no" title="statement not covered" >                            _.find(vm.diasSemana, {'dia' : d}).ativo = true;</span>
+                        });
+                    }
+                });
+            });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function salvarNovaTurma() {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.turma = {</span>
+                $id : vm.novaTurma.$id,
+                quadra: vm.novaTurma.quadra.$id,
+                responsavel: vm.novaTurma.professor.$id,
+                horaInicio : moment(vm.novaTurma.horaInicio).format('HHmm'),
+                horaFim : moment(vm.novaTurma.horaFim).format('HHmm'),
+                dataInicio : vm.novaTurma.dataInicio.getTime(),
+                dataFim : vm.novaTurma.dataFim.getTime(),
+                dow : _.pluck(_.filter(vm.diasSemana, {
+                    'ativo': true
+                }), 'dia'),
+                title: vm.novaTurma.professor.nome,
+                tipo : 3
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (vm.turma.$id) {</span>
+<span class="cstat-no" title="statement not covered" >                reservasService.editaReservaRecorrente(vm.turma, 'turmas').then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    logger.success('Reserva editada com sucesso!');</span>
+<span class="cstat-no" title="statement not covered" >                    hideModalForm();</span>
+                }, <span class="fstat-no" title="function not covered" >function(error) {</span>
+<span class="cstat-no" title="statement not covered" >                    logger.error('Erro ao editar turma: ' + error, error , 'Ops!');</span>
+                });
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    logger.success('Reserva criada com sucesso!');</span>
+<span class="cstat-no" title="statement not covered" >                    hideModalForm();</span>
+                },<span class="fstat-no" title="function not covered" >function(error) {</span>
+<span class="cstat-no" title="statement not covered" >                    logger.error('Erro ao criar turma: ' + error, error , 'Ops!');</span>
+                });
+            }
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function hideModalForm() {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.$parent.vm.hideModalForm();</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function initDiasSemana() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.diasSemana = [</span>
+                {dia: 0, ativo: false},
+                {dia: 1, ativo: false},
+                {dia: 2, ativo: false},
+                {dia: 3, ativo: false},
+                {dia: 4, ativo: false},
+                {dia: 5, ativo: false},
+                {dia: 6, ativo: false}
+            ];
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function showNovoContatoModal() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.contatoSelecionado = {};</span>
+<span class="cstat-no" title="statement not covered" >            vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function salvarContato() {</span>
+<span class="cstat-no" title="statement not covered" >            contatosService.addNovoContato(vm.contatoSelecionado);</span>
+        }
+    }
+&nbsp;
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 30 2016 19:05:43 GMT-0300 (BRT)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

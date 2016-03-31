@@ -142,7 +142,7 @@
         function showError(err) {
             cfpLoadingBar.complete();
             if (err.code === 'INVALID_PASSWORD') {
-                logger.error('Senha incorreta');
+                logger.error('O e-mail ou senha inserido não corresponde a nenhuma conta.');
             }
         }
     }

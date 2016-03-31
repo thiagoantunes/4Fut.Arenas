@@ -6,7 +6,7 @@
 					<label for="inputNome" class="col-sm-2 control-label">Quadra</label>
 					<div class="col-sm-9">
 						<div class="fg-line">
-							<select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder="Selecione uma quadra..." name="quadra" ng-model="vm.novoMensalista.quadra" ng-options="quadra.nome for quadra in vm.quadras">
+							<select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder-text-single="'Selecione uma quadra...'" name="quadra" ng-model="vm.novoMensalista.quadra" ng-options="quadra.nome for quadra in vm.quadras">
 								<option value=""></option>
 							</select>
 						</div>
@@ -16,7 +16,7 @@
 					<label for="inputDescricao" class="col-sm-2 control-label">Responsável</label>
 					<div class="col-sm-8">
 						<div class="fg-line">
-							<select id="inputParticipantes" chosen="{width: '100%'}" name="resp" no-results-text="'Nenhum contato cadastrado.'" required data-placeholder="Selecione o responsável..." ng-model="vm.novoMensalista.responsavel" ng-options="contato.nome for contato in vm.contatos">
+							<select id="inputParticipantes" chosen="{width: '100%'}" name="resp" no-results-text="'Nenhum contato cadastrado.'" required data-placeholder-text-single="'Selecione o responsável...'" ng-model="vm.novoMensalista.responsavel" ng-options="contato.nome for contato in vm.contatos">
 								<option value=""></option>
 							</select>
 						</div>
@@ -49,7 +49,7 @@
 					<label for="inputDuracao" class="col-md-4 control-label">Duração</label>
 					<div class="col-md-8">
 						<div class="fg-line">
-							<select id="inputDuracao" chosen="{width: '100%'}" disable-search="true" name="validade" required data-placeholder="Selecione a duração..." ng-model="vm.novoMensalista.duracao" ng-options="duracao.desc for duracao in vm.duracao">
+							<select id="inputDuracao" chosen="{width: '100%'}" disable-search="true" name="validade" required data-placeholder-text-single="'Selecione a duração...'" ng-model="vm.novoMensalista.duracao" ng-options="duracao.desc for duracao in vm.duracao">
 								<option value=""></option>
 							</select>
 						</div>
@@ -60,7 +60,7 @@
 					<label for="inputValidade" class="col-md-4 control-label">Estender por</label>
 					<div class="col-md-8">
 						<div class="fg-line">
-							<select id="inputValidade" chosen="{width: '100%'}" disable-search="true" name="validade" required data-placeholder="Selecione a validade..." ng-model="vm.novoMensalista.validade" ng-options="validade.desc for validade in vm.estenderPor">
+							<select id="inputValidade" chosen="{width: '100%'}" disable-search="true" name="validade" required data-placeholder-text-single="'Selecione a validade...'" ng-model="vm.novoMensalista.validade" ng-options="validade.desc for validade in vm.estenderPor">
 								<option value=""></option>
 							</select>
 						</div>

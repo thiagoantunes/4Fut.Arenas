@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/reservas/avulsas/avulsas-form.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">28.57% <small>(10 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">28.57% <small>(10 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">23.26% <small>(10 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">8.33% <small>(1 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">23.26% <small>(10 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">app/reservas/avulsas/</a> &#187; avulsas-form.controller.js</div>
@@ -116,7 +116,31 @@
 89
 90
 91
-92</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,11 +198,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -192,6 +230,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,15 +310,29 @@
                 dataInicio : vm.novaReserva.data.getTime(),
                 dataFim : moment(moment(vm.novaReserva.data.getTime()).format('DDMMYYYY')  + '23:59', 'DDMMYYYYHH:mm')._d.getTime() ,
                 dow : [vm.novaReserva.data.getDay()],
-                title: vm.novaReserva.responsavel.nome
+                title: vm.novaReserva.responsavel.nome,
+                tipo: vm.novaReserva.tipoReserva
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            reservasService.criarReservaAvulsa(vm.reserva).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >                logger.success('Reserva criada com sucesso!');</span>
-<span class="cstat-no" title="statement not covered" >                hideModalForm();</span>
-            },<span class="fstat-no" title="function not covered" >function(error) {</span>
-<span class="cstat-no" title="statement not covered" >                logger.error(error, vm.reserva, 'Ops!');</span>
-            });
+<span class="cstat-no" title="statement not covered" >            if (vm.reserva.tipo === 1) {</span>
+<span class="cstat-no" title="statement not covered" >                reservasService.criarReservaAvulsa(vm.reserva).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    logger.success('Reserva criada com sucesso!');</span>
+<span class="cstat-no" title="statement not covered" >                    hideModalForm();</span>
+                },<span class="fstat-no" title="function not covered" >function(error) {</span>
+<span class="cstat-no" title="statement not covered" >                    logger.error(error, vm.reserva, 'Ops!');</span>
+                });
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                vm.reserva.dataFim = moment(vm.novaReserva.data.getTime()).add(vm.novaReserva.validade.value , 'M')._d.getTime();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                reservasService.criarReservaRecorrente(vm.reserva, 'mensalistas').then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    logger.success('Reserva criada com sucesso!');</span>
+<span class="cstat-no" title="statement not covered" >                    hideModalForm();</span>
+                },<span class="fstat-no" title="function not covered" >function(error) {</span>
+<span class="cstat-no" title="statement not covered" >                    logger.error('Erro ao criar uma reserva mensalista: ' + error, error , 'Ops!');</span>
+                });
+            }
+&nbsp;
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function hideModalForm() {</span>
@@ -284,7 +346,17 @@
                 {value: 2, desc: '02:00'}
             ];
 &nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.estenderPor = [</span>
+                {value: 1, desc: 'Um Mês'},
+                {value: 2, desc: 'Dois Meses'},
+                {value: 3, desc: 'Três Meses'},
+                {value: 6, desc: 'Seis Meses'},
+                {value: 12, desc: 'Um Ano'},
+            ];
+&nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.novaReserva.duracao = vm.duracao[0];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.novaReserva.tipoReserva = 1;</span>
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function showNovoContatoModal() {</span>
@@ -303,7 +375,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 28 2016 23:52:27 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 30 2016 19:05:43 GMT-0300 (BRT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

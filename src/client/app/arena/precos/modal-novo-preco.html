@@ -13,7 +13,7 @@
             <label for="inputNome" class="col-sm-2 control-label">Quadra</label>
             <div class="col-sm-9">
               <div class="fg-line">
-                <select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder="Selecione uma quadra..." name="quadra" ng-model="vm.quadraSelecionada" ng-change="vm.selecionaQuadra(vm.quadraSelecionada.$id);" ng-options="quadra.nome for quadra in vm.quadras">
+                <select id="inputQuadra" chosen="{width: '100%'}" required disable-search="true" data-placeholder-text-single="'Selecione uma quadra...'" name="quadra" ng-model="vm.quadraSelecionada" ng-change="vm.selecionaQuadra(vm.quadraSelecionada.$id);" ng-options="quadra.nome for quadra in vm.quadras">
                   <option value=""></option>
                 </select>
               </div>

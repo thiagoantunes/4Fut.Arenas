@@ -4,7 +4,7 @@
     'use strict';
 
     angular
-        .module('app.agenda')
+        .module('app.core')
         .directive('keepOpened', keepOpened);
 
     function keepOpened () {

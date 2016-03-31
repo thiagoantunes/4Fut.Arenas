@@ -403,7 +403,7 @@
                 if (horarioValido) {
                     var list = $firebaseArray(getRef().child(subdomainService.arena));
                     var reserva = {
-                        tipo : 1,
+                        tipo : novaReserva.tipo,
                         quadra: novaReserva.quadra,
                         responsavel: novaReserva.responsavel,
                         start : moment(moment(novaReserva.dataInicio).format('DDMMYYYY') +
@@ -552,6 +552,7 @@
               [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
             ).select(
               'perfil.nome',
+              'perfil.telefone',
               'arena.$value',
               {'key':'arena.$value','alias':'fkArena'}
             );
