@@ -39,7 +39,7 @@
     "fullcalendar": "~2.4.0",
     "chosen": "^1.5.1",
     "angular-chosen-localytics": "^1.4.0",
-    "lightgallery": "~1.2.6",
+    "lightgallery": "^1.2.16",
     "material-design-iconic-font": "~2.1.2",
     "angular-block-ui": "~0.2.0",
     "angular-wizard": "~0.5.5",

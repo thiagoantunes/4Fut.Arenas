@@ -144,6 +144,9 @@
             if (err.code === 'INVALID_PASSWORD') {
                 logger.error('O e-mail ou senha inserido não corresponde a nenhuma conta.');
             }
+            if (err.code === 'INVALID_USER') {
+                logger.error('Usuário não existe!');
+            }
         }
     }
 

@@ -54,12 +54,13 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right top-menu">
 						<li class="dropdown">
-							<a bs-dropdown data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-notification" href=""> <i class="tmn-counts">9</i>
+							<a bs-dropdown data-placement="bottom-right" aria-haspopup="true" aria-expanded="false" class="tm-notification" href=""> 
+							<!-- <i class="tmn-counts">9</i> -->
 							</a>
 							<div class="dropdown-menu dropdown-menu-lg stop-propagate pull-right" role="menu">
 								<div class="listview" id="notifications">
 									<div class="lv-header">
-										Notification
+										NOTIFICAÇÕES  
 										<ul class="actions">
 											<li>
 												<a href="" data-ng-click="hctrl.clearNotification($event)">
@@ -68,22 +69,30 @@
 											</li>
 										</ul>
 									</div>
-									<div class="lv-body">
+									<!-- <div class="lv-body">
 										<a class="lv-item" ng-href="" ng-repeat="w in hctrl.messageResult.list">
 											<div class="media">
 												<div class="pull-left">
-													<img class="lv-img-sm" ng-src="img/profile-pics/{{ w.img }}" alt=""></div>
-													<div class="media-body">
-														<div class="lv-title">{{ w.user }}</div>
-														<small class="lv-small">{{ w.text }}</small>
-													</div>
+													<img class="lv-img-sm" ng-src="img/profile-pics/{{ w.img }}" alt="">
 												</div>
-											</a>
-										</div>
+												<div class="media-body">
+													<div class="lv-title">{{ w.user }}</div>
+													<small class="lv-small">{{ w.text }}</small>
+												</div>
+											</div>
+										</a>
+									</div> -->
+									<div style="text-align: center; padding: 40px 20px; font-size: 54px; color: #aaa">
+										<i class="zmdi zmdi-notifications-off"></i>
+										<br/>
+										<span style="font-size: .4em">
+											Nenhuma Notificaçao 
+										</span>
+									</div>
 
-										<div class="clearfix"></div>
+									<div class="clearfix"></div>
 
-										<a class="lv-footer" href="">View Previous</a>
+										<!-- <a class="lv-footer" href="">View Previous</a> -->
 									</div>
 
 								</div>
@@ -98,7 +107,7 @@
 											Config. Arena
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="">
 											<i class="zmdi zmdi-accounts"></i>
 											Usuários do Sistema
@@ -109,7 +118,7 @@
 											<i class="zmdi zmdi-laptop-chromebook"></i>
 											Config. Sistema
 										</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 							<li class="dropdown"  style="height:55px" >

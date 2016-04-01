@@ -38,6 +38,18 @@
         </div>
     </div>
 </div>
+
+<div class="text-center" ng-if="vm.listaVazia">
+    </br>
+    </br>
+    </br>
+    <i style="opacity:0.5" class="zmdi zmdi-layers  zmdi-hc-5x"></i>
+        <h4 style="opacity:0.4">Cadastre as quadras </br>da sua arena!</h4>
+            </br>
+            <button class="btn btn-default" ng-click="vm.novaQuadra = {}; vm.edicao = false;" data-container='body' data-template-url="novaQuadraModal.html" bs-modal="modal"> Cadastrar Quadra
+            </button>
+</div>
+
 <button class="btn btn-float btn-danger m-btn" ng-click="vm.novaQuadra = {}; vm.edicao = false;" data-template-url="novaQuadraModal.html" bs-modal="modal"><i class="zmdi zmdi-plus"></i></button>
 
 <script type="text/ng-template" id="novaQuadraModal.html">

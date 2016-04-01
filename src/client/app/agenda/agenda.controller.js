@@ -74,8 +74,10 @@
         vm.excluirReserva = excluirReserva;
         vm.salvarNovoPagamento = salvarNovoPagamento;
         vm.getFormaPagamentoDesc = getFormaPagamentoDesc;
-        vm.showEditarReservaModal = showEditarReservaModal;
-        vm.hideEditarReservaModal = hideEditarReservaModal;
+        vm.showTrocaQuadraModal = showTrocaQuadraModal;
+        vm.hideTrocaQuadraModal = hideTrocaQuadraModal;
+        vm.trocarQuadra = trocarQuadra;
+        vm.aplicaDesconto = aplicaDesconto;
 
         activate();
 
@@ -96,9 +98,9 @@
                 show: false
             });
 
-            vm.editarReservaModal = $modal({
+            vm.trocaQuadraModal = $modal({
                 scope: $scope,
-                templateUrl: 'modalEditarReserva.html',
+                templateUrl: 'modalTrocaQuadra.html',
                 animation:'am-fade-and-slide-top' ,
                 show: false
             });
@@ -224,7 +226,7 @@
                        placement : placement
                    };
 
-                    if (vm.quadras.length == 1) {
+                    if (vm.quadras.length === 1) {
                         vm.novaReserva.quadra = vm.quadras[0];
                         atualizaDisponibilidade();
                     }
@@ -303,7 +305,9 @@
                 start : moment(calEvent.start)._d,
                 end : moment(calEvent.end)._d,
                 saldoDevedor : calEvent.saldoDevedor,
-                saldoQuitado : calEvent.saldoQuitado
+                saldoQuitado : calEvent.saldoQuitado,
+                status : getStatusReserva(calEvent),
+                tipo : calEvent.tipo
             };
 
             atualizaDisponibilidade();
@@ -386,6 +390,39 @@
             vm.reservas.$remove(_.find(vm.reservas, {$id: id}));
         }
 
+        function getStatusReserva(reserva) {
+            var dataReserva = moment(reserva.end);
+            var hoje = moment();
+
+            if (reserva.saldoDevedor > 0 && reserva.saldoQuitado === 0 && dataReserva.diff(hoje) >= 0) {
+                return {
+                    desc :'Agendado',
+                    class : 'label-info'
+                };
+            }
+
+            if (reserva.saldoDevedor === 0 && reserva.saldoQuitado > 0) {
+                return {
+                    desc :'Pago',
+                    class : 'label-success'
+                };
+            }
+
+            if (reserva.saldoDevedor > 0 && reserva.saldoQuitado > 0) {
+                return {
+                    desc :'Pago Parcialmente',
+                    class : 'label-warning'
+                };
+            }
+
+            if (dataReserva.diff(hoje) < 0) {
+                return {
+                    desc :'Pgto. Atrasado',
+                    class : 'label-danger'
+                };
+            }
+        }
+
         function openPrecosModal(q) {
             $modal({
                 scope : $scope,
@@ -408,18 +445,23 @@
             vm.novaReservaModal.$promise.then(vm.novaReservaModal.show);
         }
 
-        function showEditarReservaModal(){
-            vm.editarReservaModal.$promise.then(vm.editarReservaModal.show);
+        function showTrocaQuadraModal() {
+            vm.popoverPosition = $('.popover').attr('style');
+            vm.trocaQuadraModal.$promise.then(vm.trocaQuadraModal.show);
         }
 
-        function hideEditarReservaModal(){
-            vm.editarReservaModal.$promise.then(vm.editarReservaModal.hide);
+        function hideTrocaQuadraModal() {
+            vm.trocaQuadraModal.$promise.then(vm.trocaQuadraModal.hide);
+            vm.popover.hide();
+            vm.popover.show();
+            $('.popover').attr('style', vm.popoverPosition);
         }
 
         function showPagamentoReservaModal() {
             vm.novoPagamento = {
                 data: new Date(),
                 valor: vm.novaReserva.saldoDevedor,
+                desconto : 0,
                 formaPagamento : vm.formaPagamento[0]
             };
 
@@ -476,14 +518,15 @@
                 var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
                 if (reserva) {
                     if (reserva.saldoQuitado) {
-                        reserva.saldoQuitado += vm.novoPagamento.valor;
+                        reserva.saldoQuitado += (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
                     }
                     else {
-                        reserva.saldoQuitado = vm.novoPagamento.valor;
+                        reserva.saldoQuitado = (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
                     }
 
-                    if (reserva.saldoDevedor && ((reserva.saldoDevedor - vm.novoPagamento.valor) >= 0)) {
-                        reserva.saldoDevedor -= vm.novoPagamento.valor;
+                    if (reserva.saldoDevedor &&
+                        ((reserva.saldoDevedor - (vm.novoPagamento.valor + vm.novoPagamento.desconto)) >= 0)) {
+                        reserva.saldoDevedor -= (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
                     }
                     else {
                         reserva.saldoDevedor = 0;
@@ -491,11 +534,13 @@
 
                     vm.novaReserva.saldoDevedor = reserva.saldoDevedor;
                     vm.novaReserva.saldoQuitado = reserva.saldoQuitado;
+                    vm.novaReserva.status = getStatusReserva(reserva);
 
                     vm.reservas.$save(reserva).then(function() {
                         logger.success('Pagamento realizado com sucesso');
                         vm.novoPagamento = {
                             valor : vm.novaReserva.saldoDevedor,
+                            desconto : 0,
                             formaPagamento : vm.formaPagamento[0],
                             data: new Date()
                         };
@@ -508,6 +553,24 @@
             function(err) {
                 logger.error('Erro ao realizar pagamento. ' + err);
             });
+        }
+
+        function trocarQuadra(quadra) {
+            vm.novaReserva.quadra = quadra;
+            var reserva = _.find(vm.reservas , {$id : vm.novaReserva.id});
+            reserva.quadra = quadra.$id;
+            vm.reservas.$save(reserva).then(function() {
+                logger.success('Quadra alterada com sucesso!');
+                hideTrocaQuadraModal();
+            }, function() {
+                logger.error('Erro ao alterar a quadra');
+            });
+        }
+
+        function aplicaDesconto() {
+            var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
+            var dif = reserva.saldoDevedor - vm.novoPagamento.desconto;
+            vm.novoPagamento.valor = dif < 0 ? 0 : dif;
         }
     }
 

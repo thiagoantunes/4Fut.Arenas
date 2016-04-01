@@ -31,6 +31,7 @@
         $modal) {
         var vm = this;
 
+        vm.emptyList = false;
         vm.quadras = quadraService.getQuadras();
         vm.quadraSelecionada = {};
         vm.precos = [];
@@ -66,6 +67,9 @@
                         vm.quadraSelecionada = q[0];
                         getPrecos();
                     }
+                }
+                else {
+                    vm.emptyList = true;
                 }
             })
             .catch(function(error) {
@@ -261,6 +265,7 @@
                 uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEventSource', vm.precos);
                 vm.precos.$add(vm.novoPreco).then(function(ref) {
                     logger.success('Preço criado com sucesso.');
+                    vm.novoPreco = {};
                     uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
                 });
             }
