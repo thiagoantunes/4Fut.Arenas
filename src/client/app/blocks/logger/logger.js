@@ -40,7 +40,7 @@
         }
 
         function warning(message, data, title) {
-            toastr.warning(message, title);
+            //toastr.warning(message, title);
             $log.warn('Warning: ' + message, data);
         }
     }

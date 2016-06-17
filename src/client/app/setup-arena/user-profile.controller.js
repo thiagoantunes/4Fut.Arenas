@@ -23,6 +23,7 @@
 
             vm.uploadImageModal = $modal({
                 scope: $scope,
+                backdrop: false,
                 container: '#userProfileModal',
                 templateUrl: 'app/setup-arena/upload-img.html',
                 animation:'am-fade-and-slide-top' ,

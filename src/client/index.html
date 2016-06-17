@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="app">
+
 <head>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
         /* Since Angular has this but needs to load, this gives us the class early. */
-        .ng-hide { display: none!important; }
+        
+        .ng-hide {
+            display: none!important;
+        }
     </style>
     <title ng-bind="title">4Futarenas</title>
     <base href="/" />
@@ -36,16 +40,17 @@
 
     <!--Start of Zopim Live Chat Script-->
     <script type="text/javascript">
-    window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-    _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
-    $.src="//v2.zopim.com/?3o6dkUtKn73qTYrD4jTmwxYH8Z2CrkVI";z.t=+new Date;$.
-    type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
-    </script>
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+$.src="//v2.zopim.com/?3oAWMCDX2jeLtziueQeitF2bYCfZyOJR";z.t=+new Date;$.
+type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+</script>
     <!--End of Zopim Live Chat Script-->
 </head>
+
 <body>
-    
+
     <data ui-view></data>
 
     <!-- build:js js/lib.js -->
@@ -62,7 +67,6 @@
     <script src="/bower_components/angular-loading-bar/build/loading-bar.js"></script>
     <script src="/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
     <script src="/bower_components/lodash/lodash.js"></script>
-    <script src="/bower_components/jquery.nicescroll/jquery.nicescroll.js"></script>
     <script src="/bower_components/angularfire/dist/angularfire.js"></script>
     <script src="/bower_components/angular-ui-mask/dist/mask.js"></script>
     <script src="/bower_components/fullcalendar/dist/fullcalendar.js"></script>
@@ -86,6 +90,7 @@
     <script src="/bower_components/ngmap/build/scripts/ng-map.js"></script>
     <script src="/bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
     <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="/bower_components/geofire/dist/geofire.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -169,7 +174,6 @@
     <script src="/src/client/app/setup-arena/setup-arena.controller.js"></script>
     <script src="/src/client/app/setup-arena/setup-arena.route.js"></script>
     <script src="/src/client/app/setup-arena/upload-img.controller.js"></script>
-    <script src="/src/client/app/setup-arena/user-profile.controller copy.js"></script>
     <script src="/src/client/app/setup-arena/user-profile.controller.js"></script>
     <script src="/src/client/app/sistema-arena/confirmacao-cadastro.route.js"></script>
     <script src="/src/client/app/sistema-arena/sistema-arena.controller.js"></script>
@@ -187,7 +191,7 @@
     <script src="/src/client/app/widgets/password-verify-directive.js"></script>
     <script src="/src/client/app/widgets/progress-bar-directive.js"></script>
     <!-- endinject -->
-    
+
     <script src="/bower_components/fullcalendar/dist/lang/pt-br.js"></script>
     <script src="/bower_components/angular-i18n/angular-locale_pt-br.js"></script>
 
@@ -195,4 +199,5 @@
     <!-- endinject -->
     <!-- endbuild -->
 </body>
+
 </html>

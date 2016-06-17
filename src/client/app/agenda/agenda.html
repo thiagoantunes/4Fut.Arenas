@@ -267,7 +267,7 @@
         <div class="row" style="min-height: 55px">
           <div class="col-md-12">
             <div class="col-md-2">
-              <img class="lv-img-sm" style="width: 45px; height: 45px;" ng-src="/images/avatar_placeholder.jpg" alt="">
+              <img class="lv-img-sm" style="width: 45px; height: 45px;" ng-src="{{vm.novaReserva.responsavel.fotoPerfil | defaultImage}}" alt="">
             </div>
             <div class="col-md-4" style="padding-top: 3px; margin-left: -10px">
               <b>{{vm.novaReserva.responsavel.nome}}</b><br/>

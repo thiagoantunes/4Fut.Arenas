@@ -159,7 +159,8 @@
             getQuadras : getQuadras,
             getAlbum : getAlbum,
 
-            isValidArenaName: isValidArenaName
+            isValidArenaName: isValidArenaName, 
+            setLocation: setLocation
         };
 
         return service;
@@ -184,6 +185,12 @@
 
         function getAlbum() {
             return $firebaseArray(getRef().child(subdomainService.arena + '/album'));
+        }
+
+        function setLocation(lat, lng){
+            var geo = new GeoFire(Ref.child('localizacaoArenas'));
+
+            geo.set(subdomainService.arena, [lat, lng]);
         }
     }
 
@@ -497,13 +504,18 @@
             searchContatos: searchContatos,
             getContatosArena: getContatosArena,
             getContatosArenaLight : getContatosArenaLight,
-            addNovoContato : addNovoContato
+            addNovoContato : addNovoContato,
+            refContatos: refContatos
         };
 
         return service;
 
         function getRef() {
-            return Ref.child('perfil');
+            return Ref.child('users');
+        }
+
+        function refContatos() {
+            return Ref.child('arenas/' + subdomainService.arena + '/contatos');
         }
 
         function getContato(id) {
@@ -521,7 +533,7 @@
 
         function refContatosArena() {
             var norm = new Firebase.util.NormalizedCollection(
-              [Ref.child('/perfil/'), 'perfil'],
+              [Ref.child('/users/'), 'perfil'],
               [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
             ).select(
               'perfil.nome',
@@ -548,11 +560,12 @@
 
         function getContatosArenaLight() {
             var norm = new Firebase.util.NormalizedCollection(
-              [Ref.child('/perfil/'), 'perfil'],
+              [Ref.child('/users/'), 'perfil'],
               [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
             ).select(
               'perfil.nome',
               'perfil.telefone',
+              'perfil.fotoPerfil',
               'arena.$value',
               {'key':'arena.$value','alias':'fkArena'}
             );

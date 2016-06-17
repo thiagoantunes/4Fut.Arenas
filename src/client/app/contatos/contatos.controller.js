@@ -29,14 +29,12 @@
             });
 
             cfpLoadingBar.start();
-            vm.contatos.$loaded()
-            .then(function(data) {
-                vm.emptyList = (vm.contatos.length === 0);
-                cfpLoadingBar.complete();
-            })
-            .catch(function(error) {
-                cfpLoadingBar.complete();
-                console.error('Error:', error);
+
+            contatosService.refContatos().once('value', function(snapshot) {
+                if (!snapshot.exists()) {
+                    cfpLoadingBar.complete();
+                    vm.emptyList = (vm.contatos.length === 0);
+                }
             });
 
             vm.contatos.$watch(function(event) {

@@ -127,20 +127,14 @@
 									<ul class="dropdown-menu dm-icon pull-right" role="menu">
 										<li>
 											<a  href="" 
-												data-container= 'body'
-												data-animation="am-fade-and-slide-top" 
-                            					data-template-url="app/setup-arena/user-profile-modal.html" 
-                            					bs-modal="modal">
+												data-ng-click="hctrl.openPerfilModal()" >
 												<i class="zmdi zmdi-face"></i>
 												Perfil
 											</a>
 										</li>
 										<li>
 											<a  href="" 
-												data-container= 'body'
-												data-animation="am-fade-and-slide-top" 
-										 		data-template-url="app/setup-arena/change-password-modal.html" 
-										 		bs-modal="modal">
+												data-ng-click="hctrl.openTrocarSenhaModal()">
 												<i class="zmdi zmdi-key"></i>
 												Trocar Senha
 											</a>

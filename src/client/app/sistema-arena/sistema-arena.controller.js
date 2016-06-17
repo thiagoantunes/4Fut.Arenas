@@ -23,6 +23,8 @@
                 else {
                     vm.err = 'Já existe uma arena com este nome!';
                 }
+            }, function (errorObject) {
+                console.log('The read failed: ' + errorObject.code);
             });
         }
 

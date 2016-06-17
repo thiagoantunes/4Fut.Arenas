@@ -123,14 +123,16 @@
             arena.once('value', function(snapshot) {
                 cfpLoadingBar.complete();
                 if (snapshot.hasChild('staff/' + user.uid)) {
-                    if (snapshot.val().configurado) {
-                        $location.path('/admin/agenda');
-                        $scope.$apply();
-                    }
-                    else {
-                        $location.path('/admin/setup-arena');
-                        $scope.$apply();
-                    }
+                    $location.path('/admin/agenda');
+                    $scope.$apply();
+                    // if (snapshot.val().configurado) {
+                    //     $location.path('/admin/agenda');
+                    //     $scope.$apply();
+                    // }
+                    // else {
+                    //     $location.path('/admin/setup-arena');
+                    //     $scope.$apply();
+                    // }
                 }
                 else {
                     logger.error('Usuário não cadastrado na arena ' + subdomainService.arena);

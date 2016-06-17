@@ -76,7 +76,7 @@
                                     <label for="inputDescricao" class="col-sm-3 control-label">Capacidade</label>
                                     <div class="col-sm-8">
                                         <div class="fg-line">
-                                            <input id="inputDescricao" min="0" name="capacidade" type="number" placeholder="Quantidade total de jogadores" ng-model="vm.novaQuadra.capacidade" class="form-control" />
+                                            <input id="inputDescricao" min="0" name="capacidade" type="number" placeholder="Número de jogadores de cada lado" ng-model="vm.novaQuadra.capacidade" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -90,17 +90,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputDescricao" class="col-sm-3 control-label">Tipo de Piso</label>
+                                    <label for="inputDescricao" class="col-sm-3 control-label">Tipo</label>
                                     <div class="col-sm-8">
 
                                         <div class="fg-line">
-                                            <select  ng-model="vm.novaQuadra.tipo"  data-placeholder="Selecione o tipo de piso."  class="form-control" >
-                                                <option value="Sintético">Sintético</option>
-                                                <option value="Grama">Grama</option>
-                                                <option value="Areia">Areia</option>
-                                                <option value="Cimento">Cimento</option>
-                                                <option value="Taco">Taco</option>
-                                                <option value=""></option>
+                                            <select  ng-model="vm.novaQuadra.tipo"  data-placeholder="Selecione o tipo da quadra."  class="form-control" >
+                                                <option value="Society">Society</option>
+                                                <option value="Salão">Salão</option>
+                                                <option value="Campo">Campo</option>
                                             </select>
                                         </div>
                                     </div>
