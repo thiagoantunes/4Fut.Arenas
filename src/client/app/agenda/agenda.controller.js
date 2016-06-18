@@ -9,7 +9,7 @@
 
     ReservasCtrl.$inject = [
         '$scope',
-        'quadraService',
+        'quadras',
         'reservasService' ,
         'contatosService' ,
         'financeiroService',
@@ -25,7 +25,7 @@
     // jshint maxstatements:70
     function ReservasCtrl(
         $scope,
-        quadraService,
+        quadras,
         reservasService,
         contatosService,
         financeiroService,
@@ -38,7 +38,7 @@
         logger) {
 
         var vm = this;
-        vm.quadras = quadraService.getQuadras();
+        vm.quadras = quadras;
         vm.contatos = contatosService.getContatosArenaLight();
         vm.selecaoQuadras = [];
         vm.reservas = [];
@@ -156,13 +156,10 @@
         }
 
         function loadQuadras() {
-
-            vm.quadras.$loaded(function() {
-                _.forEach(vm.quadras, function(q) {
-                    vm.selecaoQuadras.push({
-                        quadra: q,
-                        ativa: true
-                    });
+            _.forEach(vm.quadras, function(q) {
+                vm.selecaoQuadras.push({
+                    quadra: q,
+                    ativa: true
                 });
             });
         }

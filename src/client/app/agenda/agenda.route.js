@@ -19,7 +19,12 @@
                     url: '/agenda',
                     templateUrl: 'app/agenda/agenda.html',
                     controller:'ReservasCtrl',
-                    controllerAs:'vm'
+                    controllerAs:'vm',
+                    resolve: {
+                        quadras: ['quadraService', function (quadraService) {
+                            return quadraService.getQuadras().$loaded();
+                        }]
+                    }
                 }
             },
         ];
