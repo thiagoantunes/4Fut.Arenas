@@ -44,7 +44,7 @@
 
         $scope.hideModal = function () {
             $scope.$parent.vm.hideUploadImageModal();
-        }
+        };
     }
 
 })();

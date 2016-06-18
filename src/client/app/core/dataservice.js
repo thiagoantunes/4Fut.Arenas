@@ -158,8 +158,10 @@
             getArena : getArena,
             getQuadras : getQuadras,
             getAlbum : getAlbum,
+            getNotificacoes: getNotificacoes,
+            getNotificacoesNaoLidas: getNotificacoesNaoLidas,
 
-            isValidArenaName: isValidArenaName, 
+            isValidArenaName: isValidArenaName,
             setLocation: setLocation
         };
 
@@ -184,11 +186,23 @@
         }
 
         function getAlbum() {
-            return $firebaseArray(getRef().child(subdomainService.arena + '/album'));
+            return $firebaseArray(Ref.child('arenasAlbuns').child(subdomainService.arena));
         }
 
-        function setLocation(lat, lng){
-            var geo = new GeoFire(Ref.child('localizacaoArenas'));
+        function getNotificacoes() {
+            var ref = Ref.child('arenasNotificacoes').child(subdomainService.arena)
+                        .limitToLast(5);
+            return $firebaseArray(ref);
+        }
+
+        function getNotificacoesNaoLidas() {
+            var ref = Ref.child('arenasNotificacoes').child(subdomainService.arena)
+                .orderByChild('lida').startAt(false).endAt(false);
+            return $firebaseArray(ref);
+        }
+
+        function setLocation(lat, lng) {
+            var geo = new GeoFire(Ref.child('arenasLocalizacao'));
 
             geo.set(subdomainService.arena, [lat, lng]);
         }
@@ -515,7 +529,7 @@
         }
 
         function refContatos() {
-            return Ref.child('arenas/' + subdomainService.arena + '/contatos');
+            return Ref.child('arenasContatos/' + subdomainService.arena);
         }
 
         function getContato(id) {
@@ -534,7 +548,7 @@
         function refContatosArena() {
             var norm = new Firebase.util.NormalizedCollection(
               [Ref.child('/users/'), 'perfil'],
-              [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
+              [Ref.child('/arenasContatos/' + subdomainService.arena), 'arena']
             ).select(
               'perfil.nome',
               'perfil.telefone',
@@ -561,7 +575,7 @@
         function getContatosArenaLight() {
             var norm = new Firebase.util.NormalizedCollection(
               [Ref.child('/users/'), 'perfil'],
-              [Ref.child('/arenas/' + subdomainService.arena + '/contatos'), 'arena']
+              [Ref.child('/arenasContatos/' + subdomainService.arena), 'arena']
             ).select(
               'perfil.nome',
               'perfil.telefone',

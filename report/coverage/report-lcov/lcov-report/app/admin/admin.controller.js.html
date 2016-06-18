@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/admin/admin.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">35.71% <small>(5 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">26.47% <small>(9 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">20% <small>(1 / 5)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">35.71% <small>(5 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">9.09% <small>(1 / 11)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">26.47% <small>(9 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/admin/</a> &#187; admin.controller.js</div>
@@ -54,7 +54,53 @@
 27
 28
 29
-30</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -67,6 +113,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -77,8 +127,50 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -90,10 +182,14 @@
         .module('app.admin')
         .controller('AdminController', AdminController);
 &nbsp;
-    AdminController.$inject = ['$scope', '$location', 'Auth', 'usersService'];
+    AdminController.$inject = ['$scope', '$modal', '$location', 'Auth', 'usersService', 'arenaService'];
     /* @ngInject */
-<span class="fstat-no" title="function not covered" >    function AdminController($scope, $location, Auth, usersService) {</span>
+<span class="fstat-no" title="function not covered" >    function AdminController($scope, $modal, $location, Auth, usersService, arenaService) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >        vm.openPerfilModal = openPerfilModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.openTrocarSenhaModal = openTrocarSenhaModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.hideModal = hideModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.lerNotificacoes = lerNotificacoes;</span>
 <span class="cstat-no" title="statement not covered" >        vm.logout = <span class="fstat-no" title="function not covered" >function() {</span></span>
 <span class="cstat-no" title="statement not covered" >            Auth.$unauth();</span>
         };
@@ -105,11 +201,53 @@
 <span class="cstat-no" title="statement not covered" >            if (authData) {</span>
 <span class="cstat-no" title="statement not covered" >                usersService.getUserProfile(authData.uid).$bindTo($scope, 'loggedUser');</span>
             }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            arenaService.getNotificacoes().$loaded(<span class="fstat-no" title="function not covered" >function (val) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.notificacoes = val;</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            arenaService.getNotificacoesNaoLidas().$loaded(<span class="fstat-no" title="function not covered" >function (val) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.notificacoesNaoLidas = val;</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.perfilModal = $modal({</span>
+                scope: $scope,
+                templateUrl: 'app/setup-arena/user-profile-modal.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.trocarSenhaModal = $modal({</span>
+                scope: $scope,
+                container: 'body',
+                templateUrl: 'app/setup-arena/change-password-modal.html',
+                animation:'am-fade-and-slide-top' ,
+                show: false
+            });
         }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        $scope.isActive = <span class="fstat-no" title="function not covered" >function (viewLocation) {</span></span>
 <span class="cstat-no" title="statement not covered" >            return viewLocation === $location.path();</span>
         };
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function lerNotificacoes() {</span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; vm.notificacoesNaoLidas.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                vm.notificacoesNaoLidas[i].lida = true;</span>
+<span class="cstat-no" title="statement not covered" >                vm.notificacoesNaoLidas.$save(i);</span>
+            }
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function openTrocarSenhaModal() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.trocarSenhaModal.$promise.then(vm.trocarSenhaModal.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function openPerfilModal() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.perfilModal.$promise.then(vm.perfilModal.show);</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function hideModal() {</span>
+<span class="cstat-no" title="statement not covered" >            vm.perfilModal.$promise.then(vm.perfilModal.hide);</span>
+        }
     }
 })();
 &nbsp;</pre></td></tr>
@@ -117,7 +255,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 17 2016 16:41:09 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 17 2016 21:46:03 GMT-0300 (BRT)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

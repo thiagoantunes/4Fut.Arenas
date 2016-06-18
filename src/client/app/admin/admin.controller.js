@@ -5,13 +5,14 @@
         .module('app.admin')
         .controller('AdminController', AdminController);
 
-    AdminController.$inject = ['$scope', '$modal', '$location', 'Auth', 'usersService'];
+    AdminController.$inject = ['$scope', '$modal', '$location', 'Auth', 'usersService', 'arenaService'];
     /* @ngInject */
-    function AdminController($scope, $modal, $location, Auth, usersService) {
+    function AdminController($scope, $modal, $location, Auth, usersService, arenaService) {
         var vm = this;
         vm.openPerfilModal = openPerfilModal;
         vm.openTrocarSenhaModal = openTrocarSenhaModal;
         vm.hideModal = hideModal;
+        vm.lerNotificacoes = lerNotificacoes;
         vm.logout = function() {
             Auth.$unauth();
         };
@@ -23,6 +24,14 @@
             if (authData) {
                 usersService.getUserProfile(authData.uid).$bindTo($scope, 'loggedUser');
             }
+
+            arenaService.getNotificacoes().$loaded(function (val) {
+                vm.notificacoes = val;
+            });
+
+            arenaService.getNotificacoesNaoLidas().$loaded(function (val) {
+                vm.notificacoesNaoLidas = val;
+            });
 
             vm.perfilModal = $modal({
                 scope: $scope,
@@ -43,6 +52,13 @@
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
+
+        function lerNotificacoes() {
+            for (var i = 0; i < vm.notificacoesNaoLidas.length; i++) {
+                vm.notificacoesNaoLidas[i].lida = true;
+                vm.notificacoesNaoLidas.$save(i);
+            }
+        }
 
         function openTrocarSenhaModal() {
             vm.trocarSenhaModal.$promise.then(vm.trocarSenhaModal.show);

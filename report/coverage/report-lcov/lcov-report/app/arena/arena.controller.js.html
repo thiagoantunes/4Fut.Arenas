@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/arena/arena.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">40% <small>(8 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">33.33% <small>(9 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">16.67% <small>(1 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">40% <small>(8 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">14.29% <small>(1 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">33.33% <small>(9 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/arena/</a> &#187; arena.controller.js</div>
@@ -71,7 +71,25 @@
 44
 45
 46
-47</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -85,6 +103,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -101,9 +120,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -117,20 +133,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function() {
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function () {
     'use strict';
 &nbsp;
     angular
-    .module('app.arena')
-    .controller('ArenaCtr', ArenaCtr);
+        .module('app.arena')
+        .controller('ArenaCtr', ArenaCtr);
 &nbsp;
-    ArenaCtr.$inject = ['$scope', 'arenaService', '$modal'];
+    ArenaCtr.$inject = ['$scope', 'arenaService', '$modal', 'Ref'];
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function ArenaCtr($scope, arenaService, $modal) {</span>
+<span class="fstat-no" title="function not covered" >    function ArenaCtr($scope, arenaService, $modal, Ref) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
 <span class="cstat-no" title="statement not covered" >        vm.showUploadImageModal = showUploadImageModal;</span>
 <span class="cstat-no" title="statement not covered" >        vm.hideUploadImageModal = hideUploadImageModal;</span>
 <span class="cstat-no" title="statement not covered" >        vm.saveImage = saveImage;</span>
+<span class="cstat-no" title="statement not covered" >        vm.placeChanged = placeChanged;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        activate();</span>
 &nbsp;
@@ -140,9 +177,10 @@
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.uploadImageModal = $modal({</span>
                 scope: $scope,
+                backdrop: 'static',
                 container: 'body',
                 templateUrl: 'app/setup-arena/upload-img.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
         }
@@ -153,11 +191,27 @@
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function hideUploadImageModal() {</span>
 <span class="cstat-no" title="statement not covered" >            vm.uploadImageModal.$promise.then(vm.uploadImageModal.hide);</span>
+<span class="cstat-no" title="statement not covered" >            vm.uploadImageModal = $modal({</span>
+                scope: $scope,
+                backdrop: 'static',
+                container: 'body',
+                templateUrl: 'app/setup-arena/upload-img.html',
+                animation: 'am-fade-and-slide-top',
+                show: false
+            });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function saveImage(fileName) {</span>
 <span class="cstat-no" title="statement not covered" >            $scope.arena.fotoPerfil = 'https://4fut.s3.amazonaws.com/img/' + fileName;</span>
 <span class="cstat-no" title="statement not covered" >            hideUploadImageModal();</span>
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function placeChanged() {</span>
+            /*jshint validthis: true */
+<span class="cstat-no" title="statement not covered" >            vm.place = this.getPlace();</span>
+<span class="cstat-no" title="statement not covered" >            var lat = vm.place.geometry.location.lat();</span>
+<span class="cstat-no" title="statement not covered" >            var lng = vm.place.geometry.location.lng();</span>
+<span class="cstat-no" title="statement not covered" >            arenaService.setLocation(lat, lng);</span>
         }
     }
 &nbsp;
@@ -168,7 +222,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 17 2016 16:41:09 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 17 2016 21:46:03 GMT-0300 (BRT)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

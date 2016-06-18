@@ -52,6 +52,7 @@
         }
 
         function placeChanged() {
+            /*jshint validthis: true */
             vm.place = this.getPlace();
             var lat = vm.place.geometry.location.lat();
             var lng = vm.place.geometry.location.lng();
