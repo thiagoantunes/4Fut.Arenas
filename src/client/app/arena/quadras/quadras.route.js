@@ -20,6 +20,11 @@
                 templateUrl: 'app/arena/quadras/quadras.html',
                 controller:'QuadraCtrl',
                 controllerAs:'vm',
+                resolve: {
+                    quadras: ['quadraService', function (quadraService) {
+                        return quadraService.getQuadras().$loaded();
+                    }]
+                }
             }
         }];
     }

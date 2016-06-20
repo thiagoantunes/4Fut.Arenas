@@ -143,6 +143,7 @@
                     editable: true,
                     selectable: true,
                     selectHelper: true,
+                    ignoreTimezone: false,
                     unselectCancel: '.reservasForm',
                     eventResize: eventResize,
                     eventDrop: eventDrop,
@@ -194,7 +195,9 @@
         }
 
         function viewRender(view, element) {
-            getReservas(view.start._d.getTime(), view.end._d.getTime());
+            var start = moment(view.start._d).add(view.start._d.getTimezoneOffset(), 'm')._d.getTime();
+            var end = moment(view.end._d).add(view.end._d.getTimezoneOffset(), 'm')._d.getTime();
+            getReservas(start, end);
         }
 
         function eventSelect(start, end, jsEvent, view) {

@@ -5,13 +5,13 @@
     .module('app.arena')
     .controller('QuadraCtrl', QuadraCtrl);
 
-    QuadraCtrl.$inject = ['quadraService', '$modal', 'logger'];
+    QuadraCtrl.$inject = ['quadras', '$modal', 'logger'];
 
-    function QuadraCtrl(quadraService, $modal, logger) {
+    function QuadraCtrl(quadras, $modal, logger) {
         var vm = this;
 
         vm.listaVazia = false;
-        vm.quadras = quadraService.getQuadrasArena();
+        vm.quadras = quadras;
         vm.originalRow = {};
         vm.openPrecosModal = openPrecosModal;
         vm.salvarNovaQuadra = salvarNovaQuadra;
@@ -33,19 +33,6 @@
         activate();
 
         function activate() {
-            vm.quadras.$loaded()
-            .then(function(q) {
-                if (vm.quadras.length === 0) {
-                    vm.listaVazia = true;
-                }
-            })
-            .catch(function(error) {
-                logger.error('Error:', error);
-            });
-
-            vm.quadras.$watch(function(event) {
-                vm.listaVazia = (vm.quadras.length === 0);
-            });
         }
 
         function salvarNovaQuadra() {
@@ -75,7 +62,7 @@
         }
 
         function excluirQuadra(q) {
-            quadraService.remove(q.$id);
+            vm.quadras.$remove(q);
         }
     }
 

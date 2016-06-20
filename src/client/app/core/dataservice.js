@@ -81,17 +81,13 @@
             //queryQuadra: queryQuadra,
 
             getQuadra: getQuadra,
-            getQuadras: getQuadras,
-            getQuadrasArena : getQuadrasArena,
-            getQuadrasLight : getQuadrasLight,
-
-            remove : remove
+            getQuadras: getQuadras
         };
 
         return service;
 
         function getRef() {
-            return Ref.child('quadras');
+            return Ref.child('arenasQuadras');
         }
 
         function getQuadra(id) {
@@ -101,53 +97,6 @@
         function getQuadras() {
             return $firebaseArray(getRef().child(subdomainService.arena));
         }
-
-        function getQuadrasArena() {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-              [Ref.child('/quadras/' + subdomainService.arena + ''), 'quadra'],
-              [Ref.child('/arenas/' + subdomainService.arena + '/quadras'), 'arena']
-            ).select(
-              'quadra.nome',
-              'quadra.color',
-              'quadra.tipo',
-              'quadra.capacidade',
-              'quadra.coberta',
-              'arena.$value',
-              {'key':'arena.$value','alias':'fkArena'}
-            ).ref();
-
-            return $firebaseArray(joinedRef);
-        }
-
-        function getQuadrasLight() {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-              [Ref.child('/quadras/' + subdomainService.arena + ''), 'quadra'],
-              [Ref.child('/arenas/' + subdomainService.arena + '/quadras'), 'arena']
-            ).select(
-              'quadra.nome',
-              'quadra.color',
-              'arena.$value'
-            ).ref();
-
-            return $firebaseArray(joinedRef);
-        }
-
-        function remove(id) {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-              [Ref.child('/quadras/' + subdomainService.arena + '/' + id), 'quadra'],
-              [Ref.child('/arenas/' + subdomainService.arena + '/quadras/' + id), 'arena']
-            ).select(
-              'quadra.nome',
-              'quadra.color',
-              'quadra.tipo',
-              'quadra.capacidade',
-              'quadra.coberta',
-              'arena.$value',
-              {'key':'arena.$value','alias':'fkArena'}
-            ).ref();
-
-            joinedRef.remove();
-        }
     }
 
     function arenaService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
@@ -156,7 +105,6 @@
             getRef : getRef,
 
             getArena : getArena,
-            getQuadras : getQuadras,
             getAlbum : getAlbum,
             getNotificacoes: getNotificacoes,
             getNotificacoesNaoLidas: getNotificacoesNaoLidas,
@@ -173,10 +121,6 @@
 
         function getArena() {
             return $firebaseObject(getRef().child(subdomainService.arena));
-        }
-
-        function getQuadras() {
-            return $firebaseArray(getRef().child(subdomainService.arena + '/quadras'));
         }
 
         function isValidArenaName(arenaName) {
@@ -220,12 +164,12 @@
 
         function getPreco(quadraId, id) {
             return $firebaseObject(
-                Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id)
+                Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id)
             );
         }
 
         function getPrecos(quadraId) {
-            return $firebaseArray(Ref.child('quadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
+            return $firebaseArray(Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
         }
 
         function salvarNovoPreco(novoPrecoModal, dow, precos) {
@@ -332,7 +276,7 @@
         function getTurmas() {
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/turmas/' + subdomainService.arena + ''), 'turma'],
-              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'turma.quadra'],
+              [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'turma.quadra'],
               [Ref.child('/perfil/'), 'professor', 'turma.responsavel']
             ).select(
               'turma.quadra',
@@ -352,7 +296,7 @@
         function getMensalistas() {
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/mensalistas/' + subdomainService.arena + ''), 'mensalista'],
-              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
+              [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
               [Ref.child('/perfil/'), 'responsavel', 'mensalista.responsavel']
             ).select(
               'mensalista.quadra',
@@ -372,7 +316,7 @@
         function getAvulsar() {
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/reservas/' + subdomainService.arena + ''), 'avulsa'],
-              [Ref.child('/quadras/' + subdomainService.arena), 'quadra', 'avulsa.quadra'],
+              [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'avulsa.quadra'],
               [Ref.child('/perfil/'), 'responsavel', 'avulsa.responsavel']
             ).select(
             'avulsa.quadra',

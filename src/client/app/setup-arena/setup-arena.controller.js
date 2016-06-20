@@ -69,7 +69,7 @@
 
             var quadraData = {};
             quadraData['arenas/' + arenaID + '/quadras/' + quadraID] = vm.novaQuadra.nome;
-            quadraData['quadras/' + arenaID + '/' + quadraID] = vm.novaQuadra;
+            quadraData['arenasQuadras/' + arenaID + '/' + quadraID] = vm.novaQuadra;
 
             Ref.update(quadraData, function(error) {
                 if (error) {
