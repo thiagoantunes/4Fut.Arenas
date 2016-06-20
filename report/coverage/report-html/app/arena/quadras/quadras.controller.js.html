@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/arena/quadras/quadras.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">26.67% <small>(8 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">26.67% <small>(8 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">33.33% <small>(8 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">14.29% <small>(1 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">33.33% <small>(8 / 24)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">app/arena/quadras/</a> &#187; quadras.controller.js</div>
@@ -94,20 +94,7 @@
 67
 68
 69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+70</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -142,19 +129,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -196,13 +170,13 @@
     .module('app.arena')
     .controller('QuadraCtrl', QuadraCtrl);
 &nbsp;
-    QuadraCtrl.$inject = ['quadraService', '$modal', 'logger'];
+    QuadraCtrl.$inject = ['quadras', '$modal', 'logger'];
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function QuadraCtrl(quadraService, $modal, logger) {</span>
+<span class="fstat-no" title="function not covered" >    function QuadraCtrl(quadras, $modal, logger) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        vm.listaVazia = false;</span>
-<span class="cstat-no" title="statement not covered" >        vm.quadras = quadraService.getQuadrasArena();</span>
+<span class="cstat-no" title="statement not covered" >        vm.quadras = quadras;</span>
 <span class="cstat-no" title="statement not covered" >        vm.originalRow = {};</span>
 <span class="cstat-no" title="statement not covered" >        vm.openPrecosModal = openPrecosModal;</span>
 <span class="cstat-no" title="statement not covered" >        vm.salvarNovaQuadra = salvarNovaQuadra;</span>
@@ -224,19 +198,6 @@
 <span class="cstat-no" title="statement not covered" >        activate();</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function activate() {</span>
-<span class="cstat-no" title="statement not covered" >            vm.quadras.$loaded()</span>
-            .then(<span class="fstat-no" title="function not covered" >function(q) {</span>
-<span class="cstat-no" title="statement not covered" >                if (vm.quadras.length === 0) {</span>
-<span class="cstat-no" title="statement not covered" >                    vm.listaVazia = true;</span>
-                }
-            })
-            .catch(<span class="fstat-no" title="function not covered" >function(error) {</span>
-<span class="cstat-no" title="statement not covered" >                logger.error('Error:', error);</span>
-            });
-&nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.quadras.$watch(<span class="fstat-no" title="function not covered" >function(event) {</span></span>
-<span class="cstat-no" title="statement not covered" >                vm.listaVazia = (vm.quadras.length === 0);</span>
-            });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function salvarNovaQuadra() {</span>
@@ -266,7 +227,7 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function excluirQuadra(q) {</span>
-<span class="cstat-no" title="statement not covered" >            quadraService.remove(q.$id);</span>
+<span class="cstat-no" title="statement not covered" >            vm.quadras.$remove(q);</span>
         }
     }
 &nbsp;
@@ -276,7 +237,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 18 2016 11:37:10 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 20 2016 15:40:11 GMT-0300 (BRT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

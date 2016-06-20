@@ -15,8 +15,10 @@
             },
             link: function(scope, element) {
                 element.on('click', function(e) {
-                    scope.keepOpened.hide();
-                    scope.keepOpened.show();
+                    if(scope.keepOpened){
+                        scope.keepOpened.hide();
+                        scope.keepOpened.show();
+                    }
                 });
             }
         };

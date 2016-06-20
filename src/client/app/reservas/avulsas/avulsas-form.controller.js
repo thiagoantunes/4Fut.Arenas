@@ -23,6 +23,7 @@
         vm.salvarNovaReserva = salvarNovaReserva;
         vm.hideModalForm = hideModalForm;
         vm.showNovoContatoModal = showNovoContatoModal;
+        vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.salvarContato = salvarContato;
 
         activate();
@@ -107,8 +108,13 @@
             vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
         }
 
+        function hideNovoContatoModal() {
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.hide);
+        }
+
         function salvarContato() {
             contatosService.addNovoContato(vm.contatoSelecionado);
+            hideNovoContatoModal();
         }
     }
 
