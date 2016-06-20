@@ -15,10 +15,7 @@
             },
             link: function(scope, element) {
                 element.on('click', function(e) {
-                    if(scope.keepOpened){
-                        scope.keepOpened.hide();
-                        scope.keepOpened.show();
-                    }
+                    e.stopPropagation();
                 });
             }
         };
