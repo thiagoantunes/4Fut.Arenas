@@ -1,16 +1,16 @@
 /*global $:false */
-(function() {
+(function () {
     'use strict';
     angular
-    .module('app.arena')
-    .controller('PrecosCtrl', PrecosCtrl);
+        .module('app.arena')
+        .controller('PrecosCtrl', PrecosCtrl);
     PrecosCtrl.$inject = [
-        'idQuadra' ,
+        'idQuadra',
         '$scope',
         'quadraService',
         'funcionamentoService',
-        'uiCalendarConfig'  ,
-        '$popover' ,
+        'uiCalendarConfig',
+        '$popover',
         'blockUI',
         '$window',
         'logger',
@@ -24,7 +24,7 @@
         quadraService,
         funcionamentoService,
         uiCalendarConfig,
-        $popover ,
+        $popover,
         blockUI,
         $window,
         logger,
@@ -53,45 +53,37 @@
             vm.novoPrecoModal = $modal({
                 scope: $scope,
                 templateUrl: 'app/arena/precos/modal-novo-preco.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
 
             vm.quadras.$loaded()
-            .then(function(q) {
-                if (q.length > 0) {
-                    if (idQuadra) {
-                        vm.quadraSelecionada = _.find(q , {$id : idQuadra});
+                .then(function (q) {
+                    if (q.length > 0) {
+                        if (idQuadra) {
+                            vm.quadraSelecionada = _.find(q, { $id: idQuadra });
+                        }
+                        else {
+                            vm.quadraSelecionada = q[0];
+                            getPrecos();
+                        }
                     }
                     else {
-                        vm.quadraSelecionada = q[0];
-                        getPrecos();
+                        vm.emptyList = true;
                     }
-                }
-                else {
-                    vm.emptyList = true;
-                }
-            })
-            .catch(function(error) {
-                logger.error('Error:', error);
-            });
+                })
+                .catch(function (error) {
+                    logger.error('Error:', error);
+                });
 
             vm.uiConfig = {
                 calendar: {
-                    lang:'pt-br',
-                    // minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // businessHours: {
-                    //     start: '10:00',
-                    //     end: '24:00',
-                    //     dow: [0, 1, 2, 3, 4, 5, 6]
-                    // },
-                    //height: $window.innerHeight - 160,
+                    lang: 'pt-br',
                     height: 'auto',
                     timeFormat: 'H(:mm)',
                     header: false,
                     defaultView: 'agendaWeek',
-                    scrollTime :  '09:00:00',
+                    scrollTime: '09:00:00',
                     allDaySlot: false,
                     timezone: 'local',
                     axisFormat: 'H:mm',
@@ -103,7 +95,7 @@
                     selectable: true,
                     selectOverlap: false,
                     selectHelper: true,
-                    viewRender : viewRender,
+                    viewRender: viewRender,
                     eventResize: eventResize,
                     eventDrop: eventDrop,
                     select: eventSelect,
@@ -116,16 +108,8 @@
             initDiasSemana();
         }
 
-        function showNovoPrecoModal() {
-            vm.novoPrecoModal.$promise.then(vm.novoPrecoModal.show);
-        }
-
-        function hideNovoPrecoModal() {
-            vm.novoPrecoModal.$promise.then(vm.novoPrecoModal.hide);
-        }
-
         function selecionaQuadra(id) {
-            vm.quadraSelecionada = _.find(vm.quadras, {$id : id});
+            vm.quadraSelecionada = _.find(vm.quadras, { $id: id });
             getPrecos();
         }
 
@@ -133,18 +117,33 @@
             if (uiCalendarConfig.calendars.precoCalendar) {
                 uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEventSource', vm.precos);
 
-                vm.precos = funcionamentoService.getPrecos(vm.quadraSelecionada.$id);
+                vm.precos = funcionamentoService.getPrecos(vm.quadraSelecionada.$id, mapPrecos);
 
-                vm.precos.$watch(function(event) {
+                vm.precos.$watch(function (event) {
                     vm.precoMaximo = _.max(vm.precos, 'precoAvulso').precoAvulso;
                     vm.precoMinino = _.min(vm.precos, 'precoAvulso').precoAvulso;
                     vm.precoMedio = (vm.precoMaximo + vm.precoMinino) / 2;
 
                     uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEvents');
-                    uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEventSource',$('.Source').val());
+                    uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEventSource', $('.Source').val());
                     uiCalendarConfig.calendars.precoCalendar.fullCalendar('addEventSource', vm.precos);
                 });
             }
+        }
+
+        function mapPrecos(val) {
+            var daysToAdd = val.dow - new Date().getDay();
+            var end = val.start > val.end ? moment(val.end, 'HH:mm').add(1, 'd') : moment(val.end, 'HH:mm');
+            var start = moment(val.start, 'HH:mm');
+            return {
+                start: start.add(daysToAdd, 'd')._d.getTime(),
+                end: end.add(daysToAdd, 'd')._d.getTime(),
+                title: val.title,
+                precoAvulso: val.precoAvulso,
+                precoMensalista: val.precoMensalista,
+                $id: val.$id,
+                dayOfWeek: val.dow
+            };
         }
 
         function viewRender(view, element) {
@@ -152,71 +151,76 @@
         }
 
         function eventResize(event, delta, revertFunc) {
-            blockUI.start();
             var preco = _.find(vm.precos, {
                 $id: event.$id
             });
-            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
-            vm.precos.$save(preco).then(function(ref) {
+            var updData = {
+                end: moment(preco.end).add(delta._milliseconds, 'milliseconds').format('HH:mm'),
+                start: moment(preco.start).format('HH:mm'),
+                dow: preco.dayOfWeek,
+                quadra: vm.quadraSelecionada.$id,
+                id: preco.$id
+            };
+            funcionamentoService.updatePreco(updData).then(function (ref) {
                 logger.success('Preço editado com sucesso.');
-                blockUI.stop();
+                getPrecos();
             });
         }
 
         function eventDrop(event, delta, revertFunc) {
-            blockUI.start();
             var preco = _.find(vm.precos, {
                 $id: event.$id
             });
-            preco.start = moment(preco.start, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
-            preco.end = moment(preco.end, 'HH:mm').add(delta._milliseconds, 'milliseconds').format('HH:mm');
-            preco.dow = moment(preco.dow[0], 'd').add(delta._days, 'days').format('d');
-            vm.precos.$save(preco).then(function(ref) {
+
+            var updData = {
+                start: moment(preco.start).add(delta._milliseconds, 'milliseconds').format('HH:mm'),
+                end: moment(preco.end).add(delta._milliseconds, 'milliseconds').format('HH:mm'),
+                dow: moment(preco.dayOfWeek[0], 'd').add(delta._days, 'days').format('d'),
+                quadra: vm.quadraSelecionada.$id,
+                id: preco.$id
+            };
+            
+            funcionamentoService.updatePreco(updData).then(function (ref) {
                 logger.success('Preço editado com sucesso.');
-                blockUI.stop();
+                getPrecos();
             });
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            if (end._d.getDay() !== start._d.getDay()) {
-                uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
-            }
-            else {
-                var element = $(jsEvent.target).closest('.fc-event');
-                var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
+            var element = $(jsEvent.target).closest('.fc-event');
+            var placement = (jsEvent.clientY < 320) ? 'bottom' : 'top';
 
-                if (element.length > 0) {
-                    var popover = $popover(element, {
-                        placement: placement,
-                        title:'',
-                        templateUrl: 'app/arena/precos/novo-preco.html',
-                        container: '#precos',
-                        autoClose: 1,
-                        scope: $scope
-                    });
+            if (element.length > 0) {
+                var popover = $popover(element, {
+                    placement: placement,
+                    title: '',
+                    templateUrl: 'app/arena/precos/novo-preco.html',
+                    container: '#precos',
+                    autoClose: 1,
+                    scope: $scope
+                });
 
-                    vm.novoPreco = {
-                        start : moment(start._d).format('HH:mm'),
-                        end : moment(end._d).format('HH:mm'),
-                        dow: start._d.getDay().toString(),
-                        precoAvulso : '',
-                        precoMensalista : ''
-                    };
-                    vm.dataLabel = moment(start).format('ddd') + ' de ' +
+                vm.novoPreco = {
+                    start: moment(start._d).format('HH:mm'),
+                    end: moment(end._d).format('HH:mm'),
+                    dow: start._d.getDay().toString(),
+                    precoAvulso: '',
+                    precoMensalista: ''
+                };
+                vm.dataLabel = moment(start).format('ddd') + ' de ' +
                     moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm');
 
-                    popover.$promise.then(popover.show);
-                }
+                popover.$promise.then(popover.show);
             }
         }
 
         function eventClick(calEvent, jsEvent, view) {
-            var preco = _.find(vm.precos , {'$id' : calEvent.$id});
+            var preco = _.find(vm.precos, { '$id': calEvent.$id });
             vm.novoPreco = preco;
 
-            var left =  jsEvent.pageX - ($('.popover').width() / 2) ;
+            var left = jsEvent.pageX - ($('.popover').width() / 2);
             var top = (jsEvent.pageY);
-            $('.popover').attr('style' , 'top: ' +
+            $('.popover').attr('style', 'top: ' +
                 top + 'px; left: ' +
                 left + 'px; display: block; visibility: visible; background:#fff');
         }
@@ -243,7 +247,7 @@
 
             $popover(element, {
                 placement: 'bottom',
-                title:'',
+                title: '',
                 templateUrl: 'app/arena/precos/novo-preco.html',
                 container: 'body',
                 autoClose: 1,
@@ -253,8 +257,8 @@
 
         function salvarNovoPreco() {
             vm.novoPreco.title = 'A:  R$ ' +
-            vm.novoPreco.precoAvulso +
-            '  |  ' + 'M: R$ ' + vm.novoPreco.precoMensalista;
+                vm.novoPreco.precoAvulso +
+                '  |  ' + 'M: R$ ' + vm.novoPreco.precoMensalista;
 
             if (vm.novoPreco.$id) {
                 vm.precos.$save(vm.novoPreco);
@@ -263,7 +267,7 @@
             else {
 
                 uiCalendarConfig.calendars.precoCalendar.fullCalendar('removeEventSource', vm.precos);
-                vm.precos.$add(vm.novoPreco).then(function(ref) {
+                vm.precos.$add(vm.novoPreco).then(function (ref) {
                     logger.success('Preço criado com sucesso.');
                     vm.novoPreco = {};
                     uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
@@ -277,27 +281,35 @@
             }), 'dia');
 
             funcionamentoService.salvarNovoPreco(vm.novoPrecoModal, dow, vm.precos)
-            .then(function() {
-                uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
-                logger.success('Preço criado com sucesso.');
-                hideNovoPrecoModal();
-                vm.novoPreco = {};
-            },
-            function(err) {
-                logger.error(err);
-            });
+                .then(function () {
+                    uiCalendarConfig.calendars.precoCalendar.fullCalendar('unselect');
+                    logger.success('Preço criado com sucesso.');
+                    hideNovoPrecoModal();
+                    vm.novoPreco = {};
+                },
+                function (err) {
+                    logger.error(err);
+                });
         }
 
         function initDiasSemana() {
             vm.diasSemana = [
-                {dia: 0, ativo: false},
-                {dia: 1, ativo: false},
-                {dia: 2, ativo: false},
-                {dia: 3, ativo: false},
-                {dia: 4, ativo: false},
-                {dia: 5, ativo: false},
-                {dia: 6, ativo: false}
+                { dia: 0, ativo: false },
+                { dia: 1, ativo: false },
+                { dia: 2, ativo: false },
+                { dia: 3, ativo: false },
+                { dia: 4, ativo: false },
+                { dia: 5, ativo: false },
+                { dia: 6, ativo: false }
             ];
+        }
+
+        function showNovoPrecoModal() {
+            vm.novoPrecoModal.$promise.then(vm.novoPrecoModal.show);
+        }
+
+        function hideNovoPrecoModal() {
+            vm.novoPrecoModal.$promise.then(vm.novoPrecoModal.hide);
         }
 
     }

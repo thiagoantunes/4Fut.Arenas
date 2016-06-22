@@ -1,6 +1,6 @@
 /*global $:false */
 /*jshint quotmark: false */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -10,12 +10,12 @@
     ReservasCtrl.$inject = [
         '$scope',
         'quadras',
-        'reservasService' ,
-        'contatosService' ,
+        'reservasService',
+        'contatosService',
         'financeiroService',
-        'uiCalendarConfig' ,
-        '$popover' ,
-        'blockUI' ,
+        'uiCalendarConfig',
+        '$popover',
+        'blockUI',
         '$modal',
         'cfpLoadingBar',
         '$window',
@@ -29,7 +29,7 @@
         reservasService,
         contatosService,
         financeiroService,
-        uiCalendarConfig ,
+        uiCalendarConfig,
         $popover,
         blockUI,
         $modal,
@@ -52,11 +52,11 @@
         vm.popover = {};
         vm.popoverPosition = null;
         vm.formaPagamento = [
-            {value: 1, desc: 'Dinheiro'},
-            {value: 2, desc: 'Cartão  de Crédito'},
-            {value: 3, desc: 'Cartão  de Débito'},
-            {value: 3, desc: 'Boleto Bancário'},
-            {value: 3, desc: 'Cheque'}
+            { value: 1, desc: 'Dinheiro' },
+            { value: 2, desc: 'Cartão  de Crédito' },
+            { value: 3, desc: 'Cartão  de Débito' },
+            { value: 3, desc: 'Boleto Bancário' },
+            { value: 3, desc: 'Cheque' }
         ];
 
         vm.refreshCalendar = refreshCalendar;
@@ -94,48 +94,48 @@
             vm.novaReservaModal = $modal({
                 scope: $scope,
                 templateUrl: 'modalNovaReserva.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
 
             vm.trocaQuadraModal = $modal({
                 scope: $scope,
                 templateUrl: 'modalTrocaQuadra.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
 
             vm.novoContatoModal = $modal({
                 scope: $scope,
                 templateUrl: 'app/contatos/novo-contato.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false,
                 container: 'body',
-                backdrop : 'static'
+                backdrop: 'static'
             });
 
             vm.pagamentoReservaModal = $modal({
                 scope: $scope,
                 templateUrl: 'modalPagamentoReserva.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false,
                 container: 'body',
-                backdrop : 'static'
+                backdrop: 'static'
             });
         }
 
         function initCalendar() {
             vm.uiConfig = {
-                calendar:{
-                    lang:'pt-br',
+                calendar: {
+                    lang: 'pt-br',
                     // minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     // maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     height: $window.innerHeight - 120,
                     timeFormat: 'H(:mm)',
-                    timezone:'local',
-                    header:{left:'month agendaWeek agendaDay',center: 'title'},
-                    defaultView:'agendaWeek',
-                    scrollTime :  '09:00:00',
+                    timezone: 'local',
+                    header: { left: 'month agendaWeek agendaDay', center: 'title' },
+                    defaultView: 'agendaWeek',
+                    scrollTime: '09:00:00',
                     allDaySlot: false,
                     defaultEventMinutes: 60,
                     axisFormat: 'H:mm',  //,'h(:mm)tt',
@@ -151,13 +151,13 @@
                     eventClick: eventClick,
                     eventRender: eventRender,
                     viewRender: viewRender,
-                    gotoDate : gotoDate
+                    gotoDate: gotoDate
                 }
             };
         }
 
         function loadQuadras() {
-            _.forEach(vm.quadras, function(q) {
+            _.forEach(vm.quadras, function (q) {
                 vm.selecaoQuadras.push({
                     quadra: q,
                     ativa: true
@@ -169,22 +169,22 @@
             cfpLoadingBar.start();
 
             uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
-            vm.reservas = reservasService.getFilteredArray(filterFunc, start , end);
+            vm.reservas = reservasService.getFilteredArray(filterFunc, start, end);
 
-            vm.reservas.$loaded(function() {
+            vm.reservas.$loaded(function () {
                 cfpLoadingBar.complete();
             });
 
-            vm.reservas.$watch(function(event) {
+            vm.reservas.$watch(function (event) {
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEvents');
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource',$('.Source').val());
+                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', $('.Source').val());
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
             });
         }
 
         function filterFunc(rec) {
             var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
-            return _.some(qdrs, {'$id': rec.quadra});
+            return _.some(qdrs, { '$id': rec.quadra });
         }
 
         function refreshCalendar() {
@@ -201,38 +201,34 @@
         }
 
         function eventSelect(start, end, jsEvent, view) {
-            if (end._d.getDay() !== start._d.getDay()) {
-                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
-            }
-            else {
-                var element = $(jsEvent.target).closest('.fc-event');
-                var placement = (jsEvent.clientY < 350) ? 'bottom' : 'top';
 
-                if (element.length > 0) {
-                    vm.popover = $popover(element, {
-                       placement: placement,
-                       title:'',
-                       templateUrl: 'popupNovaReserva.html',
-                       container: '#reservas',
-                       autoClose: 1,
-                       scope: $scope
-                   });
-                    vm.novaReserva = {
-                       responsavel : {},
-                       dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
-                           moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
-                       start : start._d,
-                       end : end._d,
-                       placement : placement
-                   };
+            var element = $(jsEvent.target).closest('.fc-event');
+            var placement = (jsEvent.clientY < 350) ? 'bottom' : 'top';
 
-                    if (vm.quadras.length === 1) {
-                        vm.novaReserva.quadra = vm.quadras[0];
-                        atualizaDisponibilidade();
-                    }
+            if (element.length > 0) {
+                vm.popover = $popover(element, {
+                    placement: placement,
+                    title: '',
+                    templateUrl: 'popupNovaReserva.html',
+                    container: '#reservas',
+                    autoClose: 1,
+                    scope: $scope
+                });
+                vm.novaReserva = {
+                    responsavel: {},
+                    dataLabel: moment(start).format('ddd, DD [de] MMMM') + ', ' +
+                    moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
+                    start: start._d,
+                    end: end._d,
+                    placement: placement
+                };
 
-                    vm.popover.$promise.then(vm.popover.show);
+                if (vm.quadras.length === 1) {
+                    vm.novaReserva.quadra = vm.quadras[0];
+                    atualizaDisponibilidade();
                 }
+
+                vm.popover.$promise.then(vm.popover.show);
             }
         }
 
@@ -248,7 +244,7 @@
                     $id: event.$id
                 });
                 reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();
-                vm.reservas.$save(reserva).then(function(ref) {
+                vm.reservas.$save(reserva).then(function (ref) {
                     cfpLoadingBar.complete();
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
@@ -272,7 +268,7 @@
                 reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();
                 reserva.start = moment(reserva.start).add(delta._days, 'days')._d.getTime();
                 reserva.end = moment(reserva.end).add(delta._days, 'days')._d.getTime();
-                vm.reservas.$save(reserva).then(function(ref) {
+                vm.reservas.$save(reserva).then(function (ref) {
                     cfpLoadingBar.complete();
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);
                     uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);
@@ -281,33 +277,33 @@
             }
         }
 
-        function eventRender(event, element,view) {
+        function eventRender(event, element, view) {
             if (!event.tipo) {
                 event.tipo = 1;
             }
             element.find('.fc-time').prepend('<img src=\'images/icons/tipo-' + event.tipo +
                 '.png\' width=\'15\' height=\'15\' style=\'margin-right: 5px; margin-top: -4px;\'>');
-            element.attr('class' , element.attr('class') +  ' ' +
-                _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
+            element.attr('class', element.attr('class') + ' ' +
+                _.pluck(_.filter(vm.quadras, '$id', event.quadra), 'color'));
         }
 
         function eventClick(calEvent, jsEvent) {
 
-            var color = _.result(_.find(vm.quadras , {'$id' : calEvent.quadra}), 'color');
+            var color = _.result(_.find(vm.quadras, { '$id': calEvent.quadra }), 'color');
 
             vm.novaReserva = {
                 id: calEvent.$id,
-                quadra: _.find(vm.quadras, {$id : calEvent.quadra}),
-                responsavel : _.find(vm.contatos, {$id : calEvent.responsavel}),
-                dataLabel : moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
-                    moment(calEvent.start).format('HH:mm') + ' às ' +
-                    moment(calEvent.end).format('HH:mm'),
-                start : moment(calEvent.start)._d,
-                end : moment(calEvent.end)._d,
-                saldoDevedor : calEvent.saldoDevedor,
-                saldoQuitado : calEvent.saldoQuitado,
-                status : getStatusReserva(calEvent),
-                tipo : calEvent.tipo
+                quadra: _.find(vm.quadras, { $id: calEvent.quadra }),
+                responsavel: _.find(vm.contatos, { $id: calEvent.responsavel }),
+                dataLabel: moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
+                moment(calEvent.start).format('HH:mm') + ' às ' +
+                moment(calEvent.end).format('HH:mm'),
+                start: moment(calEvent.start)._d,
+                end: moment(calEvent.end)._d,
+                saldoDevedor: calEvent.saldoDevedor,
+                saldoQuitado: calEvent.saldoQuitado,
+                status: getStatusReserva(calEvent),
+                tipo: calEvent.tipo
             };
 
             atualizaDisponibilidade();
@@ -317,7 +313,7 @@
 
             var prevPopover = document.getElementsByClassName('popover');
             if (prevPopover) {
-                _.forEach(prevPopover, function(p) {
+                _.forEach(prevPopover, function (p) {
                     if (p !== undefined) {
                         p.parentNode.removeChild(p);
                     }
@@ -326,7 +322,7 @@
             $('.popover').remove();
             vm.popover = $popover(element, {
                 placement: placement,
-                title:'',
+                title: '',
                 templateUrl: 'popupReserva.html',
                 container: '#reservas',
                 autoClose: 1,
@@ -346,48 +342,48 @@
         }
 
         function atualizaDisponibilidade() {
-            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f) {
+            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento, function (f) {
                 return f.start <= moment(vm.novaReserva.start).format('HH:mm') &&
-                        f.end >= moment(vm.novaReserva.end).format('HH:mm') &&
-                        f.dow === ('' + vm.novaReserva.start.getDay());
+                    f.end >= moment(vm.novaReserva.end).format('HH:mm') &&
+                    f.dow === ('' + vm.novaReserva.start.getDay());
             });
 
-            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), function(f) {
+            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), function (f) {
                 return ((vm.novaReserva.start >= moment(f.end) || vm.novaReserva.end <= moment(f.start)) ||
-                vm.novaReserva.id === f.$id);
+                    vm.novaReserva.id === f.$id);
             });
         }
 
         function conflitoHorário(reserva) {
-            return !_.every(_.filter(vm.reservas, 'quadra', reserva.quadra), function(f) {
+            return !_.every(_.filter(vm.reservas, 'quadra', reserva.quadra), function (f) {
                 return ((reserva.start >= moment(f.end) || reserva.end <= moment(f.start)) ||
-                reserva.$id === f.$id);
+                    reserva.$id === f.$id);
             });
         }
 
         function salvarReservaAvulsa() {
             var reserva = {
-                tipo : 1,
+                tipo: 1,
                 quadra: vm.novaReserva.quadra.$id,
-                start : vm.novaReserva.start.getTime(),
-                end : vm.novaReserva.end.getTime(),
-                responsavel : (vm.novaReserva.responsavel && vm.novaReserva.responsavel.$id) ? vm.novaReserva.responsavel.$id : null,
+                start: vm.novaReserva.start.getTime(),
+                end: vm.novaReserva.end.getTime(),
+                responsavel: (vm.novaReserva.responsavel && vm.novaReserva.responsavel.$id) ? vm.novaReserva.responsavel.$id : null,
                 title: (vm.novaReserva.responsavel && vm.novaReserva.responsavel.nome) ? vm.novaReserva.responsavel.nome : null,
-                saldoDevedor : vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0,
-                saldoQuitado : 0
+                saldoDevedor: vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0,
+                saldoQuitado: 0
             };
 
-            vm.reservas.$add(reserva).then(function(ref) {
+            vm.reservas.$add(reserva).then(function (ref) {
                 logger.success('Reserva criada com sucesso!');
                 uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');
                 vm.popover.hide();
-            }, function(error) {
+            }, function (error) {
                 logger.error(error, vm.reserva, 'Ops!');
             });
         }
 
         function excluirReserva(id) {
-            vm.reservas.$remove(_.find(vm.reservas, {$id: id}));
+            vm.reservas.$remove(_.find(vm.reservas, { $id: id }));
         }
 
         function getStatusReserva(reserva) {
@@ -396,45 +392,45 @@
 
             if (reserva.saldoDevedor > 0 && reserva.saldoQuitado === 0 && dataReserva.diff(hoje) >= 0) {
                 return {
-                    desc :'Agendado',
-                    class : 'label-info'
+                    desc: 'Agendado',
+                    class: 'label-info'
                 };
             }
 
             if (reserva.saldoDevedor === 0 && reserva.saldoQuitado > 0) {
                 return {
-                    desc :'Pago',
-                    class : 'label-success'
+                    desc: 'Pago',
+                    class: 'label-success'
                 };
             }
 
             if (reserva.saldoDevedor > 0 && reserva.saldoQuitado > 0) {
                 return {
-                    desc :'Pago Parcialmente',
-                    class : 'label-warning'
+                    desc: 'Pago Parcialmente',
+                    class: 'label-warning'
                 };
             }
 
             if (dataReserva.diff(hoje) < 0) {
                 return {
-                    desc :'Pgto. Atrasado',
-                    class : 'label-danger'
+                    desc: 'Pgto. Atrasado',
+                    class: 'label-danger'
                 };
             }
         }
 
         function openPrecosModal(q) {
             $modal({
-                scope : $scope,
+                scope: $scope,
                 controllerAs: 'vm',
                 controller: 'PrecosReadOnlyCtrl',
                 templateUrl: 'app/arena/precos/precos-readonly.html',
                 resolve: {
-                    quadra: function() {
+                    quadra: function () {
                         return {
                             id: q.$id,
                             color: q.color,
-                            nome : q.nome
+                            nome: q.nome
                         };
                     }
                 }
@@ -461,11 +457,11 @@
             vm.novoPagamento = {
                 data: new Date(),
                 valor: vm.novaReserva.saldoDevedor,
-                desconto : 0,
-                formaPagamento : vm.formaPagamento[0]
+                desconto: 0,
+                formaPagamento: vm.formaPagamento[0]
             };
 
-            financeiroService.getPagamentosReserva(vm.novaReserva.id).$loaded().then(function(data) {
+            financeiroService.getPagamentosReserva(vm.novaReserva.id).$loaded().then(function (data) {
                 vm.pagamentos = data;
             });
 
@@ -474,7 +470,7 @@
         }
 
         function getFormaPagamentoDesc(value) {
-            return _.find(vm.formaPagamento, {'value' : value}).desc;
+            return _.find(vm.formaPagamento, { 'value': value }).desc;
         }
 
         function hidePagamentoReservaModal() {
@@ -514,19 +510,19 @@
         function salvarNovoPagamento() {
             vm.novoPagamento.formaPagamento = vm.novoPagamento.formaPagamento.value;
             vm.novoPagamento.data = vm.novoPagamento.data.getTime();
-            vm.pagamentos.$add(vm.novoPagamento).then(function() {
-                var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
+            vm.pagamentos.$add(vm.novoPagamento).then(function () {
+                var reserva = _.find(vm.reservas, { '$id': vm.novaReserva.id });
                 if (reserva) {
                     if (reserva.saldoQuitado) {
-                        reserva.saldoQuitado += (vm.novoPagamento.valor) ;
+                        reserva.saldoQuitado += (vm.novoPagamento.valor);
                     }
                     else {
-                        reserva.saldoQuitado = (vm.novoPagamento.valor) ;
+                        reserva.saldoQuitado = (vm.novoPagamento.valor);
                     }
 
                     if (reserva.saldoDevedor &&
                         ((reserva.saldoDevedor - (vm.novoPagamento.valor + vm.novoPagamento.desconto)) >= 0)) {
-                        reserva.saldoDevedor -= (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
+                        reserva.saldoDevedor -= (vm.novoPagamento.valor + vm.novoPagamento.desconto);
                     }
                     else {
                         reserva.saldoDevedor = 0;
@@ -536,39 +532,39 @@
                     vm.novaReserva.saldoQuitado = reserva.saldoQuitado;
                     vm.novaReserva.status = getStatusReserva(reserva);
 
-                    vm.reservas.$save(reserva).then(function() {
+                    vm.reservas.$save(reserva).then(function () {
                         logger.success('Pagamento realizado com sucesso');
                         vm.novoPagamento = {
-                            valor : vm.novaReserva.saldoDevedor,
-                            desconto : 0,
-                            formaPagamento : vm.formaPagamento[0],
+                            valor: vm.novaReserva.saldoDevedor,
+                            desconto: 0,
+                            formaPagamento: vm.formaPagamento[0],
                             data: new Date()
                         };
                     },
-                    function(err) {
-                        logger.error('Erro ao realizar pagamento. ' + err);
-                    });
+                        function (err) {
+                            logger.error('Erro ao realizar pagamento. ' + err);
+                        });
                 }
             },
-            function(err) {
-                logger.error('Erro ao realizar pagamento. ' + err);
-            });
+                function (err) {
+                    logger.error('Erro ao realizar pagamento. ' + err);
+                });
         }
 
         function trocarQuadra(quadra) {
             vm.novaReserva.quadra = quadra;
-            var reserva = _.find(vm.reservas , {$id : vm.novaReserva.id});
+            var reserva = _.find(vm.reservas, { $id: vm.novaReserva.id });
             reserva.quadra = quadra.$id;
-            vm.reservas.$save(reserva).then(function() {
+            vm.reservas.$save(reserva).then(function () {
                 logger.success('Quadra alterada com sucesso!');
                 hideTrocaQuadraModal();
-            }, function() {
+            }, function () {
                 logger.error('Erro ao alterar a quadra');
             });
         }
 
         function aplicaDesconto() {
-            var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
+            var reserva = _.find(vm.reservas, { '$id': vm.novaReserva.id });
             var dif = reserva.saldoDevedor - vm.novoPagamento.desconto;
             vm.novoPagamento.valor = dif < 0 ? 0 : dif;
         }

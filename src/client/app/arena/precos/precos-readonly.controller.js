@@ -56,7 +56,7 @@
         function getPrecos() {
             uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);
 
-            vm.precosReadOnly = funcionamentoService.getPrecos(vm.quadra.id);
+            vm.precosReadOnly = funcionamentoService.getPrecos(vm.quadra.id, mapPrecos);
 
             vm.precosReadOnly.$watch(function(event) {
                 vm.precoMaximo = _.max(vm.precosReadOnly, 'precoAvulso').precoAvulso;
@@ -66,6 +66,21 @@
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);
                 uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precosReadOnly);
             });
+        }
+
+        function mapPrecos(val) {
+            var daysToAdd = val.dow - new Date().getDay();
+            var end = val.start > val.end ? moment(val.end, 'HH:mm').add(1, 'd') : moment(val.end, 'HH:mm');
+            var start = moment(val.start, 'HH:mm');
+            return {
+                start: start.add(daysToAdd, 'd')._d.getTime(),
+                end: end.add(daysToAdd, 'd')._d.getTime(),
+                title: val.title,
+                precoAvulso: val.precoAvulso,
+                precoMensalista: val.precoMensalista,
+                $id: val.$id,
+                dayOfWeek: val.dow
+            };
         }
 
         function viewRender(view, element) {
