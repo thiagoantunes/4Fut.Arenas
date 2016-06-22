@@ -22,6 +22,7 @@
         vm.salvarNovaTurma = salvarNovaTurma;
         vm.hideModalForm = hideModalForm;
         vm.showNovoContatoModal = showNovoContatoModal;
+        vm.hideNovoContatoModal = hideNovoContatoModal;
         vm.salvarContato = salvarContato;
 
         activate();
@@ -36,6 +37,7 @@
             });
 
             initDiasSemana();
+            console.log('testedd')
 
             initReservaSelecionada();
         }
@@ -120,8 +122,13 @@
             vm.novoContatoModal.$promise.then(vm.novoContatoModal.show);
         }
 
+        function hideNovoContatoModal() {
+            vm.novoContatoModal.$promise.then(vm.novoContatoModal.hide);
+        }
+
         function salvarContato() {
             contatosService.addNovoContato(vm.contatoSelecionado);
+            hideNovoContatoModal();
         }
     }
 
