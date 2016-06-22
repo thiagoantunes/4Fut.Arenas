@@ -161,7 +161,7 @@
                 quadra: vm.quadraSelecionada.$id,
                 id: preco.$id
             };
-            funcionamentoService.updatePreco(updData).then(function (ref) {
+            funcionamentoService.updateHorarioPreco(updData).then(function (ref) {
                 logger.success('Preço editado com sucesso.');
                 getPrecos();
             });
@@ -179,8 +179,8 @@
                 quadra: vm.quadraSelecionada.$id,
                 id: preco.$id
             };
-            
-            funcionamentoService.updatePreco(updData).then(function (ref) {
+
+            funcionamentoService.updateHorarioPreco(updData).then(function (ref) {
                 logger.success('Preço editado com sucesso.');
                 getPrecos();
             });
@@ -261,8 +261,17 @@
                 '  |  ' + 'M: R$ ' + vm.novoPreco.precoMensalista;
 
             if (vm.novoPreco.$id) {
-                vm.precos.$save(vm.novoPreco);
-                logger.success('Preço editado com sucesso.');
+                var updData = {
+                    precoAvulso: vm.novoPreco.precoAvulso,
+                    precoMensalista: vm.novoPreco.precoMensalista,
+                    quadra: vm.quadraSelecionada.$id,
+                    id: vm.novoPreco.$id,
+                    title: vm.novoPreco.title 
+                };
+                funcionamentoService.updatePreco(updData).then(function (ref) {
+                    logger.success('Preço editado com sucesso.');
+                    getPrecos();
+                });
             }
             else {
 

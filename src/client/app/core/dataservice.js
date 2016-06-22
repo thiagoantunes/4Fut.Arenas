@@ -177,6 +177,7 @@
             getPrecos: getPrecos,
 
             salvarNovoPreco: salvarNovoPreco,
+            updateHorarioPreco: updateHorarioPreco,
             updatePreco: updatePreco
         };
 
@@ -188,20 +189,24 @@
             );
         }
 
-        // function getPrecos(quadraId) {
-        //     return $firebaseArray(Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/'));
-        // }
-
         function getPrecos(quadraId, fn) {
             var ref = Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/');
             return new MappedArray(ref, fn);
         }
 
-        function updatePreco(preco) {
+        function updateHorarioPreco(preco) {
             var update = {};
             update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/start'] = preco.start;
             update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/end'] = preco.end;
             update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/dow'] = preco.dow;
+            return Ref.update(update);
+        }
+
+        function updatePreco(preco) {
+            var update = {};
+            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/precoAvulso'] = preco.precoAvulso;
+            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/precoMensalista'] = preco.precoMensalista;
+            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/title'] = preco.title;
             return Ref.update(update);
         }
 
