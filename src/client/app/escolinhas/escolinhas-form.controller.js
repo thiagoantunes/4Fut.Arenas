@@ -37,7 +37,6 @@
             });
 
             initDiasSemana();
-            console.log('testedd')
 
             initReservaSelecionada();
         }

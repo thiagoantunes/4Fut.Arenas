@@ -4,9 +4,9 @@
 
     angular
         .module('app.reservas')
-        .controller('AvulsasFormCtrl', AvulsasFormCtrl);
+        .controller('NovaReservaFormCtrl', NovaReservaFormCtrl);
 
-    AvulsasFormCtrl.$inject = [
+    NovaReservaFormCtrl.$inject = [
         '$scope' ,
         '$modal',
         'quadraService' ,
@@ -15,7 +15,7 @@
         'logger'
     ];
 
-    function AvulsasFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {
+    function NovaReservaFormCtrl($scope, $modal,quadraService, contatosService, reservasService, logger) {
         var vm = this;
         vm.novaReserva = {};
         vm.quadras = quadraService.getQuadras();
@@ -46,6 +46,12 @@
 
         function salvarNovaReserva() {
 
+            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f) {
+                return f.start <= moment(vm.novaReserva.hora).format('HHmm') &&
+                        f.end >= moment(vm.novaReserva.hora).add(vm.novaReserva.duracao.value, 'h').format('HHmm') &&
+                        f.dow === ('' + vm.novaReserva.data.getDay());
+            });
+
             vm.reserva = {
                 quadra: vm.novaReserva.quadra.$id,
                 responsavel: vm.novaReserva.responsavel.$id,
@@ -59,6 +65,7 @@
             };
 
             if (vm.reserva.tipo === 1) {
+                vm.reserva.saldoDevedor = vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0;
                 reservasService.criarReservaAvulsa(vm.reserva).then(function() {
                     logger.success('Reserva criada com sucesso!');
                     hideModalForm();
@@ -67,8 +74,8 @@
                 });
             }
             else {
+                vm.reserva.saldoDevedor = vm.novaReserva.preco ? vm.novaReserva.preco.precoMensalista : 0;
                 vm.reserva.dataFim = moment(vm.novaReserva.data.getTime()).add(vm.novaReserva.validade.value , 'M')._d.getTime();
-
                 reservasService.criarReservaRecorrente(vm.reserva, 'mensalistas').then(function() {
                     logger.success('Reserva criada com sucesso!');
                     hideModalForm();

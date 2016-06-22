@@ -518,10 +518,10 @@
                 var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});
                 if (reserva) {
                     if (reserva.saldoQuitado) {
-                        reserva.saldoQuitado += (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
+                        reserva.saldoQuitado += (vm.novoPagamento.valor) ;
                     }
                     else {
-                        reserva.saldoQuitado = (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;
+                        reserva.saldoQuitado = (vm.novoPagamento.valor) ;
                     }
 
                     if (reserva.saldoDevedor &&

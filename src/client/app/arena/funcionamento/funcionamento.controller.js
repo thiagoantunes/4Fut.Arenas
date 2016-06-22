@@ -20,13 +20,6 @@
         vm.precoMedio = 0;
         vm.uiConfig = {
             calendar: {
-                minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                businessHours: {
-                    start: '10:00',
-                    end: '24:00',
-                    dow: [0, 1, 2, 3, 4, 5, 6]
-                },
                 height: 'auto',
                 timeFormat: 'H(:mm)',
                 header: false,

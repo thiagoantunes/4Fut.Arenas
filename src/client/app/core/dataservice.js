@@ -277,7 +277,7 @@
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/turmas/' + subdomainService.arena + ''), 'turma'],
               [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'turma.quadra'],
-              [Ref.child('/perfil/'), 'professor', 'turma.responsavel']
+              [Ref.child('/users/'), 'professor', 'turma.responsavel']
             ).select(
               'turma.quadra',
               'turma.dataInicio',
@@ -297,7 +297,7 @@
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/mensalistas/' + subdomainService.arena + ''), 'mensalista'],
               [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
-              [Ref.child('/perfil/'), 'responsavel', 'mensalista.responsavel']
+              [Ref.child('/users/'), 'responsavel', 'mensalista.responsavel']
             ).select(
               'mensalista.quadra',
               'mensalista.dataInicio',
@@ -317,7 +317,7 @@
             var joinedRef = new Firebase.util.NormalizedCollection(
               [Ref.child('/reservas/' + subdomainService.arena + ''), 'avulsa'],
               [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'avulsa.quadra'],
-              [Ref.child('/perfil/'), 'responsavel', 'avulsa.responsavel']
+              [Ref.child('/users/'), 'responsavel', 'avulsa.responsavel']
             ).select(
             'avulsa.quadra',
               'avulsa.start',
@@ -375,7 +375,9 @@
                             novaReserva.horaInicio, 'DDMMYYYYHH:mm')._d.getTime() ,
                         end : moment(moment(novaReserva.dataFim).format('DDMMYYYY') +
                             novaReserva.horaFim, 'DDMMYYYYHH:mm')._d.getTime(),
-                        title : novaReserva.title
+                        title : novaReserva.title,
+                        saldoDevedor : novaReserva.saldoDevedor,
+                        saldoQuitado : 0
                     };
 
                     list.$add(reserva).then(function(ref) {
@@ -421,8 +423,13 @@
                                     start : start,
                                     end : end,
                                     responsavel : novaReserva.responsavel,
-                                    title : novaReserva.title
+                                    title : novaReserva.title,
                                 };
+
+                                if(novaReserva.saldoDevedor){
+                                    reserva.saldoDevedor = novaReserva.saldoDevedor;
+                                    reserva.saldoQuitado  = 0
+                                }
 
                                 reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
                                 reservasTurma[ tipo + '/' + subdomainService.arena + '/' + turmaID + '/reservas/' +  reservaID] = true;

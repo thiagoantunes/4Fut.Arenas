@@ -58,7 +58,7 @@
         }
 
         function addQuadra() {
-            var quadraID = Ref.child('quadras').push().key();
+            var quadraID = Ref.child('arenasQuadras').push().key();
 
             var userData = $firebaseObject(Ref.child('users/' + userID));
             userData.$loaded(function() {

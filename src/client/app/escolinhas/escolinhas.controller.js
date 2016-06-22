@@ -32,12 +32,10 @@
         function activate() {
             cfpLoadingBar.start();
             reservasService.refTurmas().once('value', function(snapshot) {
+                loadMore();
                 if (!snapshot.exists()) {
                     cfpLoadingBar.complete();
                     vm.emptyList = (vm.turmas.length === 0);
-                }
-                else {
-                    loadMore();
                 }
             });
         }
