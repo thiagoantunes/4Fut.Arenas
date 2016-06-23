@@ -71,7 +71,7 @@
     function PageArray($firebaseArray) {
         return function (ref, field) {
             // create a Paginate reference
-            var pageRef = new Firebase.util.Paginate(ref, field, { maxCacheSize: 250 });
+            var pageRef = new Firebase.util.Paginate(ref, field, {maxCacheSize: 250});
             // generate a synchronized array using the special page ref
             var list = $firebaseArray(pageRef);
             // store the "page" scope on the synchronized array for easy access
@@ -196,17 +196,35 @@
 
         function updateHorarioPreco(preco) {
             var update = {};
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/start'] = preco.start;
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/end'] = preco.end;
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/dow'] = preco.dow;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/start'] = preco.start;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/end'] = preco.end;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/dow'] = preco.dow;
             return Ref.update(update);
         }
 
         function updatePreco(preco) {
             var update = {};
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/precoAvulso'] = preco.precoAvulso;
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/precoMensalista'] = preco.precoMensalista;
-            update['/arenasQuadras/' + subdomainService.arena + '/' + preco.quadra + '/funcionamento/' + preco.id + '/title'] = preco.title;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/precoAvulso'] = preco.precoAvulso;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/precoMensalista'] = preco.precoMensalista;
+            update['/arenasQuadras/' +
+                subdomainService.arena + '/' +
+                preco.quadra + '/funcionamento/' +
+                preco.id + '/title'] = preco.title;
             return Ref.update(update);
         }
 
@@ -319,8 +337,8 @@
                 'turma.horaFim',
                 'turma.responsavel',
                 'turma.dow',
-                { 'key': 'quadra.nome', 'alias': 'nomeQuadra' },
-                { 'key': 'professor.nome', 'alias': 'nomeProfessor' }
+                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
+                {'key': 'professor.nome', 'alias': 'nomeProfessor'}
                 ).ref();
 
             return new ScrollArray(joinedRef, 'dataInicio');
@@ -339,8 +357,8 @@
                 'mensalista.horaFim',
                 'mensalista.responsavel',
                 'mensalista.dow',
-                { 'key': 'quadra.nome', 'alias': 'nomeQuadra' },
-                { 'key': 'responsavel.nome', 'alias': 'nomeResponsavel' }
+                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
+                {'key': 'responsavel.nome', 'alias': 'nomeResponsavel'}
                 ).ref();
 
             return new ScrollArray(joinedRef, 'dataInicio');
@@ -357,8 +375,8 @@
                 'avulsa.end',
                 'avulsa.responsavel',
                 'avulsa.tipo',
-                { 'key': 'quadra.nome', 'alias': 'nomeQuadra' },
-                { 'key': 'responsavel.nome', 'alias': 'nomeResponsavel' }
+                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
+                {'key': 'responsavel.nome', 'alias': 'nomeResponsavel'}
                 ).ref();
 
             return new ScrollArray(joinedRef, 'start');
@@ -460,7 +478,7 @@
 
                                 if (novaReserva.saldoDevedor) {
                                     reserva.saldoDevedor = novaReserva.saldoDevedor;
-                                    reserva.saldoQuitado = 0
+                                    reserva.saldoQuitado = 0;
                                 }
 
                                 reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
@@ -540,7 +558,7 @@
                 'perfil.dataNascimento',
                 'perfil.cpf',
                 'arena.$value',
-                { 'key': 'arena.$value', 'alias': 'fkArena' }
+                {'key': 'arena.$value', 'alias': 'fkArena'}
                 );
 
             norm.filter(
@@ -564,7 +582,7 @@
                 'perfil.telefone',
                 'perfil.fotoPerfil',
                 'arena.$value',
-                { 'key': 'arena.$value', 'alias': 'fkArena' }
+                {'key': 'arena.$value', 'alias': 'fkArena'}
                 );
 
             norm.filter(

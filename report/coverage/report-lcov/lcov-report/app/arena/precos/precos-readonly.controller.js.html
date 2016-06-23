@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/arena/precos/precos-readonly.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">19.51% <small>(8 / 41)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">14.29% <small>(1 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">19.51% <small>(8 / 41)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">19.57% <small>(9 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">12.5% <small>(1 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">19.57% <small>(9 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">app/arena/precos/</a> &#187; precos-readonly.controller.js</div>
@@ -121,7 +121,22 @@
 94
 95
 96
-97</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -188,6 +203,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,7 +305,7 @@
 <span class="fstat-no" title="function not covered" >        function getPrecos() {</span>
 <span class="cstat-no" title="statement not covered" >            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.precosReadOnly = funcionamentoService.getPrecos(vm.quadra.id);</span>
+<span class="cstat-no" title="statement not covered" >            vm.precosReadOnly = funcionamentoService.getPrecos(vm.quadra.id, mapPrecos);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.precosReadOnly.$watch(<span class="fstat-no" title="function not covered" >function(event) {</span></span>
 <span class="cstat-no" title="statement not covered" >                vm.precoMaximo = _.max(vm.precosReadOnly, 'precoAvulso').precoAvulso;</span>
@@ -285,6 +315,21 @@
 <span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEventSource', vm.precosReadOnly);</span>
 <span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', vm.precosReadOnly);</span>
             });
+        }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function mapPrecos(val) {</span>
+<span class="cstat-no" title="statement not covered" >            var daysToAdd = val.dow - new Date().getDay();</span>
+<span class="cstat-no" title="statement not covered" >            var end = val.start &gt; val.end ? moment(val.end, 'HH:mm').add(1, 'd') : moment(val.end, 'HH:mm');</span>
+<span class="cstat-no" title="statement not covered" >            var start = moment(val.start, 'HH:mm');</span>
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                start: start.add(daysToAdd, 'd')._d.getTime(),
+                end: end.add(daysToAdd, 'd')._d.getTime(),
+                title: val.title,
+                precoAvulso: val.precoAvulso,
+                precoMensalista: val.precoMensalista,
+                $id: val.$id,
+                dayOfWeek: val.dow
+            };
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function viewRender(view, element) {</span>
@@ -318,7 +363,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 20 2016 19:36:20 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 23 2016 12:27:55 GMT-0300 (BRT)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

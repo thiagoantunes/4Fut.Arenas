@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/agenda/agenda.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">15.77% <small>(38 / 241)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 66)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">15.9% <small>(38 / 239)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 64)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">1.82% <small>(1 / 55)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">15.77% <small>(38 / 241)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">15.9% <small>(38 / 239)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/agenda/</a> &#187; agenda.controller.js</div>
@@ -793,7 +793,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -805,9 +809,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -836,7 +837,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1181,7 +1181,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*global $:false */
 /*jshint quotmark: false */
-(function() {
+(function () {
     'use strict';
 &nbsp;
     angular
@@ -1191,12 +1191,12 @@
     ReservasCtrl.$inject = [
         '$scope',
         'quadras',
-        'reservasService' ,
-        'contatosService' ,
+        'reservasService',
+        'contatosService',
         'financeiroService',
-        'uiCalendarConfig' ,
-        '$popover' ,
-        'blockUI' ,
+        'uiCalendarConfig',
+        '$popover',
+        'blockUI',
         '$modal',
         'cfpLoadingBar',
         '$window',
@@ -1210,7 +1210,7 @@
         reservasService,
         contatosService,
         financeiroService,
-        uiCalendarConfig ,
+        uiCalendarConfig,
         $popover,
         blockUI,
         $modal,
@@ -1275,48 +1275,48 @@
 <span class="cstat-no" title="statement not covered" >            vm.novaReservaModal = $modal({</span>
                 scope: $scope,
                 templateUrl: 'modalNovaReserva.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.trocaQuadraModal = $modal({</span>
                 scope: $scope,
                 templateUrl: 'modalTrocaQuadra.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false
             });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.novoContatoModal = $modal({</span>
                 scope: $scope,
                 templateUrl: 'app/contatos/novo-contato.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false,
                 container: 'body',
-                backdrop : 'static'
+                backdrop: 'static'
             });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.pagamentoReservaModal = $modal({</span>
                 scope: $scope,
                 templateUrl: 'modalPagamentoReserva.html',
-                animation:'am-fade-and-slide-top' ,
+                animation: 'am-fade-and-slide-top',
                 show: false,
                 container: 'body',
-                backdrop : 'static'
+                backdrop: 'static'
             });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function initCalendar() {</span>
 <span class="cstat-no" title="statement not covered" >            vm.uiConfig = {</span>
-                calendar:{
-                    lang:'pt-br',
+                calendar: {
+                    lang: 'pt-br',
                     // minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     // maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     height: $window.innerHeight - 120,
                     timeFormat: 'H(:mm)',
-                    timezone:'local',
-                    header:{left:'month agendaWeek agendaDay',center: 'title'},
-                    defaultView:'agendaWeek',
-                    scrollTime :  '09:00:00',
+                    timezone: 'local',
+                    header: {left: 'month agendaWeek agendaDay', center: 'title'},
+                    defaultView: 'agendaWeek',
+                    scrollTime: '09:00:00',
                     allDaySlot: false,
                     defaultEventMinutes: 60,
                     axisFormat: 'H:mm',  //,'h(:mm)tt',
@@ -1332,13 +1332,13 @@
                     eventClick: eventClick,
                     eventRender: eventRender,
                     viewRender: viewRender,
-                    gotoDate : gotoDate
+                    gotoDate: gotoDate
                 }
             };
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function loadQuadras() {</span>
-<span class="cstat-no" title="statement not covered" >            _.forEach(vm.quadras, <span class="fstat-no" title="function not covered" >function(q) {</span></span>
+<span class="cstat-no" title="statement not covered" >            _.forEach(vm.quadras, <span class="fstat-no" title="function not covered" >function (q) {</span></span>
 <span class="cstat-no" title="statement not covered" >                vm.selecaoQuadras.push({</span>
                     quadra: q,
                     ativa: true
@@ -1350,15 +1350,15 @@
 <span class="cstat-no" title="statement not covered" >            cfpLoadingBar.start();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);</span>
-<span class="cstat-no" title="statement not covered" >            vm.reservas = reservasService.getFilteredArray(filterFunc, start , end);</span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas = reservasService.getFilteredArray(filterFunc, start, end);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.reservas.$loaded(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$loaded(<span class="fstat-no" title="function not covered" >function () {</span></span>
 <span class="cstat-no" title="statement not covered" >                cfpLoadingBar.complete();</span>
             });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.reservas.$watch(<span class="fstat-no" title="function not covered" >function(event) {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$watch(<span class="fstat-no" title="function not covered" >function (event) {</span></span>
 <span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEvents');</span>
-<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource',$('.Source').val());</span>
+<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', $('.Source').val());</span>
 <span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);</span>
             });
         }
@@ -1369,8 +1369,12 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function refreshCalendar() {</span>
-<span class="cstat-no" title="statement not covered" >            var start = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start._d.getTime();</span>
-<span class="cstat-no" title="statement not covered" >            var end = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end._d.getTime();</span>
+<span class="cstat-no" title="statement not covered" >            var start = moment(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start._d)</span>
+                .add(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start
+                ._d.getTimezoneOffset(), 'm')._d.getTime();
+<span class="cstat-no" title="statement not covered" >            var end = moment(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end._d)</span>
+                .add(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end
+                ._d.getTimezoneOffset(), 'm')._d.getTime();
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            getReservas(start, end);</span>
         }
@@ -1382,38 +1386,34 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function eventSelect(start, end, jsEvent, view) {</span>
-<span class="cstat-no" title="statement not covered" >            if (end._d.getDay() !== start._d.getDay()) {</span>
-<span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');</span>
-            }
-            else {
-<span class="cstat-no" title="statement not covered" >                var element = $(jsEvent.target).closest('.fc-event');</span>
-<span class="cstat-no" title="statement not covered" >                var placement = (jsEvent.clientY &lt; 350) ? 'bottom' : 'top';</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                if (element.length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >                    vm.popover = $popover(element, {</span>
-                       placement: placement,
-                       title:'',
-                       templateUrl: 'popupNovaReserva.html',
-                       container: '#reservas',
-                       autoClose: 1,
-                       scope: $scope
-                   });
-<span class="cstat-no" title="statement not covered" >                    vm.novaReserva = {</span>
-                       responsavel : {},
-                       dataLabel : moment(start).format('ddd, DD [de] MMMM') + ', ' +
-                           moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
-                       start : start._d,
-                       end : end._d,
-                       placement : placement
-                   };
+<span class="cstat-no" title="statement not covered" >            var element = $(jsEvent.target).closest('.fc-event');</span>
+<span class="cstat-no" title="statement not covered" >            var placement = (jsEvent.clientY &lt; 350) ? 'bottom' : 'top';</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                    if (vm.quadras.length === 1) {</span>
-<span class="cstat-no" title="statement not covered" >                        vm.novaReserva.quadra = vm.quadras[0];</span>
-<span class="cstat-no" title="statement not covered" >                        atualizaDisponibilidade();</span>
-                    }
+<span class="cstat-no" title="statement not covered" >            if (element.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                vm.popover = $popover(element, {</span>
+                    placement: placement,
+                    title: '',
+                    templateUrl: 'popupNovaReserva.html',
+                    container: '#reservas',
+                    autoClose: 1,
+                    scope: $scope
+                });
+<span class="cstat-no" title="statement not covered" >                vm.novaReserva = {</span>
+                    responsavel: {},
+                    dataLabel: moment(start).format('ddd, DD [de] MMMM') + ', ' +
+                    moment(start._d).format('HH:mm') + ' às ' + moment(end._d).format('HH:mm'),
+                    start: start._d,
+                    end: end._d,
+                    placement: placement
+                };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                    vm.popover.$promise.then(vm.popover.show);</span>
+<span class="cstat-no" title="statement not covered" >                if (vm.quadras.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >                    vm.novaReserva.quadra = vm.quadras[0];</span>
+<span class="cstat-no" title="statement not covered" >                    atualizaDisponibilidade();</span>
                 }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                vm.popover.$promise.then(vm.popover.show);</span>
             }
         }
 &nbsp;
@@ -1429,7 +1429,7 @@
                     $id: event.$id
                 });
 <span class="cstat-no" title="statement not covered" >                reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();</span>
-<span class="cstat-no" title="statement not covered" >                vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function (ref) {</span></span>
 <span class="cstat-no" title="statement not covered" >                    cfpLoadingBar.complete();</span>
 <span class="cstat-no" title="statement not covered" >                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);</span>
 <span class="cstat-no" title="statement not covered" >                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);</span>
@@ -1453,7 +1453,7 @@
 <span class="cstat-no" title="statement not covered" >                reserva.end = moment(reserva.end).add(delta._milliseconds, 'milliseconds')._d.getTime();</span>
 <span class="cstat-no" title="statement not covered" >                reserva.start = moment(reserva.start).add(delta._days, 'days')._d.getTime();</span>
 <span class="cstat-no" title="statement not covered" >                reserva.end = moment(reserva.end).add(delta._days, 'days')._d.getTime();</span>
-<span class="cstat-no" title="statement not covered" >                vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >                vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function (ref) {</span></span>
 <span class="cstat-no" title="statement not covered" >                    cfpLoadingBar.complete();</span>
 <span class="cstat-no" title="statement not covered" >                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('removeEventSource', vm.reservas);</span>
 <span class="cstat-no" title="statement not covered" >                    uiCalendarConfig.calendars.reservasCalendar.fullCalendar('addEventSource', vm.reservas);</span>
@@ -1462,33 +1462,33 @@
             }
         }
 &nbsp;
-<span class="fstat-no" title="function not covered" >        function eventRender(event, element,view) {</span>
+<span class="fstat-no" title="function not covered" >        function eventRender(event, element, view) {</span>
 <span class="cstat-no" title="statement not covered" >            if (!event.tipo) {</span>
 <span class="cstat-no" title="statement not covered" >                event.tipo = 1;</span>
             }
 <span class="cstat-no" title="statement not covered" >            element.find('.fc-time').prepend('&lt;img src=\'images/icons/tipo-' + event.tipo +</span>
                 '.png\' width=\'15\' height=\'15\' style=\'margin-right: 5px; margin-top: -4px;\'&gt;');
-<span class="cstat-no" title="statement not covered" >            element.attr('class' , element.attr('class') +  ' ' +</span>
-                _.pluck(_.filter(vm.quadras,'$id', event.quadra), 'color'));
+<span class="cstat-no" title="statement not covered" >            element.attr('class', element.attr('class') + ' ' +</span>
+                _.pluck(_.filter(vm.quadras, '$id', event.quadra), 'color'));
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function eventClick(calEvent, jsEvent) {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            var color = _.result(_.find(vm.quadras , {'$id' : calEvent.quadra}), 'color');</span>
+<span class="cstat-no" title="statement not covered" >            var color = _.result(_.find(vm.quadras, {'$id': calEvent.quadra}), 'color');</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.novaReserva = {</span>
                 id: calEvent.$id,
-                quadra: _.find(vm.quadras, {$id : calEvent.quadra}),
-                responsavel : _.find(vm.contatos, {$id : calEvent.responsavel}),
-                dataLabel : moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
-                    moment(calEvent.start).format('HH:mm') + ' às ' +
-                    moment(calEvent.end).format('HH:mm'),
-                start : moment(calEvent.start)._d,
-                end : moment(calEvent.end)._d,
-                saldoDevedor : calEvent.saldoDevedor,
-                saldoQuitado : calEvent.saldoQuitado,
-                status : getStatusReserva(calEvent),
-                tipo : calEvent.tipo
+                quadra: _.find(vm.quadras, {$id: calEvent.quadra}),
+                responsavel: _.find(vm.contatos, {$id: calEvent.responsavel}),
+                dataLabel: moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
+                moment(calEvent.start).format('HH:mm') + ' às ' +
+                moment(calEvent.end).format('HH:mm'),
+                start: moment(calEvent.start)._d,
+                end: moment(calEvent.end)._d,
+                saldoDevedor: calEvent.saldoDevedor,
+                saldoQuitado: calEvent.saldoQuitado,
+                status: getStatusReserva(calEvent),
+                tipo: calEvent.tipo
             };
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            atualizaDisponibilidade();</span>
@@ -1498,7 +1498,7 @@
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            var prevPopover = document.getElementsByClassName('popover');</span>
 <span class="cstat-no" title="statement not covered" >            if (prevPopover) {</span>
-<span class="cstat-no" title="statement not covered" >                _.forEach(prevPopover, <span class="fstat-no" title="function not covered" >function(p) {</span></span>
+<span class="cstat-no" title="statement not covered" >                _.forEach(prevPopover, <span class="fstat-no" title="function not covered" >function (p) {</span></span>
 <span class="cstat-no" title="statement not covered" >                    if (p !== undefined) {</span>
 <span class="cstat-no" title="statement not covered" >                        p.parentNode.removeChild(p);</span>
                     }
@@ -1507,7 +1507,7 @@
 <span class="cstat-no" title="statement not covered" >            $('.popover').remove();</span>
 <span class="cstat-no" title="statement not covered" >            vm.popover = $popover(element, {</span>
                 placement: placement,
-                title:'',
+                title: '',
                 templateUrl: 'popupReserva.html',
                 container: '#reservas',
                 autoClose: 1,
@@ -1527,42 +1527,42 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function atualizaDisponibilidade() {</span>
-<span class="cstat-no" title="statement not covered" >            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento, <span class="fstat-no" title="function not covered" >function (f) {</span></span>
 <span class="cstat-no" title="statement not covered" >                return f.start &lt;= moment(vm.novaReserva.start).format('HH:mm') &amp;&amp;</span>
-                        f.end &gt;= moment(vm.novaReserva.end).format('HH:mm') &amp;&amp;
-                        f.dow === ('' + vm.novaReserva.start.getDay());
+                    f.end &gt;= moment(vm.novaReserva.end).format('HH:mm') &amp;&amp;
+                    f.dow === ('' + vm.novaReserva.start.getDay());
             });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.horarioLivre = _.every(_.filter(vm.reservas, 'quadra', vm.novaReserva.quadra.$id), <span class="fstat-no" title="function not covered" >function (f) {</span></span>
 <span class="cstat-no" title="statement not covered" >                return ((vm.novaReserva.start &gt;= moment(f.end) || vm.novaReserva.end &lt;= moment(f.start)) ||</span>
-                vm.novaReserva.id === f.$id);
+                    vm.novaReserva.id === f.$id);
             });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function conflitoHorário(reserva) {</span>
-<span class="cstat-no" title="statement not covered" >            return !_.every(_.filter(vm.reservas, 'quadra', reserva.quadra), <span class="fstat-no" title="function not covered" >function(f) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return !_.every(_.filter(vm.reservas, 'quadra', reserva.quadra), <span class="fstat-no" title="function not covered" >function (f) {</span></span>
 <span class="cstat-no" title="statement not covered" >                return ((reserva.start &gt;= moment(f.end) || reserva.end &lt;= moment(f.start)) ||</span>
-                reserva.$id === f.$id);
+                    reserva.$id === f.$id);
             });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function salvarReservaAvulsa() {</span>
 <span class="cstat-no" title="statement not covered" >            var reserva = {</span>
-                tipo : 1,
+                tipo: 1,
                 quadra: vm.novaReserva.quadra.$id,
-                start : vm.novaReserva.start.getTime(),
-                end : vm.novaReserva.end.getTime(),
-                responsavel : (vm.novaReserva.responsavel &amp;&amp; vm.novaReserva.responsavel.$id) ? vm.novaReserva.responsavel.$id : null,
+                start: vm.novaReserva.start.getTime(),
+                end: vm.novaReserva.end.getTime(),
+                responsavel: (vm.novaReserva.responsavel &amp;&amp; vm.novaReserva.responsavel.$id) ? vm.novaReserva.responsavel.$id : null,
                 title: (vm.novaReserva.responsavel &amp;&amp; vm.novaReserva.responsavel.nome) ? vm.novaReserva.responsavel.nome : null,
-                saldoDevedor : vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0,
-                saldoQuitado : 0
+                saldoDevedor: vm.novaReserva.preco ? vm.novaReserva.preco.precoAvulso : 0,
+                saldoQuitado: 0
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            vm.reservas.$add(reserva).then(<span class="fstat-no" title="function not covered" >function(ref) {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$add(reserva).then(<span class="fstat-no" title="function not covered" >function (ref) {</span></span>
 <span class="cstat-no" title="statement not covered" >                logger.success('Reserva criada com sucesso!');</span>
 <span class="cstat-no" title="statement not covered" >                uiCalendarConfig.calendars.reservasCalendar.fullCalendar('unselect');</span>
 <span class="cstat-no" title="statement not covered" >                vm.popover.hide();</span>
-            }, <span class="fstat-no" title="function not covered" >function(error) {</span>
+            }, <span class="fstat-no" title="function not covered" >function (error) {</span>
 <span class="cstat-no" title="statement not covered" >                logger.error(error, vm.reserva, 'Ops!');</span>
             });
         }
@@ -1577,45 +1577,45 @@
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (reserva.saldoDevedor &gt; 0 &amp;&amp; reserva.saldoQuitado === 0 &amp;&amp; dataReserva.diff(hoje) &gt;= 0) {</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
-                    desc :'Agendado',
-                    class : 'label-info'
+                    desc: 'Agendado',
+                    class: 'label-info'
                 };
             }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (reserva.saldoDevedor === 0 &amp;&amp; reserva.saldoQuitado &gt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
-                    desc :'Pago',
-                    class : 'label-success'
+                    desc: 'Pago',
+                    class: 'label-success'
                 };
             }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (reserva.saldoDevedor &gt; 0 &amp;&amp; reserva.saldoQuitado &gt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
-                    desc :'Pago Parcialmente',
-                    class : 'label-warning'
+                    desc: 'Pago Parcialmente',
+                    class: 'label-warning'
                 };
             }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if (dataReserva.diff(hoje) &lt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
-                    desc :'Pgto. Atrasado',
-                    class : 'label-danger'
+                    desc: 'Pgto. Atrasado',
+                    class: 'label-danger'
                 };
             }
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function openPrecosModal(q) {</span>
 <span class="cstat-no" title="statement not covered" >            $modal({</span>
-                scope : $scope,
+                scope: $scope,
                 controllerAs: 'vm',
                 controller: 'PrecosReadOnlyCtrl',
                 templateUrl: 'app/arena/precos/precos-readonly.html',
                 resolve: {
-                    quadra: <span class="fstat-no" title="function not covered" >function() {</span>
+                    quadra: <span class="fstat-no" title="function not covered" >function () {</span>
 <span class="cstat-no" title="statement not covered" >                        return {</span>
                             id: q.$id,
                             color: q.color,
-                            nome : q.nome
+                            nome: q.nome
                         };
                     }
                 }
@@ -1642,11 +1642,11 @@
 <span class="cstat-no" title="statement not covered" >            vm.novoPagamento = {</span>
                 data: new Date(),
                 valor: vm.novaReserva.saldoDevedor,
-                desconto : 0,
-                formaPagamento : vm.formaPagamento[0]
+                desconto: 0,
+                formaPagamento: vm.formaPagamento[0]
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            financeiroService.getPagamentosReserva(vm.novaReserva.id).$loaded().then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            financeiroService.getPagamentosReserva(vm.novaReserva.id).$loaded().then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
 <span class="cstat-no" title="statement not covered" >                vm.pagamentos = data;</span>
             });
 &nbsp;
@@ -1655,7 +1655,7 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function getFormaPagamentoDesc(value) {</span>
-<span class="cstat-no" title="statement not covered" >            return _.find(vm.formaPagamento, {'value' : value}).desc;</span>
+<span class="cstat-no" title="statement not covered" >            return _.find(vm.formaPagamento, {'value': value}).desc;</span>
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function hidePagamentoReservaModal() {</span>
@@ -1695,19 +1695,19 @@
 <span class="fstat-no" title="function not covered" >        function salvarNovoPagamento() {</span>
 <span class="cstat-no" title="statement not covered" >            vm.novoPagamento.formaPagamento = vm.novoPagamento.formaPagamento.value;</span>
 <span class="cstat-no" title="statement not covered" >            vm.novoPagamento.data = vm.novoPagamento.data.getTime();</span>
-<span class="cstat-no" title="statement not covered" >            vm.pagamentos.$add(vm.novoPagamento).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
-<span class="cstat-no" title="statement not covered" >                var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});</span>
+<span class="cstat-no" title="statement not covered" >            vm.pagamentos.$add(vm.novoPagamento).then(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >                var reserva = _.find(vm.reservas, {'$id': vm.novaReserva.id});</span>
 <span class="cstat-no" title="statement not covered" >                if (reserva) {</span>
 <span class="cstat-no" title="statement not covered" >                    if (reserva.saldoQuitado) {</span>
-<span class="cstat-no" title="statement not covered" >                        reserva.saldoQuitado += (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;</span>
+<span class="cstat-no" title="statement not covered" >                        reserva.saldoQuitado += (vm.novoPagamento.valor);</span>
                     }
                     else {
-<span class="cstat-no" title="statement not covered" >                        reserva.saldoQuitado = (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;</span>
+<span class="cstat-no" title="statement not covered" >                        reserva.saldoQuitado = (vm.novoPagamento.valor);</span>
                     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >                    if (reserva.saldoDevedor &amp;&amp;</span>
                         ((reserva.saldoDevedor - (vm.novoPagamento.valor + vm.novoPagamento.desconto)) &gt;= 0)) {
-<span class="cstat-no" title="statement not covered" >                        reserva.saldoDevedor -= (vm.novoPagamento.valor + vm.novoPagamento.desconto) ;</span>
+<span class="cstat-no" title="statement not covered" >                        reserva.saldoDevedor -= (vm.novoPagamento.valor + vm.novoPagamento.desconto);</span>
                     }
                     else {
 <span class="cstat-no" title="statement not covered" >                        reserva.saldoDevedor = 0;</span>
@@ -1717,39 +1717,39 @@
 <span class="cstat-no" title="statement not covered" >                    vm.novaReserva.saldoQuitado = reserva.saldoQuitado;</span>
 <span class="cstat-no" title="statement not covered" >                    vm.novaReserva.status = getStatusReserva(reserva);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                    vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function () {</span></span>
 <span class="cstat-no" title="statement not covered" >                        logger.success('Pagamento realizado com sucesso');</span>
 <span class="cstat-no" title="statement not covered" >                        vm.novoPagamento = {</span>
-                            valor : vm.novaReserva.saldoDevedor,
-                            desconto : 0,
-                            formaPagamento : vm.formaPagamento[0],
+                            valor: vm.novaReserva.saldoDevedor,
+                            desconto: 0,
+                            formaPagamento: vm.formaPagamento[0],
                             data: new Date()
                         };
                     },
-<span class="fstat-no" title="function not covered" >                    function(err) {</span>
-<span class="cstat-no" title="statement not covered" >                        logger.error('Erro ao realizar pagamento. ' + err);</span>
-                    });
+<span class="fstat-no" title="function not covered" >                        function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                            logger.error('Erro ao realizar pagamento. ' + err);</span>
+                        });
                 }
             },
-<span class="fstat-no" title="function not covered" >            function(err) {</span>
-<span class="cstat-no" title="statement not covered" >                logger.error('Erro ao realizar pagamento. ' + err);</span>
-            });
+<span class="fstat-no" title="function not covered" >                function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    logger.error('Erro ao realizar pagamento. ' + err);</span>
+                });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function trocarQuadra(quadra) {</span>
 <span class="cstat-no" title="statement not covered" >            vm.novaReserva.quadra = quadra;</span>
-<span class="cstat-no" title="statement not covered" >            var reserva = _.find(vm.reservas , {$id : vm.novaReserva.id});</span>
+<span class="cstat-no" title="statement not covered" >            var reserva = _.find(vm.reservas, {$id: vm.novaReserva.id});</span>
 <span class="cstat-no" title="statement not covered" >            reserva.quadra = quadra.$id;</span>
-<span class="cstat-no" title="statement not covered" >            vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            vm.reservas.$save(reserva).then(<span class="fstat-no" title="function not covered" >function () {</span></span>
 <span class="cstat-no" title="statement not covered" >                logger.success('Quadra alterada com sucesso!');</span>
 <span class="cstat-no" title="statement not covered" >                hideTrocaQuadraModal();</span>
-            }, <span class="fstat-no" title="function not covered" >function() {</span>
+            }, <span class="fstat-no" title="function not covered" >function () {</span>
 <span class="cstat-no" title="statement not covered" >                logger.error('Erro ao alterar a quadra');</span>
             });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function aplicaDesconto() {</span>
-<span class="cstat-no" title="statement not covered" >            var reserva = _.find(vm.reservas, {'$id' : vm.novaReserva.id});</span>
+<span class="cstat-no" title="statement not covered" >            var reserva = _.find(vm.reservas, {'$id': vm.novaReserva.id});</span>
 <span class="cstat-no" title="statement not covered" >            var dif = reserva.saldoDevedor - vm.novoPagamento.desconto;</span>
 <span class="cstat-no" title="statement not covered" >            vm.novoPagamento.valor = dif &lt; 0 ? 0 : dif;</span>
         }
@@ -1761,7 +1761,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 20 2016 19:36:20 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 23 2016 12:27:55 GMT-0300 (BRT)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

@@ -52,11 +52,11 @@
         vm.popover = {};
         vm.popoverPosition = null;
         vm.formaPagamento = [
-            { value: 1, desc: 'Dinheiro' },
-            { value: 2, desc: 'Cartão  de Crédito' },
-            { value: 3, desc: 'Cartão  de Débito' },
-            { value: 3, desc: 'Boleto Bancário' },
-            { value: 3, desc: 'Cheque' }
+            {value: 1, desc: 'Dinheiro'},
+            {value: 2, desc: 'Cartão  de Crédito'},
+            {value: 3, desc: 'Cartão  de Débito'},
+            {value: 3, desc: 'Boleto Bancário'},
+            {value: 3, desc: 'Cheque'}
         ];
 
         vm.refreshCalendar = refreshCalendar;
@@ -133,7 +133,7 @@
                     height: $window.innerHeight - 120,
                     timeFormat: 'H(:mm)',
                     timezone: 'local',
-                    header: { left: 'month agendaWeek agendaDay', center: 'title' },
+                    header: {left: 'month agendaWeek agendaDay', center: 'title'},
                     defaultView: 'agendaWeek',
                     scrollTime: '09:00:00',
                     allDaySlot: false,
@@ -184,12 +184,16 @@
 
         function filterFunc(rec) {
             var qdrs = _.pluck(_.filter(vm.selecaoQuadras, 'ativa', true), 'quadra');
-            return _.some(qdrs, { '$id': rec.quadra });
+            return _.some(qdrs, {'$id': rec.quadra});
         }
 
         function refreshCalendar() {
-            var start = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start._d.getTime();
-            var end = uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end._d.getTime();
+            var start = moment(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start._d)
+                .add(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').start
+                ._d.getTimezoneOffset(), 'm')._d.getTime();
+            var end = moment(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end._d)
+                .add(uiCalendarConfig.calendars.reservasCalendar.fullCalendar('getView').end
+                ._d.getTimezoneOffset(), 'm')._d.getTime();
 
             getReservas(start, end);
         }
@@ -289,12 +293,12 @@
 
         function eventClick(calEvent, jsEvent) {
 
-            var color = _.result(_.find(vm.quadras, { '$id': calEvent.quadra }), 'color');
+            var color = _.result(_.find(vm.quadras, {'$id': calEvent.quadra}), 'color');
 
             vm.novaReserva = {
                 id: calEvent.$id,
-                quadra: _.find(vm.quadras, { $id: calEvent.quadra }),
-                responsavel: _.find(vm.contatos, { $id: calEvent.responsavel }),
+                quadra: _.find(vm.quadras, {$id: calEvent.quadra}),
+                responsavel: _.find(vm.contatos, {$id: calEvent.responsavel}),
                 dataLabel: moment(calEvent.start).format('ddd, DD [de] MMMM') + ', ' +
                 moment(calEvent.start).format('HH:mm') + ' às ' +
                 moment(calEvent.end).format('HH:mm'),
@@ -383,7 +387,7 @@
         }
 
         function excluirReserva(id) {
-            vm.reservas.$remove(_.find(vm.reservas, { $id: id }));
+            vm.reservas.$remove(_.find(vm.reservas, {$id: id}));
         }
 
         function getStatusReserva(reserva) {
@@ -470,7 +474,7 @@
         }
 
         function getFormaPagamentoDesc(value) {
-            return _.find(vm.formaPagamento, { 'value': value }).desc;
+            return _.find(vm.formaPagamento, {'value': value}).desc;
         }
 
         function hidePagamentoReservaModal() {
@@ -511,7 +515,7 @@
             vm.novoPagamento.formaPagamento = vm.novoPagamento.formaPagamento.value;
             vm.novoPagamento.data = vm.novoPagamento.data.getTime();
             vm.pagamentos.$add(vm.novoPagamento).then(function () {
-                var reserva = _.find(vm.reservas, { '$id': vm.novaReserva.id });
+                var reserva = _.find(vm.reservas, {'$id': vm.novaReserva.id});
                 if (reserva) {
                     if (reserva.saldoQuitado) {
                         reserva.saldoQuitado += (vm.novoPagamento.valor);
@@ -553,7 +557,7 @@
 
         function trocarQuadra(quadra) {
             vm.novaReserva.quadra = quadra;
-            var reserva = _.find(vm.reservas, { $id: vm.novaReserva.id });
+            var reserva = _.find(vm.reservas, {$id: vm.novaReserva.id});
             reserva.quadra = quadra.$id;
             vm.reservas.$save(reserva).then(function () {
                 logger.success('Quadra alterada com sucesso!');
@@ -564,7 +568,7 @@
         }
 
         function aplicaDesconto() {
-            var reserva = _.find(vm.reservas, { '$id': vm.novaReserva.id });
+            var reserva = _.find(vm.reservas, {'$id': vm.novaReserva.id});
             var dif = reserva.saldoDevedor - vm.novoPagamento.desconto;
             vm.novoPagamento.valor = dif < 0 ? 0 : dif;
         }

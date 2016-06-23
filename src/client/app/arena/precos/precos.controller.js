@@ -61,7 +61,7 @@
                 .then(function (q) {
                     if (q.length > 0) {
                         if (idQuadra) {
-                            vm.quadraSelecionada = _.find(q, { $id: idQuadra });
+                            vm.quadraSelecionada = _.find(q, {$id: idQuadra});
                         }
                         else {
                             vm.quadraSelecionada = q[0];
@@ -109,7 +109,7 @@
         }
 
         function selecionaQuadra(id) {
-            vm.quadraSelecionada = _.find(vm.quadras, { $id: id });
+            vm.quadraSelecionada = _.find(vm.quadras, {$id: id});
             getPrecos();
         }
 
@@ -215,7 +215,7 @@
         }
 
         function eventClick(calEvent, jsEvent, view) {
-            var preco = _.find(vm.precos, { '$id': calEvent.$id });
+            var preco = _.find(vm.precos, {'$id': calEvent.$id});
             vm.novoPreco = preco;
 
             var left = jsEvent.pageX - ($('.popover').width() / 2);
@@ -266,7 +266,7 @@
                     precoMensalista: vm.novoPreco.precoMensalista,
                     quadra: vm.quadraSelecionada.$id,
                     id: vm.novoPreco.$id,
-                    title: vm.novoPreco.title 
+                    title: vm.novoPreco.title
                 };
                 funcionamentoService.updatePreco(updData).then(function (ref) {
                     logger.success('Preço editado com sucesso.');
@@ -303,13 +303,13 @@
 
         function initDiasSemana() {
             vm.diasSemana = [
-                { dia: 0, ativo: false },
-                { dia: 1, ativo: false },
-                { dia: 2, ativo: false },
-                { dia: 3, ativo: false },
-                { dia: 4, ativo: false },
-                { dia: 5, ativo: false },
-                { dia: 6, ativo: false }
+                {dia: 0, ativo: false},
+                {dia: 1, ativo: false},
+                {dia: 2, ativo: false},
+                {dia: 3, ativo: false},
+                {dia: 4, ativo: false},
+                {dia: 5, ativo: false},
+                {dia: 6, ativo: false}
             ];
         }
 
