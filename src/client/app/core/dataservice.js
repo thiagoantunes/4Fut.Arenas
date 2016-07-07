@@ -5,8 +5,6 @@
         .module('app.core')
         .factory('FilteredArray', FilteredArray)
         .factory('MappedArray', MappedArray)
-        .factory('ScrollArray', ScrollArray)
-        .factory('PageArray', PageArray)
         .factory('usersService', usersService)
         .factory('arenaService', arenaService)
         .factory('quadraService', quadraService)
@@ -17,15 +15,13 @@
 
     FilteredArray.$inject = ['$firebaseArray'];
     MappedArray.$inject = ['$firebaseArray'];
-    ScrollArray.$inject = ['$firebaseArray'];
-    PageArray.$inject = ['$firebaseArray'];
-    quadraService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService'];
-    arenaService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService'];
-    funcionamentoService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService', '$q', 'MappedArray'];
+    quadraService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService'];
+    arenaService.$inject = ['Auth', '$q', 'Ref', '$firebaseArray', '$firebaseObject', '$state'];
+    funcionamentoService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', '$q', 'MappedArray'];
     reservasService.$inject =
-        ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService', 'FilteredArray', '$q', 'ScrollArray'];
-    contatosService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService', 'FilteredArray'];
-    financeiroService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'subdomainService'];
+        ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', 'FilteredArray', '$q'];
+    contatosService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', 'FilteredArray'];
+    financeiroService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService'];
 
     function FilteredArray($firebaseArray) {
         /*jshint -W004 */
@@ -59,42 +55,7 @@
         return $firebaseArray.$extend(MappedArray);
     }
 
-    function ScrollArray($firebaseArray) {
-        return function (ref, field) {
-            var scrollRef = new Firebase.util.Scroll(ref, field);
-            var list = $firebaseArray(scrollRef);
-            list.scroll = scrollRef.scroll;
-            return list;
-        };
-    }
-
-    function PageArray($firebaseArray) {
-        return function (ref, field) {
-            // create a Paginate reference
-            var pageRef = new Firebase.util.Paginate(ref, field, {maxCacheSize: 250});
-            // generate a synchronized array using the special page ref
-            var list = $firebaseArray(pageRef);
-            // store the "page" scope on the synchronized array for easy access
-            list.page = pageRef.page;
-
-            // when the page count loads, update local scope vars
-            pageRef.page.onPageCount(function (currentPageCount, couldHaveMore) {
-                list.pageCount = currentPageCount;
-                list.couldHaveMore = couldHaveMore;
-            });
-
-            // when the current page is changed, update local scope vars
-            pageRef.page.onPageChange(function (currentPageNumber) {
-                list.currentPageNumber = currentPageNumber;
-            });
-
-            // load the first page
-            pageRef.page.next();
-            return list;
-        };
-    }
-
-    function quadraService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+    function quadraService(Ref, $firebaseArray, $firebaseObject, arenaService) {
         var service = {
             getRef: getRef,
             //queryQuadra: queryQuadra,
@@ -110,17 +71,18 @@
         }
 
         function getQuadra(id) {
-            return $firebaseObject(getRef().child(subdomainService.arena + '/' + id));
+            return $firebaseObject(getRef().child(arenaService.idArena + '/' + id));
         }
 
         function getQuadras() {
-            return $firebaseArray(getRef().child(subdomainService.arena));
+            return $firebaseArray(getRef().child(arenaService.idArena));
         }
     }
 
-    function arenaService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+    function arenaService(Auth, $q, Ref, $firebaseArray, $firebaseObject, $state) {
 
         var service = {
+            getIdArena: getIdArena,
             getRef: getRef,
 
             getArena: getArena,
@@ -132,14 +94,40 @@
             setLocation: setLocation
         };
 
+        service.idArena = '';
+
         return service;
+
+        function getIdArena() {
+            var deferred = $q.defer();
+            Auth.onAuthStateChanged(function(user) {
+                if (user) {
+                    Ref.child('users/' + user.uid).once('value', function (snap) {
+                        if (snap.val() === null || snap.val().arena === null) {
+                            deferred.reject();
+                        }
+                        else {
+                            service.idArena = snap.val().arena;
+                            deferred.resolve(service.idArena);
+                        }
+                    });
+                }
+                else {
+                    deferred.reject();
+                    $state.go('login');
+                }
+            });
+
+            return deferred.promise;
+        }
 
         function getRef() {
             return Ref.child('arenas');
         }
 
         function getArena() {
-            return $firebaseObject(getRef().child(subdomainService.arena));
+            /*jshint validthis: true */
+            return $firebaseObject(getRef().child(this.idArena));
         }
 
         function isValidArenaName(arenaName) {
@@ -149,17 +137,20 @@
         }
 
         function getAlbum() {
-            return $firebaseArray(Ref.child('arenasAlbuns').child(subdomainService.arena));
+            /*jshint validthis: true */
+            return $firebaseArray(Ref.child('arenasAlbuns').child(this.idArena));
         }
 
         function getNotificacoes() {
-            var ref = Ref.child('arenasNotificacoes').child(subdomainService.arena)
+            /*jshint validthis: true */
+            var ref = Ref.child('arenasNotificacoes').child(this.idArena)
                 .limitToLast(5);
             return $firebaseArray(ref);
         }
 
         function getNotificacoesNaoLidas() {
-            var ref = Ref.child('arenasNotificacoes').child(subdomainService.arena)
+            /*jshint validthis: true */
+            var ref = Ref.child('arenasNotificacoes').child(this.idArena)
                 .orderByChild('lida').startAt(false).endAt(false);
             return $firebaseArray(ref);
         }
@@ -167,11 +158,11 @@
         function setLocation(lat, lng) {
             var geo = new GeoFire(Ref.child('arenasLocalizacao'));
 
-            geo.set(subdomainService.arena, [lat, lng]);
+            geo.set(arenaService.idArena, [lat, lng]);
         }
     }
 
-    function funcionamentoService(Ref, $firebaseArray, $firebaseObject, subdomainService, $q, MappedArray) {
+    function funcionamentoService(Ref, $firebaseArray, $firebaseObject, arenaService, $q, MappedArray) {
         var service = {
             getPreco: getPreco,
             getPrecos: getPrecos,
@@ -185,27 +176,27 @@
 
         function getPreco(quadraId, id) {
             return $firebaseObject(
-                Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/' + id)
+                Ref.child('arenasQuadras/' + arenaService.idArena + '/' + quadraId + '/funcionamento/' + id)
             );
         }
 
         function getPrecos(quadraId, fn) {
-            var ref = Ref.child('arenasQuadras/' + subdomainService.arena + '/' + quadraId + '/funcionamento/');
+            var ref = Ref.child('arenasQuadras/' + arenaService.idArena + '/' + quadraId + '/funcionamento/');
             return new MappedArray(ref, fn);
         }
 
         function updateHorarioPreco(preco) {
             var update = {};
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/start'] = preco.start;
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/end'] = preco.end;
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/dow'] = preco.dow;
             return Ref.update(update);
@@ -214,15 +205,15 @@
         function updatePreco(preco) {
             var update = {};
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/precoAvulso'] = preco.precoAvulso;
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/precoMensalista'] = preco.precoMensalista;
             update['/arenasQuadras/' +
-                subdomainService.arena + '/' +
+                arenaService.idArena + '/' +
                 preco.quadra + '/funcionamento/' +
                 preco.id + '/title'] = preco.title;
             return Ref.update(update);
@@ -272,20 +263,14 @@
         }
     }
 
-    function reservasService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray, $q, ScrollArray) {
+    function reservasService(Ref, $firebaseArray, $firebaseObject, arenaService, FilteredArray, $q) {
         var service = {
             getRef: getRef,
-
-            refTurmas: refTurmas,
-            refMensalistas: refMensalistas,
-            refAvulsas: refAvulsas,
 
             getAll: getAll,
             getFilteredArray: getFilteredArray,
             getReserva: getReserva,
             getTurmas: getTurmas,
-            getMensalistas: getMensalistas,
-            getAvulsar: getAvulsar,
 
             verificaHorarioPeriodo: verificaHorarioPeriodo,
 
@@ -300,93 +285,27 @@
         }
 
         function getFilteredArray(fn, start, end) {
-            var ref = getRef().child(subdomainService.arena).orderByChild('start').startAt(start).endAt(end);
+            var ref = getRef().child(arenaService.idArena).orderByChild('start').startAt(start).endAt(end);
             return new FilteredArray(ref, fn);
         }
 
         function getAll() {
-            return $firebaseArray(getRef().child(subdomainService.arena));
+            return $firebaseArray(getRef().child(arenaService.idArena));
         }
 
         function getReserva(id) {
-            return $firebaseArray(getRef().child(subdomainService.arena + '/' + id));
-        }
-
-        function refTurmas() {
-            return Ref.child('turmas/' + subdomainService.arena);
-        }
-
-        function refMensalistas() {
-            return Ref.child('mensalistas/' + subdomainService.arena);
-        }
-
-        function refAvulsas() {
-            return Ref.child('reservas/' + subdomainService.arena);
+            return $firebaseArray(getRef().child(arenaService.idArena + '/' + id));
         }
 
         function getTurmas() {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-                [Ref.child('/turmas/' + subdomainService.arena + ''), 'turma'],
-                [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'turma.quadra'],
-                [Ref.child('/users/'), 'professor', 'turma.responsavel']
-            ).select(
-                'turma.quadra',
-                'turma.dataInicio',
-                'turma.dataFim',
-                'turma.horaInicio',
-                'turma.horaFim',
-                'turma.responsavel',
-                'turma.dow',
-                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
-                {'key': 'professor.nome', 'alias': 'nomeProfessor'}
-                ).ref();
-
-            return new ScrollArray(joinedRef, 'dataInicio');
-        }
-
-        function getMensalistas() {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-                [Ref.child('/mensalistas/' + subdomainService.arena + ''), 'mensalista'],
-                [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'mensalista.quadra'],
-                [Ref.child('/users/'), 'responsavel', 'mensalista.responsavel']
-            ).select(
-                'mensalista.quadra',
-                'mensalista.dataInicio',
-                'mensalista.dataFim',
-                'mensalista.horaInicio',
-                'mensalista.horaFim',
-                'mensalista.responsavel',
-                'mensalista.dow',
-                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
-                {'key': 'responsavel.nome', 'alias': 'nomeResponsavel'}
-                ).ref();
-
-            return new ScrollArray(joinedRef, 'dataInicio');
-        }
-
-        function getAvulsar() {
-            var joinedRef = new Firebase.util.NormalizedCollection(
-                [Ref.child('/reservas/' + subdomainService.arena + ''), 'avulsa'],
-                [Ref.child('/arenasQuadras/' + subdomainService.arena), 'quadra', 'avulsa.quadra'],
-                [Ref.child('/users/'), 'responsavel', 'avulsa.responsavel']
-            ).select(
-                'avulsa.quadra',
-                'avulsa.start',
-                'avulsa.end',
-                'avulsa.responsavel',
-                'avulsa.tipo',
-                {'key': 'quadra.nome', 'alias': 'nomeQuadra'},
-                {'key': 'responsavel.nome', 'alias': 'nomeResponsavel'}
-                ).ref();
-
-            return new ScrollArray(joinedRef, 'start');
+            return $firebaseArray(Ref.child('arenasTurmas/' + arenaService.idArena));
         }
 
         function verificaHorarioPeriodo(reserva) {
             var deferred = $q.defer();
 
             var result = true;
-            var ref = getRef().child(subdomainService.arena)
+            var ref = getRef().child(arenaService.idArena)
                 .orderByChild('start').startAt(reserva.dataInicio).endAt(reserva.dataFim);
 
             ref.once('value', function (data) {
@@ -416,7 +335,7 @@
             verificaHorarioPeriodo(novaReserva).then(function (horarioValido) {
 
                 if (horarioValido) {
-                    var list = $firebaseArray(getRef().child(subdomainService.arena));
+                    var list = $firebaseArray(getRef().child(arenaService.idArena));
                     var reserva = {
                         tipo: novaReserva.tipo,
                         quadra: novaReserva.quadra,
@@ -432,8 +351,9 @@
 
                     list.$add(reserva).then(function (ref) {
                         deferred.resolve();
-                    }, function () {
-                        deferred.reject('Erro ao cadastrar nova turma');
+                    }, function (err) {
+                        console.log(err);
+                        deferred.reject('Erro ao cadastrar nova reserva');
                     });
                 }
                 else {
@@ -451,16 +371,16 @@
             verificaHorarioPeriodo(novaReserva).then(function (horarioValido) {
 
                 if (horarioValido) {
-                    var list = $firebaseArray(Ref.child(tipo).child(subdomainService.arena));
+                    var list = $firebaseArray(Ref.child(tipo).child(arenaService.idArena));
                     list.$add(novaReserva).then(function (ref) {
-                        var turmaID = ref.key();
+                        var turmaID = ref.key;
                         var reservasTurma = {};
 
                         _.forEach(novaReserva.dow, function (d) {
                             var dataReserva = moment(novaReserva.dataInicio).day(d);
 
                             while (dataReserva <= novaReserva.dataFim) {
-                                var reservaID = getRef().child(subdomainService.arena).push().key();
+                                var reservaID = getRef().child(arenaService.idArena).push().key;
 
                                 var dataF = moment(dataReserva).format('DD/MM/YYYY');
                                 var start = moment(dataF + novaReserva.horaInicio, 'DD/MM/YYYYHHmm')._d.getTime();
@@ -481,8 +401,8 @@
                                     reserva.saldoQuitado = 0;
                                 }
 
-                                reservasTurma['reservas/' + subdomainService.arena + '/' + reservaID] = reserva;
-                                reservasTurma[tipo + '/' + subdomainService.arena + '/' + turmaID + '/reservas/' + reservaID] = true;
+                                reservasTurma['reservas/' + arenaService.idArena + '/' + reservaID] = reserva;
+                                reservasTurma[tipo + '/' + arenaService.idArena + '/' + turmaID + '/reservas/' + reservaID] = true;
 
                                 dataReserva = moment(dataReserva).add(7, 'days')._d;
                             }
@@ -510,7 +430,7 @@
         }
     }
 
-    function contatosService(Ref, $firebaseArray, $firebaseObject, subdomainService, FilteredArray) {
+    function contatosService(Ref, $firebaseArray, $firebaseObject, arenaService, FilteredArray) {
         var service = {
             getRef: getRef,
             refContatosArena: refContatosArena,
@@ -530,7 +450,7 @@
         }
 
         function refContatos() {
-            return Ref.child('arenasContatos/' + subdomainService.arena);
+            return Ref.child('arenasContatos/' + arenaService.idArena);
         }
 
         function getContato(id) {
@@ -542,14 +462,14 @@
         }
 
         function searchContatos(fn) {
-            var ref = getRef().child(subdomainService.arena);
+            var ref = getRef().child(arenaService.idArena);
             return new FilteredArray(ref, fn);
         }
 
         function refContatosArena() {
-            var norm = new Firebase.util.NormalizedCollection(
+            var norm = new firebase.util.NormalizedCollection(
                 [Ref.child('/users/'), 'perfil'],
-                [Ref.child('/arenasContatos/' + subdomainService.arena), 'arena']
+                [Ref.child('/arenasContatos/' + arenaService.idArena), 'arena']
             ).select(
                 'perfil.nome',
                 'perfil.telefone',
@@ -574,9 +494,9 @@
         }
 
         function getContatosArenaLight() {
-            var norm = new Firebase.util.NormalizedCollection(
+            var norm = new firebase.util.NormalizedCollection(
                 [Ref.child('/users/'), 'perfil'],
-                [Ref.child('/arenasContatos/' + subdomainService.arena), 'arena']
+                [Ref.child('/arenasContatos/' + arenaService.idArena), 'arena']
             ).select(
                 'perfil.nome',
                 'perfil.telefone',
@@ -601,7 +521,7 @@
         }
     }
 
-    function usersService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+    function usersService(Ref, $firebaseArray, $firebaseObject, arenaService) {
         var service = {
             getRef: getRef,
             getUserProfile: getUserProfile,
@@ -618,7 +538,7 @@
         }
     }
 
-    function financeiroService(Ref, $firebaseArray, $firebaseObject, subdomainService) {
+    function financeiroService(Ref, $firebaseArray, $firebaseObject, arenaService) {
         var service = {
             getRef: getRef,
             getPagamentosReserva: getPagamentosReserva,
@@ -627,11 +547,11 @@
         return service;
 
         function getRef() {
-            return Ref.child('pagamentos');
+            return Ref.child('arenasPagamentos');
         }
 
         function getPagamentosReserva(reservaId) {
-            return $firebaseArray(getRef().child(subdomainService.arena + '/' + reservaId));
+            return $firebaseArray(getRef().child(arenaService.idArena + '/' + reservaId));
         }
     }
 

@@ -11,7 +11,7 @@
         }
     </style>
     <title ng-bind="title">4Futarenas</title>
-    <base href="/" />
+    <!--<base href="/" />-->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
@@ -39,14 +39,27 @@
     <!-- endbuild -->
 
     <!--Start of Zopim Live Chat Script-->
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
 window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
 d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
 _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
 $.src="//v2.zopim.com/?3oAWMCDX2jeLtziueQeitF2bYCfZyOJR";z.t=+new Date;$.
 type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
-</script>
+</script>-->
     <!--End of Zopim Live Chat Script-->
+
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '31acf3f77ffe3651649b5484b9a6589353b00684';
+window.smartsupp||(function(d) {
+	var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+	s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+	c.type='text/javascript';c.charset='utf-8';c.async=true;
+	c.src='//www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+
 </head>
 
 <body>
@@ -95,6 +108,17 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
     <!-- endbower -->
     <!-- endbuild -->
 
+    <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAfkQ7QG4LY6w0x5XNKzvu1VRiGOVyOxCY",
+    authDomain: "rdqdb-a9419.firebaseapp.com",
+    databaseURL: "https://rdqdb-a9419.firebaseio.com",
+    storageBucket: "rdqdb-a9419.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
+
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
@@ -105,15 +129,14 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
     <script src="/src/client/app/blocks/exception/exception.module.js"></script>
     <script src="/src/client/app/blocks/logger/logger.module.js"></script>
     <script src="/src/client/app/blocks/router/router.module.js"></script>
+    <script src="/src/client/app/cadastro/sistema-arena.module.js"></script>
     <script src="/src/client/app/contatos/contatos.module.js"></script>
     <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/dashboard/dashboard.module.js"></script>
     <script src="/src/client/app/escolinhas/escolinhas.module.js"></script>
-    <script src="/src/client/app/home/home.module.js"></script>
     <script src="/src/client/app/login/login.module.js"></script>
     <script src="/src/client/app/reservas/reservas.module.js"></script>
     <script src="/src/client/app/setup-arena/setup-arena.module.js"></script>
-    <script src="/src/client/app/sistema-arena/sistema-arena.module.js"></script>
     <script src="/src/client/app/widgets/widgets.module.js"></script>
     <script src="/src/client/app/admin/admin.controller.js"></script>
     <script src="/src/client/app/admin/admin.route.js"></script>
@@ -134,6 +157,9 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
     <script src="/src/client/app/blocks/exception/exception.js"></script>
     <script src="/src/client/app/blocks/logger/logger.js"></script>
     <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+    <script src="/src/client/app/cadastro/confirmacao-cadastro.route.js"></script>
+    <script src="/src/client/app/cadastro/sistema-arena.controller.js"></script>
+    <script src="/src/client/app/cadastro/sistema-arena.route.js"></script>
     <script src="/src/client/app/contatos/contatos.controller.js"></script>
     <script src="/src/client/app/contatos/contatos.route.js"></script>
     <script src="/src/client/app/core/angularfire/auth.js"></script>
@@ -155,8 +181,6 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
     <script src="/src/client/app/escolinhas/escolinhas-form.controller.js"></script>
     <script src="/src/client/app/escolinhas/escolinhas.controller.js"></script>
     <script src="/src/client/app/escolinhas/escolinhas.route.js"></script>
-    <script src="/src/client/app/home/home.controller.js"></script>
-    <script src="/src/client/app/home/home.route.js"></script>
     <script src="/src/client/app/login/login.controller.js"></script>
     <script src="/src/client/app/login/login.route.js"></script>
     <script src="/src/client/app/reservas/nova-reserva-form.controller.js"></script>
@@ -165,9 +189,6 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
     <script src="/src/client/app/setup-arena/setup-arena.route.js"></script>
     <script src="/src/client/app/setup-arena/upload-img.controller.js"></script>
     <script src="/src/client/app/setup-arena/user-profile.controller.js"></script>
-    <script src="/src/client/app/sistema-arena/confirmacao-cadastro.route.js"></script>
-    <script src="/src/client/app/sistema-arena/sistema-arena.controller.js"></script>
-    <script src="/src/client/app/sistema-arena/sistema-arena.route.js"></script>
     <script src="/src/client/app/widgets/btn-directive.js"></script>
     <script src="/src/client/app/widgets/chosen-results.directive.js"></script>
     <script src="/src/client/app/widgets/custom-on-change.directive.js"></script>

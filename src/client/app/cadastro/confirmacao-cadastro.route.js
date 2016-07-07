@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('app.home')
-        .run(appRun);
+    .module('app.sistema-arena')
+    .run(appRun);
 
     appRun.$inject = ['routerHelper'];
     /* @ngInject */
@@ -14,14 +14,12 @@
     function getStates() {
         return [
             {
-                state: 'root',
+                state: 'sistema-arena.confirmacao-cadastro',
                 config: {
-                    url: '/',
-                    templateUrl: 'app/home/home.html',
-                    controller: 'HomeCtrl',
-                    controllerAs: 'vm',
+                    url: '/confirmacao-cadastro',
+                    templateUrl: 'app/cadastro/confirmacao-cadastro.html',
                 }
-            }
+            },
         ];
     }
 })();

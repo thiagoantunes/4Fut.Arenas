@@ -58,6 +58,7 @@
         "angular": false,
         "moment" : false,
         "Firebase" : false,
+        "firebase" : false,
         "_" : false,
         "GeoFire" : false
     }

@@ -5,9 +5,9 @@
     .module('app.arena')
     .controller('AlbumCtrl', AlbumCtrl);
 
-    AlbumCtrl.$inject = ['$scope' , '$modal', 'arenaService', 'Upload', '$timeout', '$sce', 'subdomainService', 'cfpLoadingBar'];
+    AlbumCtrl.$inject = ['$scope' , '$modal', 'arenaService', 'Upload', '$timeout', '$sce', 'cfpLoadingBar'];
 
-    function AlbumCtrl($scope, $modal, arenaService, Upload, $timeout, $sce, subdomainService, cfpLoadingBar) {
+    function AlbumCtrl($scope, $modal, arenaService, Upload, $timeout, $sce, cfpLoadingBar) {
         var vm = this;
         vm.album = arenaService.getAlbum();
         vm.emptyList = false;
@@ -76,7 +76,7 @@
                             url: 'https://4fut.s3.amazonaws.com/',
                             method: 'POST',
                             data : {
-                                key: subdomainService.arena + '/' + fileName,
+                                key: arenaService.idArena + '/' + fileName,
                                 AWSAccessKeyId: 'AKIAI7H2KNGKAMZK32DQ',
                                 'Content-Type': fileOk.type !== '' ? fileOk.type : 'application/octet-stream',
                                 acl: 'public-read',
@@ -91,7 +91,7 @@
 
                                 Upload.resize(fileOk, 180, 180, null, null, null , true).then(function(thumb) {
 
-                                    var thumbName =  subdomainService.arena + '/thumb/' + fileName;
+                                    var thumbName =  arenaService.idArena + '/thumb/' + fileName;
                                     Upload.upload({
                                         url: 'https://4fut.s3.amazonaws.com/',
                                         method: 'POST',
@@ -108,7 +108,7 @@
                                     }).then(function (response) {
                                         $timeout(function () {
                                             var albumItem = {
-                                                img : 'https://4fut.s3.amazonaws.com/' +  subdomainService.arena + '/' + fileName,
+                                                img : 'https://4fut.s3.amazonaws.com/' +  arenaService.idArena + '/' + fileName,
                                                 thumb : 'https://4fut.s3.amazonaws.com/'  + thumbName
                                             };
                                             vm.album.$add(albumItem);

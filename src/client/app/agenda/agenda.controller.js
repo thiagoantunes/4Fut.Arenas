@@ -128,8 +128,7 @@
             vm.uiConfig = {
                 calendar: {
                     lang: 'pt-br',
-                    // minTime:'10:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // maxTime:'24:00',//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    firstDay: 1,
                     height: $window.innerHeight - 120,
                     timeFormat: 'H(:mm)',
                     timezone: 'local',
@@ -348,7 +347,8 @@
         function atualizaDisponibilidade() {
             vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento, function (f) {
                 return f.start <= moment(vm.novaReserva.start).format('HH:mm') &&
-                    f.end >= moment(vm.novaReserva.end).format('HH:mm') &&
+                    (f.end > f.start && f.end >= moment(vm.novaReserva.end).format('HH:mm') ||
+                     f.end >= '00:00' && f.end <= '01:00') &&
                     f.dow === ('' + vm.novaReserva.start.getDay());
             });
 

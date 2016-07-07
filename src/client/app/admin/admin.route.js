@@ -16,12 +16,12 @@
             {
                 state: 'admin',
                 config: {
-                    url: '/admin',
+                    url: '',
                     templateUrl: 'app/admin/admin.html',
                     redirectTo: 'admin.agenda',
                     controller: 'AdminController',
                     controllerAs: 'hctrl',
-                }
+                },
             }
         ];
     }

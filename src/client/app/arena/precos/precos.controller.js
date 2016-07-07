@@ -79,6 +79,7 @@
             vm.uiConfig = {
                 calendar: {
                     lang: 'pt-br',
+                    firstDay: 1,
                     height: 'auto',
                     timeFormat: 'H(:mm)',
                     header: false,

@@ -16,11 +16,11 @@
             {
                 state: 'login',
                 config: {
-                    url:'/login',
+                    url: '/login',
                     templateUrl: 'app/login/login.html',
                     controller: 'LoginCtrl',
                     controllerAs: 'lctrl',
-                }
+                },
             }
         ];
     }

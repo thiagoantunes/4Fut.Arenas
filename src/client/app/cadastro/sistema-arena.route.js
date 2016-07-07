@@ -16,17 +16,18 @@
             {
                 state: 'sistema-arena',
                 config: {
-                    url: '/sistema-arena',
+                    url: '',
                     template: '<data ui-view></data>',
                     controller:'SistemaArenaCtrl',
-                    controllerAs:'vm'
+                    controllerAs:'vm',
+                    abstract: true
                 }
             },
             {
                 state: 'sistema-arena.cadastro',
                 config: {
                     url: '/cadastro',
-                    templateUrl: 'app/sistema-arena/sistema-arena.html',
+                    templateUrl: 'app/cadastro/sistema-arena.html',
                 }
             },
         ];

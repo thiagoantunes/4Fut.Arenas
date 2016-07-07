@@ -16,7 +16,7 @@
         activate();
 
         function activate() {
-            var authData = Auth.$getAuth();
+            var authData = Auth.currentUser;
             if (authData) {
                 usersService.getUserProfile(authData.uid).$bindTo($scope, 'user');
             }

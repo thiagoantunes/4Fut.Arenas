@@ -29,22 +29,23 @@
         }
 
         function createAccount() {
-            Auth.$createUser({email: vm.novaArena.email, password: vm.novaArena.password})
+            Auth.createUserWithEmailAndPassword(vm.novaArena.email, vm.novaArena.password)
             .then(authenticate)
               .then(createProfile)
               .then(redirect, showError);
 
             function authenticate() {
-                return Auth.$authWithPassword({email: vm.novaArena.email, password: vm.novaArena.password}, {rememberMe: true});
+                return Auth.signInWithEmailAndPassword(vm.novaArena.email, vm.novaArena.password);
             }
 
             function createProfile(user) {
                 var novoRegistro = {};
-                novoRegistro['arenas/' + vm.novaArena.arena + '/staff/' + user.uid] = 1;
-                novoRegistro['arenas/' + vm.novaArena.arena + '/configurado/'] = false;
+                novoRegistro['arenas/' + vm.novaArena.arena + '/staff/' + user.uid] = true;
+                //novoRegistro['arenas/' + vm.novaArena.arena + '/configurado/'] = false;
                 novoRegistro['users/' + user.uid] = {
                     email: vm.novaArena.email,
-                    nome: vm.novaArena.responsavel
+                    nome: vm.novaArena.responsavel,
+                    arena: vm.novaArena.arena
                 };
 
                 Ref.update(novoRegistro, function(error) {

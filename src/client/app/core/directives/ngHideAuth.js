@@ -1,22 +1,22 @@
 
 angular.module('app.core')
-  .directive('ngHideAuth', ['Auth', '$timeout', function (Auth, $timeout) {
+  .directive('ngHideAuth', ['$timeout', function ($timeout) {
       'use strict';
 
       return {
           restrict: 'A',
           link: function(scope, el) {
               el.addClass('ng-cloak'); // hide until we process it
-              function update() {
+              function update(user) {
                   // sometimes if ngCloak exists on same element, they argue, so make sure that
                   // this one always runs last for reliability
                   $timeout(function () {
-                      el.toggleClass('ng-cloak', !!Auth.$getAuth());
+                      el.toggleClass('ng-cloak', !!user);
                   }, 0);
               }
 
-              Auth.$onAuth(update);
-              update();
+              var auth = firebase.auth();
+              auth.onAuthStateChanged(update);
           }
       };
   }]);

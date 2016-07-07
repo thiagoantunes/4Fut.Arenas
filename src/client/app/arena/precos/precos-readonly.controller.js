@@ -23,13 +23,7 @@
             vm.uiConfig = {
                 calendar: {
                     lang:'pt-br',
-                    // minTime: '10:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // maxTime: '24:00', //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // businessHours: {
-                    //     start: '10:00',
-                    //     end: '24:00',
-                    //     dow: [0, 1, 2, 3, 4, 5, 6]
-                    // },
+                    firstDay: 1,
                     height: $window.innerHeight - 180,
                     timeFormat: 'H(:mm)',
                     header: false,

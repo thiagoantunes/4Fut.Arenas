@@ -48,7 +48,9 @@
 
             vm.novaReserva.preco = _.find(vm.novaReserva.quadra.funcionamento  , function(f) {
                 return f.start <= moment(vm.novaReserva.hora).format('HHmm') &&
-                        f.end >= moment(vm.novaReserva.hora).add(vm.novaReserva.duracao.value, 'h').format('HHmm') &&
+                        (f.end > f.start && f.end >=
+                            moment(vm.novaReserva.hora).add(vm.novaReserva.duracao.value, 'h').format('HHmm') ||
+                        f.end >= '00:00' && f.end <= '01:00') &&
                         f.dow === ('' + vm.novaReserva.data.getDay());
             });
 
@@ -76,7 +78,7 @@
             else {
                 vm.reserva.saldoDevedor = vm.novaReserva.preco ? vm.novaReserva.preco.precoMensalista : 0;
                 vm.reserva.dataFim = moment(vm.novaReserva.data.getTime()).add(vm.novaReserva.validade.value , 'M')._d.getTime();
-                reservasService.criarReservaRecorrente(vm.reserva, 'mensalistas').then(function() {
+                reservasService.criarReservaRecorrente(vm.reserva, 'arenasMensalistas').then(function() {
                     logger.success('Reserva criada com sucesso!');
                     hideModalForm();
                 },function(error) {

@@ -15,7 +15,7 @@
         activate();
 
         function activate() {
-            $firebaseObject(Ref.child('users/' + Auth.$getAuth().uid)).$loaded().then(function(ref) {
+            $firebaseObject(Ref.child('users/' + Auth.currentUser.uid)).$loaded().then(function(ref) {
                 $scope.email = ref.email;
             });
         }

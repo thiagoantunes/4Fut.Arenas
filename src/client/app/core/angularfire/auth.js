@@ -1,8 +1,8 @@
 (function() {
     'use strict';
-    angular.module('firebase.auth', ['firebase', 'firebase.ref'])
+    angular.module('firebase.auth', [])
 
-    .factory('Auth', function($firebaseAuth, Ref) {
-        return $firebaseAuth(Ref);
+    .factory('Auth', function() {
+        return firebase.auth();
     });
 })();

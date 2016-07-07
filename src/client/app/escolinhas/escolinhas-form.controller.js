@@ -83,7 +83,7 @@
             };
 
             if (vm.turma.$id) {
-                reservasService.editaReservaRecorrente(vm.turma, 'turmas').then(function() {
+                reservasService.editaReservaRecorrente(vm.turma, 'arenasTurmas').then(function() {
                     logger.success('Reserva editada com sucesso!');
                     hideModalForm();
                 }, function(error) {
@@ -91,7 +91,7 @@
                 });
             }
             else {
-                reservasService.criarReservaRecorrente(vm.turma, 'turmas').then(function() {
+                reservasService.criarReservaRecorrente(vm.turma, 'arenasTurmas').then(function() {
                     logger.success('Reserva criada com sucesso!');
                     hideModalForm();
                 },function(error) {

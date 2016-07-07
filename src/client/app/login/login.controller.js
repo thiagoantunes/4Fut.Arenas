@@ -13,7 +13,6 @@
         'Ref',
         '$timeout' ,
         '$firebaseObject' ,
-        'subdomainService',
         'logger',
         'cfpLoadingBar'];
 
@@ -25,7 +24,6 @@
         Ref,
         $timeout,
         $firebaseObject,
-        subdomainService,
         logger,
         cfpLoadingBar) {
 
@@ -46,7 +44,7 @@
         $scope.passwordLogin = function(email, pass) {
             $scope.err = null;
             cfpLoadingBar.start();
-            Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(
+            Auth.signInWithEmailAndPassword(email, pass).then(
               redirect, showError
             );
         };
@@ -118,35 +116,38 @@
         }
 
         function redirect(user) {
-            var arena = Ref.child('arenas/' + subdomainService.arena);
+            var userRef = Ref.child('users/' + user.uid);
 
-            arena.once('value', function(snapshot) {
-                cfpLoadingBar.complete();
-                if (snapshot.hasChild('staff/' + user.uid)) {
-                    $location.path('/admin/agenda');
-                    $scope.$apply();
-                    // if (snapshot.val().configurado) {
-                    //     $location.path('/admin/agenda');
-                    //     $scope.$apply();
-                    // }
-                    // else {
-                    //     $location.path('/admin/setup-arena');
-                    //     $scope.$apply();
-                    // }
+            userRef.once('value', function(snapUser) {
+                if (snapUser.hasChild('arena')) {
+                    var arenaRef = Ref.child('arenas/' + snapUser.val().arena);
+                    arenaRef.once('value', function(snapArena) {
+                        if (snapArena.hasChild('staff/' + user.uid)) {
+                            cfpLoadingBar.complete();
+                            $location.path('/agenda');
+                            $scope.$apply();
+                        }
+                        else {
+                            cfpLoadingBar.complete();
+                            logger.error('Usuário não cadastrado na arena ');
+                            Auth.signOut();
+                        }
+                    });
                 }
                 else {
-                    logger.error('Usuário não cadastrado na arena ' + subdomainService.arena);
-                    Auth.$unauth();
+                    cfpLoadingBar.complete();
+                    logger.error('Usuário não cadastrado na arena ');
+                    Auth.signOut();
                 }
             });
         }
 
         function showError(err) {
             cfpLoadingBar.complete();
-            if (err.code === 'INVALID_PASSWORD') {
+            if (err.code === 'auth/wrong-password') {
                 logger.error('O e-mail ou senha inserido não corresponde a nenhuma conta.');
             }
-            if (err.code === 'INVALID_USER') {
+            if (err.code === 'auth/user-not-found') {
                 logger.error('Usuário não existe!');
             }
         }

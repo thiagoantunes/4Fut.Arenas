@@ -63,10 +63,10 @@
     "angular": ">=1",
     "lodash": "~3.10.1",
     "chosen": "^1.5.1",
-    "firebase": "^2.4.1",
+    "firebase": "^3.1.0",
     "lightgallery": "v1.1.5",
     "angular-chosen-localytics": "^1.4.0",
-    "angularfire": "^1.2.0"
+    "angularfire": "^2.0.1"
   },
   "overrides": {
     "bootstrap": {

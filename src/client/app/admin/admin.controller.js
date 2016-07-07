@@ -14,13 +14,13 @@
         vm.hideModal = hideModal;
         vm.lerNotificacoes = lerNotificacoes;
         vm.logout = function() {
-            Auth.$unauth();
+            Auth.signOut();
         };
 
         activate();
 
         function activate() {
-            var authData = Auth.$getAuth();
+            var authData = Auth.currentUser;
             if (authData) {
                 usersService.getUserProfile(authData.uid).$bindTo($scope, 'loggedUser');
             }

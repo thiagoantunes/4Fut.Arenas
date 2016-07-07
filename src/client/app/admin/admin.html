@@ -17,39 +17,14 @@
 						<!--<li ng-class="{ active: isActive('/admin/dashboard')}">
 							<a href="#/admin/dashboard">DASHBOARD</a>
 						</li>-->
-						<li ng-class="{ active: isActive('/admin/agenda')}">
-							<a href="#/admin/agenda">AGENDA</a>
+						<li data-ui-sref-active="active">
+							<a data-ui-sref="admin.agenda" >AGENDA</a>
 						</li>
-						<li ng-class="{ active: isActive('/admin/escolinhas')}">
-							<a href="#/admin/escolinhas">ESCOLINHAS</a>
+						<li data-ui-sref-active="active">
+							<a data-ui-sref="admin.escolinhas" href="#/admin/escolinhas">ESCOLINHAS</a>
 						</li>
-						<!-- <li class="dropdown">
-							<a bs-dropdown data-placement="bottom-left"  data-trigger="hover" data-container=".myButton" aria-expanded="false" class="tm-settings myButton" href="">
-								FINANCEIRO
-							</a>
-							<ul class="dropdown-menu dm-icon" role="menu">
-								<li>
-									<a href="/admin/arena/arena-profile">
-										<i class="zmdi zmdi-store"></i>
-										Avulsas
-									</a>
-								</li>
-								<li>
-									<a href="">
-										<i class="zmdi zmdi-accounts"></i>
-										Mensalistas
-									</a>
-								</li>
-								<li>
-									<a href="">
-										<i class="zmdi zmdi-laptop-chromebook"></i>
-										Escolinha
-									</a>
-								</li>
-							</ul>
-						</li> -->
-						<li ng-class="{ active: isActive('/admin/contatos')}">
-							<a href="#/admin/contatos">CONTATOS</a>
+						<li data-ui-sref-active="active">
+							<a data-ui-sref="admin.contatos" >CONTATOS</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right top-menu">
@@ -98,7 +73,7 @@
 							</a>
 							<ul class="dropdown-menu dm-icon" role="menu">
 								<li>
-									<a href="#/admin/arena/arena-profile">
+									<a data-ui-sref="admin.arena">
 										<i class="zmdi zmdi-store"></i> Config. Arena
 									</a>
 								</li>
@@ -144,7 +119,7 @@
 	</div>
 </header>
 
-<section id="content" style="margin-top:-120px">
+<section id="content"  style="margin-top:-120px">
 	<div class="container">
 		<data class="page-view" data-ui-view></data>
 	</div>

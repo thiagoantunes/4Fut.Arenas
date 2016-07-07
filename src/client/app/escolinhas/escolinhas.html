@@ -11,38 +11,18 @@
 		</div>
 		<div class="card-body card-padding" style="min-height:300px">
 			<div ng-if="vm.turmas.length>0">
-				<!-- <div class="p-header" >
-					<ul class="p-menu">
-						<li class="active">
-							<button 
-								class="btn btn-default" 
-								href="" 
-								ng-click="vm.showEscolinhasForm();"> 
-								<i class="zmdi zmdi-accounts-add hidden-xs"></i> Nova Turma
-							</button>
-						</li>
-					</ul>
-					<ul class="actions p-menu m-t-20 hidden-xs">
-						<li class="pm-search">
-							<div class="pms-inner">
-								<i class="zmdi zmdi-search"></i>
-								<input type="text" ng-model="buscaReserva" placeholder="Buscar...">
-							</div>
-						</li>
-					</ul>
-				</div> -->
 				<table class="table">
 					<tr>
 						<th>Quadra</th>
 						<th>Professor</th>
 						<th>Quando</th>
 					</tr>
-					<tr ng-repeat="turma in vm.turmas | filter:buscaReserva" ng-if="turma.nomeQuadra !== undefined">
+					<tr ng-repeat="turma in vm.turmas | filter:buscaReserva" ng-if="turma.quadra !== undefined">
 						<td>
-							{{ turma.nomeQuadra }}
+							{{ vm.getQuadraNome(turma.quadra) }}
 						</td>
 						<td>
-							{{ turma.nomeProfessor }}
+							{{ vm.getContato(turma.responsavel) }}
 						</td>
 						<td>
 							<spam ng-repeat="d in turma.dow">
@@ -62,9 +42,6 @@
 						</td>
 					</tr>
 				</table>
-				<div class="load-more">
-					<a href="" ng-click="vm.loadMore()" ng-if="vm.turmas.scroll.hasNext()"><i class="zmdi zmdi-refresh-alt"></i> Carregar mais...</a>
-				</div>
 			</div>
 			<div class="text-center" ng-if="vm.emptyList">
 				<i style="opacity:0.5" class="zmdi zmdi-graduation-cap zmdi-hc-5x"></i>

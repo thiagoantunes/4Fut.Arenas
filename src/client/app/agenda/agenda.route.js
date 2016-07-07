@@ -21,7 +21,7 @@
                     controller:'ReservasCtrl',
                     controllerAs:'vm',
                     resolve: {
-                        quadras: ['quadraService', function (quadraService) {
+                        quadras: ['quadraService', 'arena', function (quadraService, arena) {
                             return quadraService.getQuadras().$loaded();
                         }]
                     }
