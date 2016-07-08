@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+        
+        .ng-hide {
+            display: none!important;
+        }
+    </style>
+    <title ng-bind="title">4Futarenas</title>
+    <!--<base href="/" />-->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="styles/lib-15a8fa8f17.css">
+
+    <link rel="stylesheet" href="styles/app-cae160ee20.css">
+
+    <!--Start of Zopim Live Chat Script-->
+    <!--<script type="text/javascript">
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+$.src="//v2.zopim.com/?3oAWMCDX2jeLtziueQeitF2bYCfZyOJR";z.t=+new Date;$.
+type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+</script>-->
+    <!--End of Zopim Live Chat Script-->
+
+    <!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '31acf3f77ffe3651649b5484b9a6589353b00684';
+window.smartsupp||(function(d) {
+	var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+	s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+	c.type='text/javascript';c.charset='utf-8';c.async=true;
+	c.src='//www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+
+</head>
+
+<body>
+
+    <data ui-view></data>
+
+    <script src="js/lib-df6da1273b.js"></script>
+
+    <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAfkQ7QG4LY6w0x5XNKzvu1VRiGOVyOxCY",
+    authDomain: "rdqdb-a9419.firebaseapp.com",
+    databaseURL: "https://rdqdb-a9419.firebaseio.com",
+    storageBucket: "rdqdb-a9419.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
+
+    <script src="js/app-91851ee39b.js"></script>
+</body>
+
+</html>

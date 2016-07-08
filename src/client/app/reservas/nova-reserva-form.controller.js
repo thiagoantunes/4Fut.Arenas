@@ -122,7 +122,9 @@
         }
 
         function salvarContato() {
-            contatosService.addNovoContato(vm.contatoSelecionado);
+            contatosService.addNovoContato(vm.contatoSelecionado).then(function(val) {
+                vm.novaReserva.responsavel = _.find(vm.contatos, {$id : val});
+            });
             hideNovoContatoModal();
         }
     }

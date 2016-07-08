@@ -134,7 +134,7 @@
                     timezone: 'local',
                     header: {left: 'month agendaWeek agendaDay', center: 'title'},
                     defaultView: 'agendaWeek',
-                    scrollTime: '09:00:00',
+                    scrollTime: '17:00:00',
                     allDaySlot: false,
                     defaultEventMinutes: 60,
                     axisFormat: 'H:mm',  //,'h(:mm)tt',
@@ -498,7 +498,9 @@
         }
 
         function salvarContato() {
-            contatosService.addNovoContato(vm.contatoSelecionado);
+            contatosService.addNovoContato(vm.contatoSelecionado).then(function(val) {
+                vm.novaReserva.responsavel = _.find(vm.contatos, {$id : val});
+            });
             hideNovoContatoModal();
         }
 

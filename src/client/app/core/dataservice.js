@@ -20,7 +20,7 @@
     funcionamentoService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', '$q', 'MappedArray'];
     reservasService.$inject =
         ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', 'FilteredArray', '$q'];
-    contatosService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService', 'FilteredArray'];
+    contatosService.$inject = ['Ref', '$q', '$firebaseArray', '$firebaseObject', 'arenaService', 'FilteredArray'];
     financeiroService.$inject = ['Ref', '$firebaseArray', '$firebaseObject', 'arenaService'];
 
     function FilteredArray($firebaseArray) {
@@ -87,6 +87,7 @@
 
             getArena: getArena,
             getAlbum: getAlbum,
+            getEstrutura: getEstrutura,
             getNotificacoes: getNotificacoes,
             getNotificacoesNaoLidas: getNotificacoesNaoLidas,
 
@@ -139,6 +140,11 @@
         function getAlbum() {
             /*jshint validthis: true */
             return $firebaseArray(Ref.child('arenasAlbuns').child(this.idArena));
+        }
+
+        function getEstrutura() {
+            /*jshint validthis: true */
+            return $firebaseArray(Ref.child('arenasEstrutura').child(this.idArena));
         }
 
         function getNotificacoes() {
@@ -430,7 +436,7 @@
         }
     }
 
-    function contatosService(Ref, $firebaseArray, $firebaseObject, arenaService, FilteredArray) {
+    function contatosService(Ref, $q, $firebaseArray, $firebaseObject, arenaService, FilteredArray) {
         var service = {
             getRef: getRef,
             refContatosArena: refContatosArena,
@@ -515,9 +521,16 @@
         }
 
         function addNovoContato(novoContato) {
-            novoContato.fkArena = true;
-            getContatosArena().$add(novoContato);
+            var deferred = $q.defer();
+            var contatoId = Ref.child('users').push().key;
+            var contatoData = {};
+            contatoData['arenasContatos/' + arenaService.idArena + '/' + contatoId] = true;
+            contatoData['users/' + contatoId] = novoContato;
 
+            Ref.update(contatoData, function(error) {
+                deferred.resolve(contatoId);
+            });
+            return deferred.promise;
         }
     }
 
