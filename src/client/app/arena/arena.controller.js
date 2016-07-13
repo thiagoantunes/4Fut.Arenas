@@ -12,6 +12,7 @@
         vm.estruturaArena = arenaService.getEstrutura();
         vm.showUploadImageModal = showUploadImageModal;
         vm.hideUploadImageModal = hideUploadImageModal;
+        vm.mudaOrdemEstruturas = mudaOrdemEstruturas;
         vm.saveImage = saveImage;
         vm.placeChanged = placeChanged;
 
@@ -63,15 +64,15 @@
 
         function initItensEstrutura() {
             vm.itensEstrutura = [
-                {id: 1, ativo: false, img: '', desc: 'Vestiário', quantidade : null, ordem: 1},
-                {id: 2, ativo: false, img: '', desc: 'Vestiário Feminino', quantidade : null, ordem: 2},
-                {id: 3, ativo: false, img: '', desc: 'Estacionamento', quantidade : null, ordem: 3},
-                {id: 4, ativo: false, img: '', desc: 'Estacionamento Motos', quantidade : null, ordem: 4},
-                {id: 5, ativo: false, img: '', desc: 'Lanchonete', quantidade : null, ordem: 5},
-                {id: 6, ativo: false, img: '', desc: 'Churrasqueira', quantidade : null, ordem: 6},
-                {id: 7, ativo: false, img: '', desc: 'Armário Individual', quantidade : null, ordem: 7},
-                {id: 8, ativo: false, img: '', desc: 'Playground', quantidade : null, ordem: 8},
-                {id: 9, ativo: false, img: '', desc: 'Segurança Privada', quantidade : null, ordem: 9},
+                {id:1, ativo: false, img: 'vestiario1.png', desc: 'Vestiário Masculino', ordem: 1},
+                {id:2, ativo: false, img: 'vestiario2.png', desc: 'Vestiário Feminino', ordem: 2},
+                {id:3, ativo: false, img: 'estacionamento.png', desc: 'Estacionamento', ordem: 3},
+                {id:4, ativo: false, img: 'lanchonete.png', desc: 'Lanchonete',  ordem: 5},
+                {id:5, ativo: false, img: 'churrasqueira.png', desc: 'Churrasqueira', ordem: 6},
+                {id:6, ativo: false, img: 'armario.png', desc: 'Armário Individual', ordem: 7},
+                {id:7, ativo: false, img: 'playground.png', desc: 'Playground', ordem: 8},
+                {id:8, ativo: false, img: 'seguranca.png', desc: 'Segurança Privada', ordem: 9},
+                {id:9, ativo: false, img: 'wifi.png', desc: 'Wifi', ordem: 10},
             ];
 
             vm.estruturaArena.$loaded().then(function() {
@@ -83,6 +84,13 @@
                     }
                 });
             });
+        }
+
+        function mudaOrdemEstruturas(partTo) {
+            for (var i = 0; i < partTo.length; i++) {
+                partTo[i].ordem = (i + 1);
+                vm.estruturaArena.$save(partTo[i]);
+            }
         }
     }
 

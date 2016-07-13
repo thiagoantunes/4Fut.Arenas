@@ -231,7 +231,7 @@
 
 				<div class="col-sm-6 ppo-reserva-footer">
 					<div ng-if="vm.novaReserva.quadra != undefined && vm.novaReserva.preco == undefined && vm.horarioLivre" class="no-price">
-						<i class="zmdi zmdi-alert-triangle"> Quadra sem preço definido para este horário! <a ng-href="#/admin/arena/precos/{{vm.novaReserva.quadra.id}}" style="font-weight: bold; text-decoration: underline; color: red">Definir preços.</a></i> 
+						<i class="zmdi zmdi-alert-triangle"> Quadra sem preço definido para este horário! <a ng-href="#/arena/precos/{{vm.novaReserva.quadra.id}}" style="font-weight: bold; text-decoration: underline; color: red">Definir preços.</a></i> 
 					</div>
 
 					<div ng-if="vm.novaReserva.quadra != undefined && !vm.horarioLivre" class="no-room">

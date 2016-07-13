@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">app/arena/arena.controller.js</span></h1>
     <h2>
-        Statements: <span class="metric">27.03% <small>(10 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">26.19% <small>(11 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">27.03% <small>(10 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">9.09% <small>(1 / 11)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">26.19% <small>(11 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">app/arena/</a> &#187; arena.controller.js</div>
@@ -115,7 +115,15 @@
 88
 89
 90
-91</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+91
+92
+93
+94
+95
+96
+97
+98
+99</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -131,6 +139,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -199,6 +208,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -219,6 +235,7 @@
 <span class="cstat-no" title="statement not covered" >        vm.estruturaArena = arenaService.getEstrutura();</span>
 <span class="cstat-no" title="statement not covered" >        vm.showUploadImageModal = showUploadImageModal;</span>
 <span class="cstat-no" title="statement not covered" >        vm.hideUploadImageModal = hideUploadImageModal;</span>
+<span class="cstat-no" title="statement not covered" >        vm.mudaOrdemEstruturas = mudaOrdemEstruturas;</span>
 <span class="cstat-no" title="statement not covered" >        vm.saveImage = saveImage;</span>
 <span class="cstat-no" title="statement not covered" >        vm.placeChanged = placeChanged;</span>
 &nbsp;
@@ -270,15 +287,15 @@
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function initItensEstrutura() {</span>
 <span class="cstat-no" title="statement not covered" >            vm.itensEstrutura = [</span>
-                {id: 1, ativo: false, img: '', desc: 'Vestiário', quantidade : null, ordem: 1},
-                {id: 2, ativo: false, img: '', desc: 'Vestiário Feminino', quantidade : null, ordem: 2},
-                {id: 3, ativo: false, img: '', desc: 'Estacionamento', quantidade : null, ordem: 3},
-                {id: 4, ativo: false, img: '', desc: 'Estacionamento Motos', quantidade : null, ordem: 4},
-                {id: 5, ativo: false, img: '', desc: 'Lanchonete', quantidade : null, ordem: 5},
-                {id: 6, ativo: false, img: '', desc: 'Churrasqueira', quantidade : null, ordem: 6},
-                {id: 7, ativo: false, img: '', desc: 'Armário Individual', quantidade : null, ordem: 7},
-                {id: 8, ativo: false, img: '', desc: 'Playground', quantidade : null, ordem: 8},
-                {id: 9, ativo: false, img: '', desc: 'Segurança Privada', quantidade : null, ordem: 9},
+                {id:1, ativo: false, img: 'vestiario1.png', desc: 'Vestiário Masculino', ordem: 1},
+                {id:2, ativo: false, img: 'vestiario2.png', desc: 'Vestiário Feminino', ordem: 2},
+                {id:3, ativo: false, img: 'estacionamento.png', desc: 'Estacionamento', ordem: 3},
+                {id:4, ativo: false, img: 'lanchonete.png', desc: 'Lanchonete',  ordem: 5},
+                {id:5, ativo: false, img: 'churrasqueira.png', desc: 'Churrasqueira', ordem: 6},
+                {id:6, ativo: false, img: 'armario.png', desc: 'Armário Individual', ordem: 7},
+                {id:7, ativo: false, img: 'playground.png', desc: 'Playground', ordem: 8},
+                {id:8, ativo: false, img: 'seguranca.png', desc: 'Segurança Privada', ordem: 9},
+                {id:9, ativo: false, img: 'wifi.png', desc: 'Wifi', ordem: 10},
             ];
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            vm.estruturaArena.$loaded().then(<span class="fstat-no" title="function not covered" >function() {</span></span>
@@ -291,6 +308,13 @@
                 });
             });
         }
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function mudaOrdemEstruturas(partTo) {</span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; partTo.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                partTo[i].ordem = (i + 1);</span>
+<span class="cstat-no" title="statement not covered" >                vm.estruturaArena.$save(partTo[i]);</span>
+            }
+        }
     }
 &nbsp;
 })();
@@ -300,7 +324,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 07 2016 20:36:56 GMT-0300 (BRT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 11 2016 19:17:11 GMT-0300 (BRT)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

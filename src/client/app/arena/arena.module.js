@@ -7,6 +7,7 @@
         'blockUI',
         'ngMap',
         'ngFileUpload',
-        'ngImgCrop'
+        'ngImgCrop',
+        'angular-sortable-view'
      ]);
 })();

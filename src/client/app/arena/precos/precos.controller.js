@@ -136,6 +136,9 @@
             var daysToAdd = val.dow - new Date().getDay();
             var end = val.start > val.end ? moment(val.end, 'HH:mm').add(1, 'd') : moment(val.end, 'HH:mm');
             var start = moment(val.start, 'HH:mm');
+            if (val.dow === '0') {
+                daysToAdd += 7;
+            }
             return {
                 start: start.add(daysToAdd, 'd')._d.getTime(),
                 end: end.add(daysToAdd, 'd')._d.getTime(),

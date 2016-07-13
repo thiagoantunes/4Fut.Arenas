@@ -164,7 +164,7 @@
         function setLocation(lat, lng) {
             var geo = new GeoFire(Ref.child('arenasLocalizacao'));
 
-            geo.set(arenaService.idArena, [lat, lng]);
+            geo.set(this.idArena, [lat, lng]);
         }
     }
 

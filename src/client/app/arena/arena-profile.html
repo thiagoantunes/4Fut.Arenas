@@ -40,21 +40,22 @@
 <div class="pmb-block">
     <div class="pmbb-header">
         <h2><i class="zmdi zmdi-assignment-o m-r-5"></i> Estrutura</h2>
-        <span style="margin-left:25px;">Indique os itens presentes em sua arena.</span>
+        <span style="margin-left:25px;">Indique os itens presentes em sua arena. Ordene-os para que os mais importantes sejam exibidos primeiro.</span>
     </div>
     <hr/>
-    <ul style="list-style-type: none;">
-        <li ng-repeat="item in vm.estruturaArena">
+    <ul style="list-style-type: none;" sv-on-sort="vm.mudaOrdemEstruturas($partTo)" sv-root sv-part=" vm.estruturaArena">
+        <li ng-repeat="item in vm.estruturaArena | orderBy: 'ordem'" sv-element>
+           
             <div class="form-inline">
+                <a href="" style="color: #ccc; padding-top: 5px">
+                    <i class="zmdi zmdi-unfold-more zmdi-hc-2x m-r-15"></i>
+                </a>
                 <div class="form-group">
                     <label class="checkbox checkbox-inline" style="font-size:larger">
                         <input type="checkbox" ng-change="vm.estruturaArena.$save(item);" disable-valid-styling="true" ng-model='item.ativo'> 
                         <i class="input-helper"></i>
                         {{item.desc}}
                     </label>
-                </div>
-                <div class="form-group" style="margin-left: 40px">
-                    <input type="number" class="form-control" ng-readonly="!item.ativo" id="inputQtde" ng-change="vm.estruturaArena.$save(item);" ng-model='item.quantidade' placeholder="Quantidade">
                 </div>
             </div>
             <br/>
